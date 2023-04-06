@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @JmixEntity
 @Table(name = "PRODUCT_GRADE", indexes = {
-        @Index(name = "IDX_PRODUCT_GRADE_GRADE_GROUP", columnList = "GRADE_GROUP_ID")
+        @Index(name = "IDX_PRODUCT_GRADE_PRODUCT_TYPE", columnList = "PRODUCT_TYPE_ID")
 })
 @Entity
 public class ProductGrade {
@@ -24,20 +24,21 @@ public class ProductGrade {
     @NotNull
     private String gradeName;
 
+    @JoinColumn(name = "PRODUCT_TYPE_ID", nullable = false)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private ProductType productType;
+
     @Column(name = "GRADE_COMMENT")
     @Lob
     private String gradeComment;
 
-    @JoinColumn(name = "GRADE_GROUP_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private ProductGrade gradeGroup;
-
-    public ProductGrade getGradeGroup() {
-        return gradeGroup;
+    public ProductType getProductType() {
+        return productType;
     }
 
-    public void setGradeGroup(ProductGrade gradeGroup) {
-        this.gradeGroup = gradeGroup;
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 
     public String getGradeComment() {

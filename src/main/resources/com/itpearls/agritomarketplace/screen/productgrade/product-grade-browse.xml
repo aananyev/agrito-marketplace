@@ -7,7 +7,7 @@
         <collection id="productGradesDc"
                     class="com.itpearls.agritomarketplace.entity.ProductGrade">
             <fetchPlan extends="_base">
-                <property name="gradeGroup" fetchPlan="_base"/>
+                <property name="productType" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="productGradesDl">
                 <query>
@@ -37,19 +37,19 @@
                 dataLoader="productGradesDl">
             <properties include=".*"/>
         </filter>
-        <treeTable id="productGradesTable"
-                   width="100%"
-                   dataContainer="productGradesDc"
-                   hierarchyProperty="gradeGroup">
+        <groupTable id="productGradesTable"
+                    width="100%"
+                    dataContainer="productGradesDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
+                <group>
+                    <column id="productType"/>
+                </group>
                 <column id="gradeName"/>
-                <column id="gradeComment"/>
-                <column id="gradeGroup"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
@@ -58,7 +58,7 @@
                 <button id="editBtn" action="productGradesTable.edit"/>
                 <button id="removeBtn" action="productGradesTable.remove"/>
             </buttonsPanel>
-        </treeTable>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

@@ -6,7 +6,7 @@
         <instance id="productGradeDc"
                   class="com.itpearls.agritomarketplace.entity.ProductGrade">
             <fetchPlan extends="_base">
-                <property name="gradeGroup" fetchPlan="_base"/>
+                <property name="productType" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
         </instance>
@@ -16,8 +16,7 @@
         <screenSettings id="settingsFacet" auto="true"/>
     </facets>
     <actions>
-        <action id="windowCommitAndClose"
-                caption="msg:///actions.Ok"
+        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
                 icon="EDITOR_OK"
                 primary="true"
                 shortcut="${COMMIT_SHORTCUT}"/>
@@ -31,13 +30,13 @@
         <form id="form" dataContainer="productGradeDc">
             <column width="350px">
                 <textField id="gradeNameField" property="gradeName"/>
-                <textArea id="gradeCommentField" property="gradeComment" rows="5"/>
-                <entityPicker id="gradeGroupField" property="gradeGroup">
+                <entityPicker id="productTypeField" property="productType">
                     <actions>
                         <action id="entityLookup" type="entity_lookup"/>
                         <action id="entityClear" type="entity_clear"/>
                     </actions>
                 </entityPicker>
+                <textArea id="gradeCommentField" property="gradeComment" rows="5"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

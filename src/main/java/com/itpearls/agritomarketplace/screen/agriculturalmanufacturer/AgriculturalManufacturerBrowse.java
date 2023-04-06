@@ -1,10 +1,58 @@
 package com.itpearls.agritomarketplace.screen.agriculturalmanufacturer;
 
+import com.itpearls.agritomarketplace.entity.CounterpartyRating;
+import com.itpearls.agritomarketplace.screen.counterpartyrating.CounterpartyRatingEdit;
+import io.jmix.ui.Actions;
+import io.jmix.ui.ScreenBuilders;
+import io.jmix.ui.UiComponents;
+import io.jmix.ui.action.Action;
+import io.jmix.ui.action.BaseAction;
+import io.jmix.ui.component.Component;
+import io.jmix.ui.component.GroupTable;
+import io.jmix.ui.component.PopupButton;
+import io.jmix.ui.icon.JmixIcon;
 import io.jmix.ui.screen.*;
 import com.itpearls.agritomarketplace.entity.AgriculturalManufacturer;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @UiController("AgriculturalManufacturer.browse")
 @UiDescriptor("agricultural-manufacturer-browse.xml")
 @LookupComponent("agriculturalManufacturersTable")
 public class AgriculturalManufacturerBrowse extends StandardLookup<AgriculturalManufacturer> {
+    @Autowired
+    private UiComponents uiComponents;
+    @Autowired
+    private Actions actions;
+    @Autowired
+    private MessageBundle messageBundle;
+    @Autowired
+    private ScreenBuilders screenBuilders;
+    @Autowired
+    private GroupTable<AgriculturalManufacturer> agriculturalManufacturersTable;
+
+    @Install(to = "agriculturalManufacturersTable.actionMenu", subject = "columnGenerator")
+    private Component agriculturalManufacturersTableActionMenuColumnGenerator(AgriculturalManufacturer agriculturalManufacturer) {
+        PopupButton popupButton = uiComponents.create(PopupButton.class);
+
+        popupButton.setIcon(JmixIcon.BARS.iconName());
+        popupButton.setAlignment(Component.Alignment.MIDDLE_CENTER);
+        popupButton.addAction(new BaseAction("setRatingAction")
+                .withCaption(messageBundle.getMessage("msgSetRating"))
+                .withHandler(actionPerformedEvent -> {
+                    addRationgForm(actionPerformedEvent);
+                }));
+
+        return popupButton;
+    }
+
+    private void addRationgForm(Action.ActionPerformedEvent actionPerformedEvent) {
+        screenBuilders.editor(CounterpartyRating.class, this)
+                .withScreenClass(CounterpartyRatingEdit.class)
+                .withInitializer(event -> {
+                    event.setCounterparty(agriculturalManufacturersTable.getSingleSelected());
+                })
+                .newEntity()
+                .build()
+                .show();
+    }
 }

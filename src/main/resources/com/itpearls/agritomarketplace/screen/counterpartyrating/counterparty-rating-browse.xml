@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
-        caption="msg://agriculturalManufacturerBrowse.caption"
-        focusComponent="agriculturalManufacturersTable">
+        caption="msg://counterpartyRatingBrowse.caption"
+        focusComponent="counterpartyRatingsTable">
     <data readOnly="true">
-        <collection id="agriculturalManufacturersDc"
-                    class="com.itpearls.agritomarketplace.entity.AgriculturalManufacturer">
+        <collection id="counterpartyRatingsDc"
+                    class="com.itpearls.agritomarketplace.entity.CounterpartyRating">
             <fetchPlan extends="_base">
-                <property name="pounterPartyCEO" fetchPlan="_base"/>
-                <property name="counterPartyChieffAccountant" fetchPlan="_base"/>
-                <property name="counterpartyManager" fetchPlan="_base"/>
+                <property name="counterparty" fetchPlan="_base"/>
+                <property name="user" fetchPlan="_base"/>
             </fetchPlan>
-            <loader id="agriculturalManufacturersDl">
+            <loader id="counterpartyRatingsDl">
                 <query>
-                    <![CDATA[select e from AgriculturalManufacturer e where e.manufacturer = true]]>
+                    <![CDATA[select e from CounterpartyRating e]]>
                 </query>
             </loader>
         </collection>
@@ -34,36 +33,36 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="agriculturalManufacturersTable" spacing="true">
+    <layout expand="counterpartyRatingsTable" spacing="true">
         <filter id="filter"
-                dataLoader="agriculturalManufacturersDl">
+                dataLoader="counterpartyRatingsDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="agriculturalManufacturersTable"
+        <groupTable id="counterpartyRatingsTable"
                     width="100%"
-                    dataContainer="agriculturalManufacturersDc">
+                    aggregatable="true"
+                    dataContainer="counterpartyRatingsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="counterpartyName"/>
-                <column id="counterpartyAddress"/>
-                <column id="counterpartyPhone"/>
-                <column id="counterpartyEmail"/>
-                <column id="counterpartyManager"/>
-                <column id="rating"
-                        caption="msg://msgRating"/>
-                <column id="actionMenu"
-                        caption="msg://msgMenu"/>
+                <group>
+                    <column id="counterparty"/>
+                </group>
+                <column id="user"/>
+                <column id="ratingDate"/>
+                <column id="rating">
+                    <aggregation type="AVG"/>
+                </column>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="agriculturalManufacturersTable.create"/>
-                <button id="editBtn" action="agriculturalManufacturersTable.edit"/>
-                <button id="removeBtn" action="agriculturalManufacturersTable.remove"/>
+                <button id="createBtn" action="counterpartyRatingsTable.create"/>
+                <button id="editBtn" action="counterpartyRatingsTable.edit"/>
+                <button id="removeBtn" action="counterpartyRatingsTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

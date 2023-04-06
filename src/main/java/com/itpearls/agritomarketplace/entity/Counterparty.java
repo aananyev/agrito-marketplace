@@ -1,5 +1,6 @@
 package com.itpearls.agritomarketplace.entity;
 
+import io.jmix.core.FileRef;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
@@ -26,6 +27,9 @@ public class Counterparty {
     @Column(name = "COUNTERPARTY_NAME", nullable = false, length = 128)
     @NotNull
     private String counterpartyName;
+
+    @Column(name = "COUNTERPARTY_LOGO", length = 1024)
+    private FileRef counterpartyLogo;
 
     @Column(name = "COUNTERPARTY_ADDRESS")
     private String counterpartyAddress;
@@ -54,6 +58,14 @@ public class Counterparty {
     @JoinColumn(name = "COUNTERPARTY_MANAGER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Person counterpartyManager;
+
+    public FileRef getCounterpartyLogo() {
+        return counterpartyLogo;
+    }
+
+    public void setCounterpartyLogo(FileRef counterpartyLogo) {
+        this.counterpartyLogo = counterpartyLogo;
+    }
 
     public Person getCounterpartyManager() {
         return counterpartyManager;
@@ -135,4 +147,9 @@ public class Counterparty {
         this.id = id;
     }
 
+    @InstanceName
+    @DependsOnProperties({"counterpartyName"})
+    public String getInstanceName() {
+        return String.format("%s", counterpartyName);
+    }
 }

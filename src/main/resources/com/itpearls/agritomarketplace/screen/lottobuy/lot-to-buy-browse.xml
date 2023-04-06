@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
-        caption="msg://agriculturalManufacturerBrowse.caption"
-        focusComponent="agriculturalManufacturersTable">
+        caption="msg://lotToBuyBrowse.caption"
+        focusComponent="lotToBuysTable">
     <data readOnly="true">
-        <collection id="agriculturalManufacturersDc"
-                    class="com.itpearls.agritomarketplace.entity.AgriculturalManufacturer">
+        <collection id="lotToBuysDc"
+                    class="com.itpearls.agritomarketplace.entity.LotToBuy">
             <fetchPlan extends="_base">
-                <property name="pounterPartyCEO" fetchPlan="_base"/>
-                <property name="counterPartyChieffAccountant" fetchPlan="_base"/>
-                <property name="counterpartyManager" fetchPlan="_base"/>
+                <property name="agriculturalManufacturer" fetchPlan="_base"/>
+                <property name="product" fetchPlan="_base"/>
+                <property name="productGrade" fetchPlan="_base"/>
+                <property name="unitMeasurment" fetchPlan="_base"/>
             </fetchPlan>
-            <loader id="agriculturalManufacturersDl">
+            <loader id="lotToBuysDl">
                 <query>
-                    <![CDATA[select e from AgriculturalManufacturer e where e.manufacturer = true]]>
+                    <![CDATA[select e from LotToBuy e]]>
                 </query>
             </loader>
         </collection>
@@ -34,36 +35,34 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="agriculturalManufacturersTable" spacing="true">
+    <layout expand="lotToBuysTable" spacing="true">
         <filter id="filter"
-                dataLoader="agriculturalManufacturersDl">
+                dataLoader="lotToBuysDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="agriculturalManufacturersTable"
+        <groupTable id="lotToBuysTable"
                     width="100%"
-                    dataContainer="agriculturalManufacturersDc">
+                    dataContainer="lotToBuysDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="counterpartyName"/>
-                <column id="counterpartyAddress"/>
-                <column id="counterpartyPhone"/>
-                <column id="counterpartyEmail"/>
-                <column id="counterpartyManager"/>
-                <column id="rating"
-                        caption="msg://msgRating"/>
-                <column id="actionMenu"
-                        caption="msg://msgMenu"/>
+                <column id="lotArticle"/>
+                <column id="agriculturalManufacturer"
+                        caption="msg://msgBuyer"/>
+                <column id="product"/>
+                <column id="productGrade"/>
+                <column id="productAmount"/>
+                <column id="unitMeasurment"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="agriculturalManufacturersTable.create"/>
-                <button id="editBtn" action="agriculturalManufacturersTable.edit"/>
-                <button id="removeBtn" action="agriculturalManufacturersTable.remove"/>
+                <button id="createBtn" action="lotToBuysTable.create"/>
+                <button id="editBtn" action="lotToBuysTable.edit"/>
+                <button id="removeBtn" action="lotToBuysTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
