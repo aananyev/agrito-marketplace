@@ -4,9 +4,10 @@ import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -32,16 +33,24 @@ public class CounterpartyRating {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
-    @Max(message = "{msg://com.itpearls.agritomarketplace.entity/CounterpartyRating.rating.validation.Max}", value = 5)
+    @DecimalMax(message = "{msg://com.itpearls.agritomarketplace.entity/CounterpartyRating.rating.validation.DecimalMax}", value = "5")
+    @DecimalMin(message = "{msg://com.itpearls.agritomarketplace.entity/CounterpartyRating.rating.validation.DecimalMin}", value = "1")
     @NotNull
-    @Min(message = "{msg://com.itpearls.agritomarketplace.entity/CounterpartyRating.rating.validation.Min}", value = 1)
     @Column(name = "RATING", nullable = false)
-    private Integer rating;
+    private BigDecimal rating;
 
     @Column(name = "RATING_DATE", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull
     private Date ratingDate;
+
+    public void setRating(BigDecimal rating) {
+        this.rating = rating;
+    }
+
+    public BigDecimal getRating() {
+        return rating;
+    }
 
     public Date getRatingDate() {
         return ratingDate;
@@ -57,14 +66,6 @@ public class CounterpartyRating {
 
     public void setCounterparty(Counterparty counterparty) {
         this.counterparty = counterparty;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
     }
 
     public User getUser() {

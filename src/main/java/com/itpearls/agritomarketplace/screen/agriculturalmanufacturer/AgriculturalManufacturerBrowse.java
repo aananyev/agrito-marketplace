@@ -26,8 +26,6 @@ public class AgriculturalManufacturerBrowse extends StandardLookup<AgriculturalM
     @Autowired
     private UiComponents uiComponents;
     @Autowired
-    private Actions actions;
-    @Autowired
     private MessageBundle messageBundle;
     @Autowired
     private ScreenBuilders screenBuilders;

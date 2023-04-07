@@ -42,6 +42,8 @@
               caption="msg://com.itpearls.agritomarketplace.screen.unitmeasurment/unitMeasurmentBrowse.menu"/>
         <item screen="ProductGrade.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.productgrade/productGradeBrowse.menu"/>
+        <item screen="TypeActivity.browse"
+              caption="msg://com.itpearls.agritomarketplace.screen.typeactivity/typeActivityBrowse.menu"/>
     </menu>
     <menu id="Household" caption="msg://com.itpearls.agritomarketplace/menu_config.Household"
           insertAfter="Counterparties"/>

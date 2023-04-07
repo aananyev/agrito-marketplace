@@ -2,8 +2,6 @@ package com.itpearls.agritomarketplace.entity;
 
 import io.jmix.core.FileRef;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
-import io.jmix.core.metamodel.annotation.DependsOnProperties;
-import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
@@ -15,7 +13,9 @@ import java.util.UUID;
 @Table(name = "COUNTERPARTY", indexes = {
         @Index(name = "IDX_COUNTERPARTY_POUNTER_PARTY_CEO", columnList = "POUNTER_PARTY_CEO_ID"),
         @Index(name = "IDX_COUNTERPARTY_COUNTER_PARTY_CHIEFF_ACCOUNTANT", columnList = "COUNTER_PARTY_CHIEFF_ACCOUNTANT_ID"),
-        @Index(name = "IDX_COUNTERPARTY_COUNTERPARTY_MANAGER", columnList = "COUNTERPARTY_MANAGER_ID")
+        @Index(name = "IDX_COUNTERPARTY_COUNTERPARTY_MANAGER", columnList = "COUNTERPARTY_MANAGER_ID"),
+        @Index(name = "IDX_COUNTERPARTY_TYPE_ACTIVITY", columnList = "TYPE_ACTIVITY_ID"),
+        @Index(name = "IDX_COUNTERPARTY_OWNER", columnList = "OWNER_ID")
 })
 @Entity
 public class Counterparty {
@@ -147,9 +147,4 @@ public class Counterparty {
         this.id = id;
     }
 
-    @InstanceName
-    @DependsOnProperties({"counterpartyName"})
-    public String getInstanceName() {
-        return String.format("%s", counterpartyName);
-    }
 }
