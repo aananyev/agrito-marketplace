@@ -30,13 +30,13 @@
         <form id="form" dataContainer="varietyDc">
             <column width="350px">
                 <textField id="varietyNameField" property="varietyName"/>
-                <textArea id="commentField" property="comment" rows="5"/>
                 <entityPicker id="varietyProductTypeField" property="varietyProductType">
                     <actions>
                         <action id="entityLookup" type="entity_lookup"/>
                         <action id="entityClear" type="entity_clear"/>
                     </actions>
                 </entityPicker>
+                <textArea id="commentField" property="comment" rows="5"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

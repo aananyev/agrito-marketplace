@@ -34,7 +34,9 @@
             <column width="350px">
                 <checkBox id="buyField" property="buy" visible="false"/>
                 <textField id="lotArticleField" property="lotArticle"/>
-                <entityPicker id="agriculturalManufacturerField" property="agriculturalManufacturer">
+                <entityPicker id="agriculturalManufacturerField"
+                              property="agriculturalManufacturer"
+                              caption="msg://msgByer">
                     <actions>
                         <action id="entityLookup" type="entity_lookup"/>
                         <action id="entityClear" type="entity_clear"/>
@@ -59,7 +61,9 @@
                         <action id="entityClear" type="entity_clear"/>
                     </actions>
                 </entityPicker>
-                <textField id="priceField" property="price"/>
+                <textField id="priceField"
+                           property="price"
+                           caption="msg://msgMaxPrice"/>
                 <textArea id="commentField" property="comment" rows="5"/>
             </column>
         </form>

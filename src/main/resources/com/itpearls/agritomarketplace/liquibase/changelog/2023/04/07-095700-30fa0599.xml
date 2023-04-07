@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="agrito-marketplace">
+        <createTable tableName="COUNTERPARTY_RATING">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_COUNTERPARTY_RATING"/>
+            </column>
+            <column name="COUNTERPARTY_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RATING" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RATING_DATE" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="agrito-marketplace">
+        <addColumn tableName="TRADING_LOT">
+            <column name="BUY" type="BOOLEAN"/>
+            <column name="SELL" type="BOOLEAN"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="3" author="agrito-marketplace">
+        <addColumn tableName="COUNTERPARTY">
+            <column name="BYERS" type="BOOLEAN"/>
+            <column name="COUNTERPARTY_LOGO" type="VARCHAR(1024)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="4" author="agrito-marketplace">
+        <addColumn tableName="TRADING_LOT">
+            <column name="DTYPE" type="VARCHAR(31)"/>
+        </addColumn>
+
+        <update tableName="TRADING_LOT">
+            <column name="DTYPE" value="TradingLot"/>
+            <where>DTYPE is null</where>
+        </update>
+    </changeSet>
+    <changeSet id="5" author="agrito-marketplace">
+        <addColumn tableName="PRODUCT_GRADE">
+            <column name="PRODUCT_TYPE_ID" type="UUID"/>
+        </addColumn>
+
+        <addNotNullConstraint columnName="PRODUCT_TYPE_ID" tableName="PRODUCT_GRADE"/>
+    </changeSet>
+    <changeSet id="6" author="agrito-marketplace">
+        <createIndex indexName="IDX_COUNTERPARTY_RATING_COUNTERPARTY" tableName="COUNTERPARTY_RATING">
+            <column name="COUNTERPARTY_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="COUNTERPARTY_ID" baseTableName="COUNTERPARTY_RATING"
+                                 constraintName="FK_COUNTERPARTY_RATING_ON_COUNTERPARTY" referencedColumnNames="ID"
+                                 referencedTableName="COUNTERPARTY"/>
+    </changeSet>
+    <changeSet id="7" author="agrito-marketplace">
+        <createIndex indexName="IDX_COUNTERPARTY_RATING_USER" tableName="COUNTERPARTY_RATING">
+            <column name="USER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="COUNTERPARTY_RATING"
+                                 constraintName="FK_COUNTERPARTY_RATING_ON_USER" referencedColumnNames="ID"
+                                 referencedTableName="USER_"/>
+    </changeSet>
+    <changeSet id="8" author="agrito-marketplace">
+        <createIndex indexName="IDX_PRODUCT_GRADE_PRODUCT_TYPE" tableName="PRODUCT_GRADE">
+            <column name="PRODUCT_TYPE_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="PRODUCT_TYPE_ID" baseTableName="PRODUCT_GRADE"
+                                 constraintName="FK_PRODUCT_GRADE_ON_PRODUCT_TYPE" referencedColumnNames="ID"
+                                 referencedTableName="PRODUCT_TYPE"/>
+    </changeSet>
+    <changeSet id="9" author="agrito-marketplace">
+        <createIndex indexName="IDX_TRADING_LOT_ARTICLE_UNIQUE" tableName="TRADING_LOT">
+            <column name="LOT_ARTICLE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="10" author="agrito-marketplace">
+        <dropColumn columnName="GRADE_GROUP_ID" tableName="PRODUCT_GRADE"/>
+    </changeSet>
+    <changeSet id="11" author="agrito-marketplace">
+        <addNotNullConstraint columnDataType="VARCHAR(64)" columnName="PRODUCT_TYPE_NAME" tableName="PRODUCT_TYPE"
+                              validate="true"/>
+    </changeSet>
+</databaseChangeLog>

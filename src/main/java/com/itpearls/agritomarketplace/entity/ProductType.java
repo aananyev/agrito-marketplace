@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @JmixEntity
@@ -20,7 +21,8 @@ public class ProductType {
     @Id
     private UUID id;
 
-    @Column(name = "PRODUCT_TYPE_NAME", length = 64)
+    @NotNull
+    @Column(name = "PRODUCT_TYPE_NAME", nullable = false, length = 64)
     private String productTypeName;
 
     public String getProductTypeName() {

@@ -15,7 +15,7 @@ import java.util.UUID;
         @Index(name = "IDX_TRADING_LOT_PRODUCT", columnList = "PRODUCT_ID"),
         @Index(name = "IDX_TRADING_LOT_UNIT_MEASURMENT", columnList = "UNIT_MEASURMENT_ID"),
         @Index(name = "IDX_TRADING_LOT_PRODUCT_GRADE", columnList = "PRODUCT_GRADE_ID"),
-        @Index(name = "IDX_TRADING_LOT_ARTICLE_UNIQUE", columnList = "LOT_ARTICLE", unique = true)
+        @Index(name = "IDX_TRADING_LOT_ARTICLE_UNIQUE", columnList = "LOT_ARTICLE")
 })
 @Entity
 public class TradingLot {

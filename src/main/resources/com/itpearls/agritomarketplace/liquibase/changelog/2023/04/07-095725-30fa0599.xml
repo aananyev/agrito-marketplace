@@ -6,7 +6,6 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
     <changeSet id="1" author="agrito-marketplace">
-        <addNotNullConstraint columnDataType="DATETIME" columnName="RATING_DATE" tableName="COUNTERPARTY_RATING"
-                              validate="true"/>
+        <dropColumn columnName="GRADE_GROUP_ID" tableName="PRODUCT_GRADE"/>
     </changeSet>
 </databaseChangeLog>

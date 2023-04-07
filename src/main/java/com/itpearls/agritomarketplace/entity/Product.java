@@ -66,8 +66,8 @@ public class Product {
     }
 
     @InstanceName
-    @DependsOnProperties({"productName"})
+    @DependsOnProperties({"productName", "productVariety"})
     public String getInstanceName() {
-        return String.format("%s", productName);
+        return String.format("%s %s", productName, productVariety);
     }
 }
