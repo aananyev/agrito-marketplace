@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://jmix.io/schema/ui/menu">
-    <menu id="Ads" caption="msg://com.itpearls.agritomarketplace/menu_config.Ads" insertAfter="application"/>
+    <menu id="Ads" caption="msg://com.itpearls.agritomarketplace/menu_config.Ads" insertAfter="application">
+        <item screen="AdsSaleDashboard"
+              caption="msg://com.itpearls.agritomarketplace.screen.adssaledashboard/adsSaleDashboard.caption"/>
+    </menu>
     <menu id="ProductByer" caption="msg://com.itpearls.agritomarketplace/menu_config.ProductByer"
           insertAfter="application">
         <item screen="ProductByer.browse"
@@ -43,6 +46,8 @@
               caption="msg://com.itpearls.agritomarketplace.screen.productgrade/productGradeBrowse.menu"/>
         <item screen="TypeActivity.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.typeactivity/typeActivityBrowse.menu"/>
+        <item screen="PaymentType.browse"
+              caption="msg://com.itpearls.agritomarketplace.screen.paymenttype/paymentTypeBrowse.menu"/>
     </menu>
     <menu id="application" caption="msg://com.itpearls.agritomarketplace/menu.application" insertBefore="administration">
         <item screen="User.browse" caption="msg://com.itpearls.agritomarketplace.screen.user/UserBrowse.caption"/>

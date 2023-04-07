@@ -5,16 +5,12 @@ import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @JmixEntity
 @Entity
 public class MyHousehold extends AgriculturalManufacturer {
-    @Column(name = "VERSION", nullable = false)
-    @Version
-    private Integer version;
 
     @Column(name = "MY_HOUSEHOLD")
     private Boolean myHousehold;
@@ -26,9 +22,8 @@ public class MyHousehold extends AgriculturalManufacturer {
     @Column(name = "ACREAGE", precision = 19, scale = 2)
     private BigDecimal acreage;
 
-    @JoinColumn(name = "TYPE_ACTIVITY_ID", nullable = false)
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "TYPE_ACTIVITY_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
     private TypeActivity typeActivity;
 
     @Column(name = "NUMBER_EMPLOYEES")
@@ -41,9 +36,8 @@ public class MyHousehold extends AgriculturalManufacturer {
     @Lob
     private String comment;
 
-    @JoinColumn(name = "OWNER_ID", nullable = false)
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "OWNER_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
     private User owner;
 
     public Date getStartDateActivity() {
@@ -108,14 +102,6 @@ public class MyHousehold extends AgriculturalManufacturer {
 
     public void setAcreage(BigDecimal acreage) {
         this.acreage = acreage;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     @InstanceName
