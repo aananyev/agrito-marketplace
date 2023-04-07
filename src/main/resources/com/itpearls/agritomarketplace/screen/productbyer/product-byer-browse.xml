@@ -49,15 +49,10 @@
             </actions>
             <columns>
                 <column id="counterpartyName"/>
-                <column id="counterpartyAddress"/>
-                <column id="counterpartyPhone"/>
-                <column id="counterpartyFax"/>
-                <column id="counterpartyEmail"/>
-                <column id="counterpartyWebSite"/>
-                <column id="pounterPartyCEO"/>
-                <column id="counterPartyChieffAccountant"/>
-                <column id="counterpartyManager"/>
-                <column id="byers"/>
+                <column id="rating"
+                        caption="msg://msgRating"/>
+                <column id="actionMenu"
+                        caption="msg://msgMenu"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"

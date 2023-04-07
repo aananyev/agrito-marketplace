@@ -41,6 +41,7 @@
         <groupTable id="counterpartyRatingsTable"
                     width="100%"
                     aggregatable="true"
+                    aggregationStyle="BOTTOM"
                     dataContainer="counterpartyRatingsDc">
             <actions>
                 <action id="create" type="create"/>
