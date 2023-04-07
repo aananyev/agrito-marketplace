@@ -33,7 +33,12 @@
     <layout spacing="true" expand="scrollBox">
         <scrollBox id="scrollBox" spacing="true">
             <checkBox id="myHouseholdField"
+                      dataContainer="myHouseholdDc"
                       property="myHousehold"
+                      visible="false"/>
+            <checkBox id="agriculturalManufacturerCheckBox"
+                      dataContainer="myHouseholdDc"
+                      property="manufacturer"
                       visible="false"/>
             <tabSheet width="100%">
                 <tab id="mainTab"

@@ -11,15 +11,10 @@ import java.util.Date;
 
 @JmixEntity
 @Entity
-public class MyHousehold extends Counterparty {
+public class MyHousehold extends AgriculturalManufacturer {
     @Column(name = "VERSION", nullable = false)
     @Version
     private Integer version;
-
-    @JoinColumn(name = "AGRICULTURAL_MANUFACTURER_ID", nullable = false)
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private AgriculturalManufacturer agriculturalManufacturer;
 
     @Column(name = "MY_HOUSEHOLD")
     private Boolean myHousehold;
@@ -50,14 +45,6 @@ public class MyHousehold extends Counterparty {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User owner;
-
-    public AgriculturalManufacturer getAgriculturalManufacturer() {
-        return agriculturalManufacturer;
-    }
-
-    public void setAgriculturalManufacturer(AgriculturalManufacturer agriculturalManufacturer) {
-        this.agriculturalManufacturer = agriculturalManufacturer;
-    }
 
     public Date getStartDateActivity() {
         return startDateActivity;

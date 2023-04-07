@@ -15,8 +15,7 @@ import java.util.UUID;
         @Index(name = "IDX_COUNTERPARTY_COUNTER_PARTY_CHIEFF_ACCOUNTANT", columnList = "COUNTER_PARTY_CHIEFF_ACCOUNTANT_ID"),
         @Index(name = "IDX_COUNTERPARTY_COUNTERPARTY_MANAGER", columnList = "COUNTERPARTY_MANAGER_ID"),
         @Index(name = "IDX_COUNTERPARTY_TYPE_ACTIVITY", columnList = "TYPE_ACTIVITY_ID"),
-        @Index(name = "IDX_COUNTERPARTY_OWNER", columnList = "OWNER_ID"),
-        @Index(name = "IDX_COUNTERPARTY_AGRICULTURAL_MANUFACTURER", columnList = "AGRICULTURAL_MANUFACTURER_ID")
+        @Index(name = "IDX_COUNTERPARTY_OWNER", columnList = "OWNER_ID")
 })
 @Entity
 public class Counterparty {
