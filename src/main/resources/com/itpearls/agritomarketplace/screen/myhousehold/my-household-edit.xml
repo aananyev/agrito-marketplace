@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://myHouseholdEdit.caption"
+        focusComponent="counterpartyNameField">
+    <data>
+        <instance id="myHouseholdDc"
+                  class="com.itpearls.agritomarketplace.entity.MyHousehold">
+            <fetchPlan extends="_base">
+                <property name="typeActivity" fetchPlan="_base"/>
+                <property name="owner" fetchPlan="_base"/>
+                <property name="pounterPartyCEO" fetchPlan="_base"/>
+                <property name="counterPartyChieffAccountant" fetchPlan="_base"/>
+                <property name="counterpartyManager" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
+                icon="EDITOR_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="windowClose"
+                caption="msg:///actions.Close"
+                icon="EDITOR_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true" expand="scrollBox">
+        <scrollBox id="scrollBox" spacing="true">
+            <checkBox id="myHouseholdField"
+                      property="myHousehold"
+                      visible="false"/>
+            <tabSheet width="100%">
+                <tab id="mainTab"
+                     caption="msg://msgMain"
+                     expand="commentField"
+                     spacing="true">
+                    <textField id="counterpartyNameField"
+                               caption="msg://msgName"
+                               dataContainer="myHouseholdDc"
+                               property="counterpartyName"/>
+                    <entityPicker id="typeActivityField"
+                                  caption="msg://msgTypeActivity"
+                                  dataContainer="myHouseholdDc"
+                                  property="typeActivity">
+                        <actions>
+                            <action id="entityLookup" type="entity_lookup"/>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                    <dateField id="startDateActivityField"
+                               caption="msg://msgStartDate"
+                               dataContainer="myHouseholdDc"
+                               property="startDateActivity"/>
+                    <textField id="acreageField"
+                               caption="msg://msgAcreage"
+                               dataContainer="myHouseholdDc"
+                               property="acreage"/>
+                    <textField id="numberEmployeesField"
+                               caption="msg://msgNumberEmployee"
+                               dataContainer="myHouseholdDc"
+                               property="numberEmployees"/>
+                    <textField id="unitsEquipmentField"
+                               caption="msg://msgEquipment"
+                               dataContainer="myHouseholdDc"
+                               property="unitsEquipment"/>
+                    <entityPicker id="ownerField"
+                                  caption="msg://msgOwner"
+                                  editable="false"
+                                  dataContainer="myHouseholdDc"
+                                  property="owner"
+                                  visible="false">
+                        <actions>
+                            <action id="entityLookup"
+                                    type="entity_lookup"/>
+                            <action id="entityClear"
+                                    type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                    <textArea id="commentField"
+                              caption="msg://msgComment"
+                              width="100%"
+                              dataContainer="myHouseholdDc"
+                              property="comment"
+                              rows="5"/>
+                </tab>
+                <tab id="contactsTab"
+                     caption="msg://msgContacts"
+                     spacing="true">
+                    <textField id="counterpartyAddressField"
+                               caption="msg://msgCounterpartyAddress"
+                               dataContainer="myHouseholdDc"
+                               property="counterpartyAddress"/>
+                    <textField id="counterpartyPhoneField"
+                               caption="msg://msgPhone"
+                               dataContainer="myHouseholdDc"
+                               property="counterpartyPhone"/>
+                    <textField id="counterpartyFaxField"
+                               caption="msg://msgFax"
+                               dataContainer="myHouseholdDc"
+                               property="counterpartyFax"/>
+                    <textField id="counterpartyEmailField"
+                               caption="msg://msgEmail"
+                               dataContainer="myHouseholdDc"
+                               property="counterpartyEmail"/>
+                    <textField id="counterpartyWebSiteField"
+                               caption="msg://msgWebSite"
+                               dataContainer="myHouseholdDc"
+                               property="counterpartyWebSite"/>
+                </tab>
+                <tab id="peopleTab"
+                     caption="msg://msgPeople"
+                     spacing="true">
+                    <entityPicker id="counterPartyCEOField"
+                                  caption="msg://msgCEO"
+                                  dataContainer="myHouseholdDc"
+                                  property="pounterPartyCEO">
+                        <actions>
+                            <action id="entityLookup"
+                                    type="entity_lookup"/>
+                            <action id="entityClear"
+                                    type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                    <entityPicker id="counterPartyChieffAccountantField"
+                                  caption="msg://msgAccountant"
+                                  dataContainer="myHouseholdDc"
+                                  property="counterPartyChieffAccountant">
+                        <actions>
+                            <action id="entityLookup"
+                                    type="entity_lookup"/>
+                            <action id="entityClear"
+                                    type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                    <entityPicker id="counterpartyManagerField"
+                                  caption="msg://msgManager"
+                                  dataContainer="myHouseholdDc"
+                                  property="counterpartyManager">
+                        <actions>
+                            <action id="entityLookup"
+                                    type="entity_lookup"/>
+                            <action id="entityClear"
+                                    type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                </tab>
+            </tabSheet>
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"/>
+            <button id="closeBtn"
+                    action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

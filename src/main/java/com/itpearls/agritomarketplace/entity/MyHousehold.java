@@ -16,8 +16,17 @@ public class MyHousehold extends Counterparty {
     @Version
     private Integer version;
 
+    @JoinColumn(name = "AGRICULTURAL_MANUFACTURER_ID", nullable = false)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private AgriculturalManufacturer agriculturalManufacturer;
+
     @Column(name = "MY_HOUSEHOLD")
     private Boolean myHousehold;
+
+    @Column(name = "START_DATE_ACTIVITY")
+    @Temporal(TemporalType.DATE)
+    private Date startDateActivity;
 
     @Column(name = "ACREAGE", precision = 19, scale = 2)
     private BigDecimal acreage;
@@ -42,9 +51,13 @@ public class MyHousehold extends Counterparty {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User owner;
 
-    @Column(name = "START_DATE_ACTIVITY")
-    @Temporal(TemporalType.DATE)
-    private Date startDateActivity;
+    public AgriculturalManufacturer getAgriculturalManufacturer() {
+        return agriculturalManufacturer;
+    }
+
+    public void setAgriculturalManufacturer(AgriculturalManufacturer agriculturalManufacturer) {
+        this.agriculturalManufacturer = agriculturalManufacturer;
+    }
 
     public Date getStartDateActivity() {
         return startDateActivity;

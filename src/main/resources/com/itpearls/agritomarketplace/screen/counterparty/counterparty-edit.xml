@@ -6,19 +6,24 @@
         <instance id="counterpartyDc"
                   class="com.itpearls.agritomarketplace.entity.Counterparty">
             <fetchPlan extends="_base">
-                <property name="pounterPartyCEO" fetchPlan="_base"/>
-                <property name="counterPartyChieffAccountant" fetchPlan="_base"/>
-                <property name="counterpartyManager" fetchPlan="_base"/>
+                <property name="pounterPartyCEO"
+                          fetchPlan="_base"/>
+                <property name="counterPartyChieffAccountant"
+                          fetchPlan="_base"/>
+                <property name="counterpartyManager"
+                          fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
         </instance>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
-        <screenSettings id="settingsFacet" auto="true"/>
+        <screenSettings id="settingsFacet"
+                        auto="true"/>
     </facets>
     <actions>
-        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
+        <action id="windowCommitAndClose"
+                caption="msg:///actions.Ok"
                 icon="EDITOR_OK"
                 primary="true"
                 shortcut="${COMMIT_SHORTCUT}"/>
@@ -28,40 +33,58 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout spacing="true" expand="editActions">
+    <layout spacing="true"
+            width="100%"
+            expand="editActions">
         <form id="form"
               dataContainer="counterpartyDc"
               width="100%">
-            <column width="350px">
-                <textField id="counterpartyNameField" property="counterpartyName"/>
-                <textField id="counterpartyAddressField" property="counterpartyAddress"/>
-                <textField id="counterpartyPhoneField" property="counterpartyPhone"/>
-                <textField id="counterpartyFaxField" property="counterpartyFax"/>
-                <textField id="counterpartyEmailField" property="counterpartyEmail"/>
-                <textField id="counterpartyWebSiteField" property="counterpartyWebSite"/>
-                <entityPicker id="pounterPartyCEOField" property="pounterPartyCEO">
+            <column flex="3">
+                <textField id="counterpartyNameField"
+                           property="counterpartyName"/>
+                <textField id="counterpartyAddressField"
+                           property="counterpartyAddress"/>
+                <textField id="counterpartyPhoneField"
+                           property="counterpartyPhone"/>
+                <textField id="counterpartyFaxField"
+                           property="counterpartyFax"/>
+                <textField id="counterpartyEmailField"
+                           property="counterpartyEmail"/>
+                <textField id="counterpartyWebSiteField"
+                           property="counterpartyWebSite"/>
+                <entityPicker id="pounterPartyCEOField"
+                              property="pounterPartyCEO">
                     <actions>
-                        <action id="entityLookup" type="entity_lookup"/>
-                        <action id="entityClear" type="entity_clear"/>
+                        <action id="entityLookup"
+                                type="entity_lookup"/>
+                        <action id="entityClear"
+                                type="entity_clear"/>
                     </actions>
                 </entityPicker>
-                <entityPicker id="counterPartyChieffAccountantField" property="counterPartyChieffAccountant">
+                <entityPicker id="counterPartyChieffAccountantField"
+                              property="counterPartyChieffAccountant">
                     <actions>
-                        <action id="entityLookup" type="entity_lookup"/>
-                        <action id="entityClear" type="entity_clear"/>
+                        <action id="entityLookup"
+                                type="entity_lookup"/>
+                        <action id="entityClear"
+                                type="entity_clear"/>
                     </actions>
                 </entityPicker>
-                <entityPicker id="counterpartyManagerField" property="counterpartyManager">
+                <entityPicker id="counterpartyManagerField"
+                              property="counterpartyManager">
                     <actions>
-                        <action id="entityLookup" type="entity_lookup"/>
-                        <action id="entityClear" type="entity_clear"/>
+                        <action id="entityLookup"
+                                type="entity_lookup"/>
+                        <action id="entityClear"
+                                type="entity_clear"/>
                     </actions>
                 </entityPicker>
             </column>
-            <column>
+            <column flex="1">
                 <vbox id="dropZone"
+                      rowspan="6"
                       spacing="true"
-                      width="200px"
+                      width="250px"
                       height="266px"
                       align="TOP_RIGHT"
                       expand="companyLogoPic"
@@ -72,20 +95,22 @@
                            align="TOP_RIGHT"
                            height="100%"
                            stylename="widget-border"
-                           scaleMode="FILL"/>
-                    <upload id="fileImageUpload"
-                            fileStoragePutMode="IMMEDIATE"
-                            align="BOTTOM_CENTER"
-                            showFileName="false"
-                            dropZone="dropZone"
-                            showClearButton="true"
-                            property="counterpartyLogo"/>
+                           scaleMode="SCALE_DOWN"/>
+                    <fileStorageUpload id="fileImageUpload"
+                                       fileStoragePutMode="IMMEDIATE"
+                                       align="BOTTOM_CENTER"
+                                       showFileName="false"
+                                       dropZone="dropZone"
+                                       showClearButton="true"
+                                       property="counterpartyLogo"/>
                 </vbox>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
-            <button id="closeBtn" action="windowClose"/>
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"/>
+            <button id="closeBtn"
+                    action="windowClose"/>
         </hbox>
     </layout>
 </window>

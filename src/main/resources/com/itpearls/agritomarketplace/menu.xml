@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://jmix.io/schema/ui/menu">
-
-    <menu id="application" caption="msg://com.itpearls.agritomarketplace/menu.application" insertBefore="administration">
-        <item screen="User.browse" caption="msg://com.itpearls.agritomarketplace.screen.user/UserBrowse.caption"/>
-        <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
-    </menu>
     <menu id="Ads" caption="msg://com.itpearls.agritomarketplace/menu_config.Ads" insertAfter="application"/>
     <menu id="ProductByer" caption="msg://com.itpearls.agritomarketplace/menu_config.ProductByer"
           insertAfter="application">
@@ -14,13 +9,17 @@
               caption="msg://com.itpearls.agritomarketplace.screen.lottobuy/lotToBuyBrowse.menu"/>
     </menu>
     <menu id="AgriculturalManufacturer"
-          caption="msg://com.itpearls.agritomarketplace/menu_config.AgriculturalManufacturer" insertAfter="Dictionary">
+          caption="msg://com.itpearls.agritomarketplace/menu_config.AgriculturalManufacturer"
+          insertAfter="Dictionary">
         <item screen="AgriculturalManufacturer.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.agriculturalmanufacturer/agriculturalManufacturerBrowse.menu"/>
         <item screen="LotForSell.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.lotforsell/lotForSellBrowse.menu"/>
+        <item screen="MyHousehold.browse"
+              caption="msg://com.itpearls.agritomarketplace.screen.myhousehold/myHouseholdBrowse.menu"/>
     </menu>
-    <menu id="Counterparties" caption="msg://com.itpearls.agritomarketplace/menu_config.Counterparties"
+    <menu id="Counterparties"
+          caption="msg://com.itpearls.agritomarketplace/menu_config.Counterparties"
           insertAfter="Dictionary">
         <item screen="TradingLot.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.tradinglot/tradingLotBrowse.menu"/>
@@ -45,7 +44,9 @@
         <item screen="TypeActivity.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.typeactivity/typeActivityBrowse.menu"/>
     </menu>
-    <menu id="Household" caption="msg://com.itpearls.agritomarketplace/menu_config.Household"
-          insertAfter="Counterparties"/>
+    <menu id="application" caption="msg://com.itpearls.agritomarketplace/menu.application" insertBefore="administration">
+        <item screen="User.browse" caption="msg://com.itpearls.agritomarketplace.screen.user/UserBrowse.caption"/>
+        <item screen="themeSettingsScreen" caption="msg://io.jmix.ui.app.themesettings/themeSettings.caption"/>
+    </menu>
 
 </menu-config>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        caption="msg://myHouseholdBrowse.caption"
+        focusComponent="myHouseholdsTable">
+    <data readOnly="true">
+        <collection id="myHouseholdsDc"
+                    class="com.itpearls.agritomarketplace.entity.MyHousehold">
+            <fetchPlan extends="_base">
+                <property name="typeActivity" fetchPlan="_base"/>
+                <property name="owner" fetchPlan="_base"/>
+                <property name="pounterPartyCEO" fetchPlan="_base"/>
+                <property name="counterPartyChieffAccountant" fetchPlan="_base"/>
+                <property name="counterpartyManager" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="myHouseholdsDl">
+                <query>
+                    <![CDATA[select e from MyHousehold e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.owner = :owner</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="lookupSelectAction"
+                caption="msg:///actions.Select"
+                icon="LOOKUP_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="lookupCancelAction"
+                caption="msg:///actions.Cancel"
+                icon="LOOKUP_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="myHouseholdsTable" spacing="true">
+        <filter id="filter"
+                dataLoader="myHouseholdsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="myHouseholdsTable"
+                    width="100%"
+                    dataContainer="myHouseholdsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="counterpartyName"/>
+                <column id="typeActivity"/>
+                <column id="startDateActivity"/>
+                <column id="acreage"/>
+                <column id="numberEmployees"/>
+                <column id="unitsEquipment"/>
+            </columns>
+            <simplePagination/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="myHouseholdsTable.create"/>
+                <button id="editBtn" action="myHouseholdsTable.edit"/>
+                <button id="removeBtn" action="myHouseholdsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
