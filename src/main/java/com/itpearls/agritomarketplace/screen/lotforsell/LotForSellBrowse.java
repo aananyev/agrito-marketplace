@@ -17,7 +17,8 @@ public class LotForSellBrowse extends StandardLookup<LotForSell> {
     @Install(to = "lotForSellsTable.contractSum", subject = "columnGenerator")
     private Component lotForSellsTableContractSumColumnGenerator(LotForSell lotForSell) {
         Label label = uiComponents.create(Label.class);
-        label.setValue(lotForSell.getPrice() * lotForSell.getProductAmount());
+        label.setValue(lotForSell.getPrice().doubleValue()
+                * lotForSell.getProductAmount().doubleValue());
         return label;
     }
 }

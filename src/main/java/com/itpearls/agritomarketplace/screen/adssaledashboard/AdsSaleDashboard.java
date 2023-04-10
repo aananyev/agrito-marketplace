@@ -2,8 +2,12 @@ package com.itpearls.agritomarketplace.screen.adssaledashboard;
 
 import com.ibm.icu.text.RuleBasedNumberFormat;
 import com.itpearls.agritomarketplace.entity.AgriculturalManufacturer;
+import com.itpearls.agritomarketplace.entity.DealRequestPurchaseBuy;
+import com.itpearls.agritomarketplace.entity.DealRequestSaleOffer;
 import com.itpearls.agritomarketplace.entity.LotForSell;
 import com.itpearls.agritomarketplace.screen.agriculturalmanufacturer.AgriculturalManufacturerEdit;
+import com.itpearls.agritomarketplace.screen.dealrequestpurchasebuy.DealRequestPurchaseBuyEdit;
+import com.itpearls.agritomarketplace.screen.dealrequestsaleoffer.DealRequestSaleOfferEdit;
 import com.itpearls.agritomarketplace.screen.lotforsell.LotForSellEdit;
 import io.jmix.core.DataManager;
 import io.jmix.ui.ScreenBuilders;
@@ -152,17 +156,28 @@ public class AdsSaleDashboard extends Screen {
 
 
         Label total = uiComponents.create(Label.class);
-        total.setValue(lotForSell.getPrice() * lotForSell.getProductAmount()
+        total.setValue(lotForSell.getPrice().doubleValue() * lotForSell.getProductAmount().doubleValue()
                 + messageBundle.getMessage("msgRub"));
         total.setStyleName("bold");
         total.setAlignment(Component.Alignment.MIDDLE_RIGHT);
         total.setWidthAuto();
-        total.setDescription(nf.format(lotForSell.getPrice() * lotForSell.getProductAmount()));
+        total.setDescription(nf.format((lotForSell.getPrice().doubleValue()
+                * lotForSell.getProductAmount().doubleValue())));
         totalHBox.add(total);
 
         Button buttonBuy = uiComponents.create(Button.class);
         buttonBuy.setCaption(messageBundle.getMessage("msgBuy"));
         buttonBuy.setAlignment(Component.Alignment.BOTTOM_RIGHT);
+        buttonBuy.addClickListener(clickEvent -> {
+            screenBuilders.editor(DealRequestPurchaseBuy.class, this)
+                    .withScreenClass(DealRequestPurchaseBuyEdit.class)
+                    .newEntity()
+                    .withInitializer(e -> {
+                        e.setLotForSell(lotForSell);
+                    })
+                    .build()
+                    .show();
+        });
 
         dataHBox.add(amountHBox);
         dataHBox.add(price);

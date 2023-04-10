@@ -7,6 +7,7 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @JmixEntity
@@ -43,22 +44,38 @@ public class TradingLot {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private ProductGrade productGrade;
 
-    @Column(name = "PRODUCT_AMOUNT", nullable = false)
     @NotNull
-    private Double productAmount;
+    @Column(name = "PRODUCT_AMOUNT", nullable = false)
+    private BigDecimal productAmount;
 
     @JoinColumn(name = "UNIT_MEASURMENT_ID", nullable = false)
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private UnitMeasurment unitMeasurment;
 
-    @Column(name = "PRICE", nullable = false)
     @NotNull
-    private Double price;
+    @Column(name = "PRICE", nullable = false)
+    private BigDecimal price;
 
     @Column(name = "COMMENT_")
     @Lob
     private String comment;
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setProductAmount(BigDecimal productAmount) {
+        this.productAmount = productAmount;
+    }
+
+    public BigDecimal getProductAmount() {
+        return productAmount;
+    }
 
     public ProductGrade getProductGrade() {
         return productGrade;
@@ -84,28 +101,12 @@ public class TradingLot {
         this.comment = comment;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
     public UnitMeasurment getUnitMeasurment() {
         return unitMeasurment;
     }
 
     public void setUnitMeasurment(UnitMeasurment unitMeasurment) {
         this.unitMeasurment = unitMeasurment;
-    }
-
-    public Double getProductAmount() {
-        return productAmount;
-    }
-
-    public void setProductAmount(Double productAmount) {
-        this.productAmount = productAmount;
     }
 
     public Product getProduct() {
