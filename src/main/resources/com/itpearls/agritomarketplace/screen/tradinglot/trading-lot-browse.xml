@@ -8,7 +8,9 @@
                     class="com.itpearls.agritomarketplace.entity.TradingLot">
             <fetchPlan extends="_base">
                 <property name="agriculturalManufacturer" fetchPlan="_base"/>
-                <property name="product" fetchPlan="_base"/>
+                <property name="product" fetchPlan="_base">
+                    <property name="productVariety" fetchPlan="_base"/>
+                </property>
                 <property name="productGrade" fetchPlan="_base"/>
                 <property name="unitMeasurment" fetchPlan="_base"/>
             </fetchPlan>
