@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
-        caption="msg://dealRequestPurchaseBuyBrowse.caption"
-        focusComponent="dealRequestPurchaseBuysTable">
+        caption="msg://selectMyHouseholdBrowse.caption"
+        focusComponent="myHouseholdsTable">
     <data readOnly="true">
-        <collection id="dealRequestPurchaseBuysDc"
-                    class="com.itpearls.agritomarketplace.entity.DealRequestPurchaseBuy">
+        <collection id="myHouseholdsDc"
+                    class="com.itpearls.agritomarketplace.entity.MyHousehold">
             <fetchPlan extends="_base">
-                <property name="lotForSell" fetchPlan="_base"/>
-                <property name="productSeller" fetchPlan="_base"/>
-                <property name="productBuyer" fetchPlan="_base"/>
-                <property name="paymentType" fetchPlan="_base"/>
+                <property name="owner" fetchPlan="_base"/>
             </fetchPlan>
-            <loader id="dealRequestPurchaseBuysDl">
+            <loader id="myHouseholdsDl">
                 <query>
-                    <![CDATA[select e from DealRequestPurchaseBuy e]]>
+                    <![CDATA[select e from MyHousehold e order by e.counterpartyName]]>
                 </query>
             </loader>
         </collection>
@@ -35,35 +32,32 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="dealRequestPurchaseBuysTable" spacing="true">
+    <layout expand="myHouseholdsTable" spacing="true">
         <filter id="filter"
-                dataLoader="dealRequestPurchaseBuysDl">
+                dataLoader="myHouseholdsDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="dealRequestPurchaseBuysTable"
+        <groupTable id="myHouseholdsTable"
                     width="100%"
-                    dataContainer="dealRequestPurchaseBuysDc">
+                    multiselect="false"
+                    dataContainer="myHouseholdsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="lotForSell"/>
-                <column id="productSeller"/>
-                <column id="productBuyer"/>
-                <column id="amount"/>
-                <column id="proposalCost"/>
-                <column id="total"/>
-                <column id="paymentType"/>
-                <column id="dealRequestStatus"/>
+                <column id="counterpartyName"/>
+                <column id="counterpartyLogo"/>
+                <column id="manufacturer"/>
+                <column id="owner"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="dealRequestPurchaseBuysTable.create"/>
-                <button id="editBtn" action="dealRequestPurchaseBuysTable.edit"/>
-                <button id="removeBtn" action="dealRequestPurchaseBuysTable.remove"/>
+                <button id="createBtn" action="myHouseholdsTable.create"/>
+                <button id="editBtn" action="myHouseholdsTable.edit"/>
+                <button id="removeBtn" action="myHouseholdsTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

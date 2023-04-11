@@ -87,13 +87,7 @@ public class AdsSaleDashboard extends Screen {
         });
 
         manufacturerHBox.add(manufacturer);
-
-        VBoxLayout dataHBox = uiComponents.create(VBoxLayout.class);
-        dataHBox.setSpacing(true);
-        dataHBox.setMargin(true);
-        dataHBox.setHeightAuto();
-        dataHBox.setWidth(String.valueOf(manufacturerHBox.getWidth()) + "%");
-        dataHBox.setStyleName("card");
+        manufacturerHBox.expand(manufacturer);
 
         BigDecimal averageRating = averageRating(lotForSell.getAgriculturalManufacturer());
 
@@ -108,6 +102,15 @@ public class AdsSaleDashboard extends Screen {
             rating.setWidthFull();
             manufacturerHBox.add(rating);
         }
+
+        VBoxLayout dataHBox = uiComponents.create(VBoxLayout.class);
+        dataHBox.setSpacing(true);
+        dataHBox.setMargin(true);
+        dataHBox.setHeightAuto();
+        dataHBox.setWidth(String.valueOf(manufacturerHBox.getWidth()) + "%");
+        dataHBox.setStyleName("card");
+
+
 
         Label product = uiComponents.create(Label.class);
         product.setValue(lotForSell.getProduct().getProductName());

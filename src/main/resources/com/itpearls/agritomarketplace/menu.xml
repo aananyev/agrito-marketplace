@@ -7,15 +7,13 @@
               caption="msg://com.itpearls.agritomarketplace.screen.dealrequestsaleoffer/dealRequestSaleOfferBrowse.menu"/>
         <item screen="DealRequestPurchaseBuy.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.dealrequestpurchasebuy/dealRequestPurchaseBuyBrowse.menu"/>
-        <item screen="LotToBuy.browse"
-              caption="msg://com.itpearls.agritomarketplace.screen.lottobuy/lotToBuyBrowse.menu"/>
-        <item screen="LotForSell.browse"
-              caption="msg://com.itpearls.agritomarketplace.screen.lotforsell/lotForSellBrowse.menu"/>
     </menu>
     <menu id="ProductByer" caption="msg://com.itpearls.agritomarketplace/menu_config.ProductByer"
           insertAfter="application">
         <item screen="ProductByer.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.productbyer/productByerBrowse.menu"/>
+        <item screen="LotToBuy.browse"
+              caption="msg://com.itpearls.agritomarketplace.screen.lottobuy/lotToBuyBrowse.menu"/>
     </menu>
     <menu id="AgriculturalManufacturer"
           caption="msg://com.itpearls.agritomarketplace/menu_config.AgriculturalManufacturer"
@@ -24,6 +22,8 @@
               caption="msg://com.itpearls.agritomarketplace.screen.agriculturalmanufacturer/agriculturalManufacturerBrowse.menu"/>
         <item screen="MyHousehold.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.myhousehold/myHouseholdBrowse.menu"/>
+        <item screen="LotForSell.browse"
+              caption="msg://com.itpearls.agritomarketplace.screen.lotforsell/lotForSellBrowse.menu"/>
     </menu>
     <menu id="Counterparties"
           caption="msg://com.itpearls.agritomarketplace/menu_config.Counterparties"
