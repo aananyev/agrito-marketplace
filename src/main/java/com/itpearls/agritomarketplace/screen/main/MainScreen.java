@@ -2,12 +2,16 @@ package com.itpearls.agritomarketplace.screen.main;
 
 import com.itpearls.agritomarketplace.AgritoGlobalValue;
 import com.itpearls.agritomarketplace.entity.MyHousehold;
+import com.itpearls.agritomarketplace.entity.ProductByer;
+import com.itpearls.agritomarketplace.screen.myhousehold.MyHouseholdEdit;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.ScreenTools;
 import io.jmix.ui.component.AppWorkArea;
 import io.jmix.ui.component.Button;
 import io.jmix.ui.component.Window;
+import io.jmix.ui.component.mainwindow.AppMenu;
 import io.jmix.ui.component.mainwindow.Drawer;
+import io.jmix.ui.component.mainwindow.SideMenu;
 import io.jmix.ui.icon.JmixIcon;
 import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
@@ -29,6 +33,10 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     private Button collapseDrawerButton;
     @Autowired
     private ScreenBuilders screenBuilders;
+    @Autowired
+    private SideMenu sideMenu;
+    @Autowired
+    private MessageBundle messageBundle;
 
 
     @Override
@@ -48,15 +56,36 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
 
     @Subscribe
     public void onAfterShow(AfterShowEvent event) {
-        screenTools.openDefaultScreen(
-                UiControllerUtils.getScreenContext(this).getScreens());
-
+        UiControllerUtils.getScreenContext(this).getScreens();
         screenTools.handleRedirect();
 
+        selectMyHousehold();
+    }
+
+    private void selectMyHousehold() {
         screenBuilders.lookup(MyHousehold.class, this)
                 .withOpenMode(OpenMode.DIALOG)
                 .withSelectHandler(myHouseholds -> {
-                    AgritoGlobalValue.myHousehold = myHouseholds.iterator().next();
+                    AgritoGlobalValue.counterparty = myHouseholds.iterator().next();
+                    AgritoGlobalValue.myHousehold = (MyHousehold) AgritoGlobalValue.counterparty;
+
+                    SideMenu.MenuItem myHouseholdSideMenuItem = sideMenu.createMenuItem("edit-my-household",
+                            AgritoGlobalValue.counterparty.getCounterpartyName(),
+                            null,
+                            menuItem -> {
+                                screenBuilders.editor(MyHousehold.class, this)
+                                        .withScreenClass(MyHouseholdEdit.class)
+                                        .editEntity(AgritoGlobalValue.myHousehold)
+                                        .build()
+                                        .show();
+                            });
+                    myHouseholdSideMenuItem.setDescription(messageBundle.getMessage("msgEditMyHousehold")
+                            + " \""
+                            + AgritoGlobalValue.myHousehold.getCounterpartyName()
+                            + "\"");
+
+                    sideMenu.addMenuItem(myHouseholdSideMenuItem, 0);
+
                 })
                 .build()
                 .show();

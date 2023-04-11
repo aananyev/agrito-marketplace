@@ -1,6 +1,7 @@
 package com.itpearls.agritomarketplace;
 
 import com.itpearls.agritomarketplace.entity.AgriculturalManufacturer;
+import com.itpearls.agritomarketplace.entity.Counterparty;
 import com.itpearls.agritomarketplace.entity.MyHousehold;
 import com.itpearls.agritomarketplace.entity.ProductByer;
 
@@ -8,6 +9,7 @@ public class AgritoGlobalValue {
     public static MyHousehold myHousehold;
     public static AgriculturalManufacturer agriculturalManufacturer;
     public static ProductByer productByer;
+    public static Counterparty counterparty;
 
     public AgriculturalManufacturer getAgriculturalManufacturer() {
         return agriculturalManufacturer;
