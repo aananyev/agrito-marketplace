@@ -4,7 +4,9 @@ import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.UUID;
 
 @JmixEntity
@@ -19,22 +21,51 @@ public class Bidding {
     @Id
     private UUID id;
 
-    @JoinColumn(name = "TRADING_LOT_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    @JoinColumn(name = "TRADING_LOT_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private TradingLot tradingLot;
 
-    @Column(name = "PROPOSAL_COST", precision = 19, scale = 2)
+    @NotNull
+    @Column(name = "PROPOSAL_COST", nullable = false, precision = 19, scale = 2)
     private BigDecimal proposalCost;
 
-    @JoinColumn(name = "COUTERPARTY_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    @JoinColumn(name = "COUTERPARTY_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Counterparty couterparty;
 
-    @Column(name = "TRADE_ROLE", length = 64)
+    @NotNull
+    @Column(name = "TRADE_ROLE", nullable = false, length = 64)
     private String tradeRole;
 
     @Column(name = "BIDDING_STATUS", length = 64)
     private String biddingStatus;
+
+    @Column(name = "COMMTN")
+    @Lob
+    private String comment;
+
+    @NotNull
+    @Column(name = "DATE_PROPOSAL", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateProposal;
+
+    public Date getDateProposal() {
+        return dateProposal;
+    }
+
+    public void setDateProposal(Date dateProposal) {
+        this.dateProposal = dateProposal;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
     public BiddingStatus getBiddingStatus() {
         return biddingStatus == null ? null : BiddingStatus.fromId(biddingStatus);

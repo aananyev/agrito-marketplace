@@ -91,7 +91,7 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
         } else {
             if (householdCount == 1) {
                 createMenuEditHousehold(dataManager
-                        .loadValue("select e from MyHousehold у where e.owner = :owner", MyHousehold.class)
+                        .loadValue("select e from MyHousehold e where e.owner = :owner", MyHousehold.class)
                         .parameter("owner", (User) currentAuthentication.getUser())
                         .one());
             } else {

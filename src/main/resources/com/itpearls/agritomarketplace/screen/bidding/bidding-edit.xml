@@ -27,26 +27,121 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout spacing="true" expand="editActions">
-        <form id="form" dataContainer="biddingDc">
-            <column width="350px">
-                <entityPicker id="tradingLotField" property="tradingLot">
+    <layout spacing="true"
+            expand="mainVBox">
+        <groupBox id="lotDetailGroupBox"
+                  collapsable="true"
+                  collapsed="true"
+                  width="100%"
+                  height="AUTO"
+                  stylename="well"
+                  caption="msg://msgLotDetail"
+                  expand="productDetailHBox">
+            <hbox spacing="true">
+                <label stylename="h2"
+                       value="msg://msgLotArticle"/>
+                <label id="lotNameLabel"
+                       stylename="h2"
+                       dataContainer="biddingDc"
+                       property="tradingLot.lotArticle"/>
+            </hbox>
+            <label id="sellerLabel"
+                   stylename="h2"
+                   dataContainer="biddingDc"
+                   property="couterparty"/>
+            <hbox id="productDetailHBox"
+                  width="100%"
+                  height="AUTO"
+                  spacing="true">
+                <label id="productLabel"
+                       stylename="h3"
+                       dataContainer="biddingDc"
+                       property="tradingLot.product.productName"/>
+                <label id="varietyNameLabel"
+                       stylename="h3"
+                       dataContainer="biddingDc"
+                       property="tradingLot.product.productVariety.varietyName"/>
+                <label id="gradeNameLabel"
+                       stylename="h3"
+                       dataContainer="biddingDc"
+                       property="tradingLot.productGrade.gradeName"/>
+                <hbox spacing="true">
+                    <label id="productAmountLabel"
+                           stylename="h3"
+                           dataContainer="biddingDc"
+                           property="tradingLot.productAmount"/>
+                    <label id="unitunitMeasurmentLabel"
+                           stylename="h3"
+                           dataContainer="biddingDc"
+                           property="tradingLot.unitMeasurment.nameUnit"/>
+                </hbox>
+                <hbox spacing="true">
+                    <label id="productPriceLabel"
+                           stylename="h3"
+                           dataContainer="biddingDc"
+                           property="tradingLot.price"/>
+                    <label stylename="h3"
+                           value="msg://msgRub"/>
+                </hbox>
+            </hbox>
+        </groupBox>
+        <vbox id="mainVBox"
+              width="100%"
+              height="100%"
+              spacing="true"
+              expand="commentTextArea">
+            <hbox spacing="true" width="100%">
+            <entityPicker id="tradingLotField"
+                          width="100%"
+                          caption="msg://msgTradingLot"
+                          dataContainer="biddingDc"
+                          property="tradingLot">
+                <actions>
+                    <action id="entityLookup" type="entity_lookup"/>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <textField id="proposalCostField"
+                       width="100%"
+                       caption="msg://msgProposalCost"
+                       dataContainer="biddingDc"
+                       property="proposalCost"/>
+            </hbox>
+            <hbox spacing="true" width="100%">
+                <entityPicker id="couterpartyField"
+                              width="100%"
+                              caption="msg://msgCounterparty"
+                              dataContainer="biddingDc"
+                              property="couterparty">
                     <actions>
                         <action id="entityLookup" type="entity_lookup"/>
                         <action id="entityClear" type="entity_clear"/>
                     </actions>
                 </entityPicker>
-                <textField id="proposalCostField" property="proposalCost"/>
-                <entityPicker id="couterpartyField" property="couterparty">
-                    <actions>
-                        <action id="entityLookup" type="entity_lookup"/>
-                        <action id="entityClear" type="entity_clear"/>
-                    </actions>
-                </entityPicker>
-                <comboBox id="tradeRoleField" property="tradeRole"/>
-                <comboBox id="biddingStatusField" property="biddingStatus"/>
-            </column>
-        </form>
+                <comboBox id="tradeRoleField"
+                          width="100%"
+                          caption="msg://msgRole"
+                          dataContainer="biddingDc"
+                          property="tradeRole"/>
+            </hbox>
+            <comboBox id="biddingStatusField"
+                      caption="msg://msgStatus"
+                      dataContainer="biddingDc"
+                      property="biddingStatus"/>
+            <textArea id="commentTextArea"
+                      caption="msg://msgComment"
+                      dataContainer="biddingDc"
+                      property="comment"
+                      width="100%"
+                      height="100%"/>
+            <dateField id="dateProposalDateField"
+                       dataContainer="biddingDc"
+                       caption="msg://msgProposalDate"
+                       width="AUTO"
+                       height="AUTO"
+                       align="TOP_RIGHT"
+                       property="dateProposal"/>
+        </vbox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

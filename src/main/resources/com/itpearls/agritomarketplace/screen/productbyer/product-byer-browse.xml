@@ -50,15 +50,8 @@
             <columns>
                 <column id="counterpartyName"/>
                 <column id="counterpartyLogo"/>
-                <column id="counterpartyAddress"/>
                 <column id="counterpartyPhone"/>
-                <column id="counterpartyFax"/>
                 <column id="counterpartyEmail"/>
-                <column id="counterpartyWebSite"/>
-                <column id="pounterPartyCEO"/>
-                <column id="counterPartyChieffAccountant"/>
-                <column id="counterpartyManager"/>
-                <column id="byers"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"

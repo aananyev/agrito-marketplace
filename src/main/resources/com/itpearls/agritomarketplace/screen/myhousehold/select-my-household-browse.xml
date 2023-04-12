@@ -12,6 +12,11 @@
             <loader id="myHouseholdsDl">
                 <query>
                     <![CDATA[select e from MyHousehold e order by e.counterpartyName]]>
+                    <condition>
+                        <c:jpql>
+                            <c:where>e.owner = :owner</c:where>
+                        </c:jpql>
+                    </condition>
                 </query>
             </loader>
         </collection>

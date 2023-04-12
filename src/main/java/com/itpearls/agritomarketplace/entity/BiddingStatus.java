@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 public enum BiddingStatus implements EnumClass<String> {
 
     APPROVE("Согласована цена"),
-    КEJECT("Цена отклонена");
+    REJECT("Цена отклонена");
 
     private String id;
 
