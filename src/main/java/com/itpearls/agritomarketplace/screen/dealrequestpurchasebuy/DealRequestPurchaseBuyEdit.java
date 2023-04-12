@@ -6,6 +6,7 @@ import io.jmix.core.EntityStates;
 import io.jmix.ui.component.EntityPicker;
 import io.jmix.ui.component.HasValue;
 import io.jmix.ui.component.TextField;
+import io.jmix.ui.component.ValidationException;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,7 +28,21 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
     private EntityStates entityStates;
     @Autowired
     private EntityPicker<Counterparty> productBuyerField;
+    @Autowired
+    private MessageBundle messageBundle;
 
+    @Install(to = "amountField", subject = "validator")
+    private void amountFieldValidator(BigDecimal value) {
+        if (amountField.getValue().compareTo(lotForSellField.getValue().getProductAmount()) > 0) {
+            throw new ValidationException(messageBundle.getMessage("msgWrongAmount")
+                    + " "
+                    + lotForSellField.getValue().getProductAmount()
+                    + " "
+                    + lotForSellField.getValue().getUnitMeasurment().getNameUnit()
+                    + " "
+                    + lotForSellField.getValue().getProduct().getProductName());
+        }
+    }
 
     public void setLotForSell(LotForSell lotForSell) {
         lotForSellField.setValue(lotForSell);

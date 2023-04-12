@@ -1,16 +1,6 @@
 <window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
         caption="msg://application.caption">
-    <data>
-        <collection id="myHouserholdDc"
-                    class="com.itpearls.agritomarketplace.entity.MyHousehold"
-                    fetchPlan="_base">
-            <loader id="myHouseholdDl" cacheable="true">
-                <query>
-                    <![CDATA[select e from myHousehold e]]>
-                </query>
-            </loader>
-        </collection>
-    </data>
     <layout>
         <cssLayout id="horizontalWrap"
                    stylename="jmix-drawer-layout">

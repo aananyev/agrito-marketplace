@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
-        caption="msg://dealRequestSaleOfferBrowse.caption"
-        focusComponent="dealRequestSaleOffersTable">
+        caption="msg://biddingBrowse.caption"
+        focusComponent="biddingsTable">
     <data readOnly="true">
-        <collection id="dealRequestSaleOffersDc"
-                    class="com.itpearls.agritomarketplace.entity.DealRequestSaleOffer">
+        <collection id="biddingsDc"
+                    class="com.itpearls.agritomarketplace.entity.Bidding">
             <fetchPlan extends="_base">
-                <property name="lotForBuy" fetchPlan="_base"/>
-                <property name="productSeller" fetchPlan="_base"/>
-                <property name="productBuyer" fetchPlan="_base"/>
-                <property name="paymentType" fetchPlan="_base"/>
+                <property name="tradingLot" fetchPlan="_base"/>
+                <property name="couterparty" fetchPlan="_base"/>
             </fetchPlan>
-            <loader id="dealRequestSaleOffersDl">
+            <loader id="biddingsDl">
                 <query>
-                    <![CDATA[select e from DealRequestSaleOffer e]]>
+                    <![CDATA[select e from Bidding e]]>
                 </query>
             </loader>
         </collection>
@@ -35,34 +33,32 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="dealRequestSaleOffersTable" spacing="true">
+    <layout expand="biddingsTable" spacing="true">
         <filter id="filter"
-                dataLoader="dealRequestSaleOffersDl">
+                dataLoader="biddingsDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="dealRequestSaleOffersTable"
+        <groupTable id="biddingsTable"
                     width="100%"
-                    dataContainer="dealRequestSaleOffersDc">
+                    dataContainer="biddingsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="lotForBuy"/>
-                <column id="productSeller"/>
-                <column id="productBuyer"/>
-                <column id="amount"/>
+                <column id="tradingLot"/>
                 <column id="proposalCost"/>
-                <column id="total"/>
-                <column id="dealRequestStatus"/>
+                <column id="couterparty"/>
+                <column id="tradeRole"/>
+                <column id="biddingStatus"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="dealRequestSaleOffersTable.create"/>
-                <button id="editBtn" action="dealRequestSaleOffersTable.edit"/>
-                <button id="removeBtn" action="dealRequestSaleOffersTable.remove"/>
+                <button id="createBtn" action="biddingsTable.create"/>
+                <button id="editBtn" action="biddingsTable.edit"/>
+                <button id="removeBtn" action="biddingsTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

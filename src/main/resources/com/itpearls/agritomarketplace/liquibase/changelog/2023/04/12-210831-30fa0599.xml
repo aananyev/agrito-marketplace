@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="agrito-marketplace">
+        <createTable tableName="BIDDING">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_BIDDING"/>
+            </column>
+            <column name="TRADING_LOT_ID" type="UUID"/>
+            <column name="PROPOSAL_COST" type="DECIMAL(19, 2)"/>
+            <column name="COUTERPARTY_ID" type="UUID"/>
+            <column name="TRADE_ROLE" type="VARCHAR(64)"/>
+            <column name="BIDDING_STATUS" type="VARCHAR(64)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="agrito-marketplace">
+        <createIndex indexName="IDX_BIDDING_COUTERPARTY" tableName="BIDDING">
+            <column name="COUTERPARTY_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="COUTERPARTY_ID" baseTableName="BIDDING"
+                                 constraintName="FK_BIDDING_ON_COUTERPARTY" referencedColumnNames="ID"
+                                 referencedTableName="COUNTERPARTY"/>
+    </changeSet>
+    <changeSet id="3" author="agrito-marketplace">
+        <createIndex indexName="IDX_BIDDING_TRADING_LOT" tableName="BIDDING">
+            <column name="TRADING_LOT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="TRADING_LOT_ID" baseTableName="BIDDING"
+                                 constraintName="FK_BIDDING_ON_TRADING_LOT" referencedColumnNames="ID"
+                                 referencedTableName="TRADING_LOT"/>
+    </changeSet>
+</databaseChangeLog>

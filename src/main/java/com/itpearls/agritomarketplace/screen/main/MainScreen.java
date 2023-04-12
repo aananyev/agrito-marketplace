@@ -2,8 +2,11 @@ package com.itpearls.agritomarketplace.screen.main;
 
 import com.itpearls.agritomarketplace.AgritoGlobalValue;
 import com.itpearls.agritomarketplace.entity.MyHousehold;
+import com.itpearls.agritomarketplace.entity.User;
 import com.itpearls.agritomarketplace.screen.myhousehold.MyHouseholdEdit;
+import com.itpearls.agritomarketplace.screen.myhousehold.SelectMyHouseholdBrowse;
 import io.jmix.core.DataManager;
+import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.ScreenTools;
@@ -14,6 +17,7 @@ import io.jmix.ui.component.mainwindow.Drawer;
 import io.jmix.ui.component.mainwindow.SideMenu;
 import io.jmix.ui.icon.JmixIcon;
 import io.jmix.ui.model.CollectionContainer;
+import io.jmix.ui.model.CollectionLoader;
 import io.jmix.ui.navigation.Route;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +45,9 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     @Autowired
     private DataManager dataManager;
     @Autowired
-    private CollectionContainer<MyHousehold> myHouserholdDc;
-    @Autowired
     private Notifications notifications;
+    @Autowired
+    private CurrentAuthentication currentAuthentication;
 
 
     @Override
@@ -70,11 +74,15 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     }
 
     private void selectMyHousehold() {
-        Integer householdCount = myHouserholdDc.getItems().size();
+        Integer householdCount = dataManager.loadValue("select count(e) from MyHousehold e where e.owner = :owner",
+                        Integer.class)
+                .parameter("owner", (User) currentAuthentication.getUser())
+                .one();
 
         if (householdCount > 1) {
             screenBuilders.lookup(MyHousehold.class, this)
                     .withOpenMode(OpenMode.DIALOG)
+                    .withScreenClass(SelectMyHouseholdBrowse.class)
                     .withSelectHandler(myHouseholds -> {
                         createMenuEditHousehold(myHouseholds.iterator().next());
                     })
@@ -82,7 +90,10 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
                     .show();
         } else {
             if (householdCount == 1) {
-                createMenuEditHousehold(myHouserholdDc.getItem());
+                createMenuEditHousehold(dataManager
+                        .loadValue("select e from MyHousehold у where e.owner = :owner", MyHousehold.class)
+                        .parameter("owner", (User) currentAuthentication.getUser())
+                        .one());
             } else {
                 notifications.create(Notifications.NotificationType.WARNING)
                         .withCaption(messageBundle.getMessage("msgWarning"))

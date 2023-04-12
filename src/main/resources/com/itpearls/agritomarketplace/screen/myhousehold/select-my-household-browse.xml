@@ -34,6 +34,8 @@
                 width="800"/>
     <layout expand="myHouseholdsTable" spacing="true">
         <filter id="filter"
+                collapsable="true"
+                collapsed="true"
                 visible="false"
                 dataLoader="myHouseholdsDl">
             <properties include=".*"/>
@@ -48,13 +50,12 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="counterpartyName"/>
                 <column id="counterpartyLogo"/>
-                <column id="manufacturer"/>
-                <column id="owner"/>
+                <column id="counterpartyName"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
+                          visible="false"
                           alwaysVisible="true">
                 <button id="createBtn" action="myHouseholdsTable.create"/>
                 <button id="editBtn" action="myHouseholdsTable.edit"/>
