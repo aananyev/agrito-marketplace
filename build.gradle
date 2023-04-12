@@ -43,6 +43,8 @@ dependencies {
     testImplementation 'io.jmix.ui:jmix-ui-test-assist'
     implementation 'io.jmix.translations:jmix-translations-ru'
     implementation 'com.ibm.icu:icu4j:72.1'
+    implementation 'io.jmix.appsettings:jmix-appsettings-starter'
+    implementation 'io.jmix.appsettings:jmix-appsettings-ui-starter'
 }
 
 test {

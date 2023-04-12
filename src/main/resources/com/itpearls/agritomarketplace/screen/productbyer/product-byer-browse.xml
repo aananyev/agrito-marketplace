@@ -13,7 +13,7 @@
             </fetchPlan>
             <loader id="productByersDl">
                 <query>
-                    <![CDATA[select e from ProductByer e where e.byers = true]]>
+                    <![CDATA[select e from ProductByer e]]>
                 </query>
             </loader>
         </collection>
@@ -49,10 +49,16 @@
             </actions>
             <columns>
                 <column id="counterpartyName"/>
-                <column id="rating"
-                        caption="msg://msgRating"/>
-                <column id="actionMenu"
-                        caption="msg://msgMenu"/>
+                <column id="counterpartyLogo"/>
+                <column id="counterpartyAddress"/>
+                <column id="counterpartyPhone"/>
+                <column id="counterpartyFax"/>
+                <column id="counterpartyEmail"/>
+                <column id="counterpartyWebSite"/>
+                <column id="pounterPartyCEO"/>
+                <column id="counterPartyChieffAccountant"/>
+                <column id="counterpartyManager"/>
+                <column id="byers"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"

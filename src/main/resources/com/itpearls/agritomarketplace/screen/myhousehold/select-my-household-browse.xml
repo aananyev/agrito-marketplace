@@ -33,6 +33,11 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="myHouseholdsTable" spacing="true">
+        <filter id="filter"
+                visible="false"
+                dataLoader="myHouseholdsDl">
+            <properties include=".*"/>
+        </filter>
         <groupTable id="myHouseholdsTable"
                     width="100%"
                     multiselect="false"

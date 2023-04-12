@@ -1,15 +1,12 @@
 package com.itpearls.agritomarketplace.screen.dealrequestpurchasebuy;
 
 import com.itpearls.agritomarketplace.AgritoGlobalValue;
-import com.itpearls.agritomarketplace.entity.AgriculturalManufacturer;
-import com.itpearls.agritomarketplace.entity.LotForSell;
-import com.itpearls.agritomarketplace.entity.ProductByer;
+import com.itpearls.agritomarketplace.entity.*;
 import io.jmix.core.EntityStates;
 import io.jmix.ui.component.EntityPicker;
 import io.jmix.ui.component.HasValue;
 import io.jmix.ui.component.TextField;
 import io.jmix.ui.screen.*;
-import com.itpearls.agritomarketplace.entity.DealRequestPurchaseBuy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -25,11 +22,12 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
     @Autowired
     private TextField<BigDecimal> proposalCostField;
     @Autowired
-    private EntityPicker<AgriculturalManufacturer> productSellerField;
+    private EntityPicker<Counterparty> productSellerField;
     @Autowired
     private EntityStates entityStates;
     @Autowired
-    private EntityPicker<ProductByer> productBuyerField;
+    private EntityPicker<Counterparty> productBuyerField;
+
 
     public void setLotForSell(LotForSell lotForSell) {
         lotForSellField.setValue(lotForSell);
@@ -40,7 +38,7 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
 
     @Subscribe("lotForSellField")
     public void onLotForSellFieldValueChange(HasValue.ValueChangeEvent<LotForSell> event) {
-        productSellerField.setValue(event.getValue().getAgriculturalManufacturer());
+        productSellerField.setValue((AgriculturalManufacturer) event.getValue().getAgriculturalManufacturer());
         amountField.setValue(event.getValue().getProductAmount());
         proposalCostField.setValue(event.getValue().getPrice());
     }
@@ -48,7 +46,7 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
         if (entityStates.isNew(getEditedEntity())) {
-            productBuyerField.setValue(AgritoGlobalValue.productByer);
+            productBuyerField.setValue(AgritoGlobalValue.counterparty);
         }
     }
 }

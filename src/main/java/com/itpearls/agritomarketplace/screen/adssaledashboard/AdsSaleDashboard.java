@@ -81,7 +81,7 @@ public class AdsSaleDashboard extends Screen {
         manufacturer.addClickListener(clickEvent -> {
             screenBuilders.editor(AgriculturalManufacturer.class, this)
                     .withScreenClass(AgriculturalManufacturerEdit.class)
-                    .editEntity(lotForSell.getAgriculturalManufacturer())
+                    .editEntity((AgriculturalManufacturer) lotForSell.getAgriculturalManufacturer())
                     .build()
                     .show();
         });
@@ -89,7 +89,7 @@ public class AdsSaleDashboard extends Screen {
         manufacturerHBox.add(manufacturer);
         manufacturerHBox.expand(manufacturer);
 
-        BigDecimal averageRating = averageRating(lotForSell.getAgriculturalManufacturer());
+        BigDecimal averageRating = averageRating((AgriculturalManufacturer) lotForSell.getAgriculturalManufacturer());
 
         if (averageRating != null) {
             Label rating = uiComponents.create(Label.class);

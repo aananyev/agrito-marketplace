@@ -17,8 +17,8 @@ public class ProductByer extends Counterparty {
         return byers;
     }
 
-    public void setByers(Boolean byers) {
-        this.byers = byers;
+    public void setTrader(Boolean trader) {
+        this.byers= trader;
     }
 
     @InstanceName

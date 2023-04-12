@@ -25,12 +25,12 @@ public class DealRequest {
 
     @JoinColumn(name = "PRODUCT_SELLER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private AgriculturalManufacturer productSeller;
+    private Counterparty productSeller;
 
-    @JoinColumn(name = "PRODUCT_BUYER_ID", nullable = false)
     @NotNull
+    @JoinColumn(name = "PRODUCT_BUYER_ID", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private ProductByer productBuyer;
+    private Counterparty productBuyer;
 
     @Column(name = "AMOUNT", precision = 19, scale = 2)
     private BigDecimal amount;
@@ -62,6 +62,22 @@ public class DealRequest {
     @Lob
     private String commentDealRequestStatus;
 
+    public void setProductBuyer(Counterparty productBuyer) {
+        this.productBuyer = productBuyer;
+    }
+
+    public Counterparty getProductBuyer() {
+        return productBuyer;
+    }
+
+    public void setProductSeller(Counterparty productSeller) {
+        this.productSeller = productSeller;
+    }
+
+    public Counterparty getProductSeller() {
+        return productSeller;
+    }
+
     public String getCommentDealRequestStatus() {
         return commentDealRequestStatus;
     }
@@ -76,14 +92,6 @@ public class DealRequest {
 
     public void setDealRequestStatus(DealRequestStatus dealRequestStatus) {
         this.dealRequestStatus = dealRequestStatus == null ? null : dealRequestStatus.getId();
-    }
-
-    public AgriculturalManufacturer getProductSeller() {
-        return productSeller;
-    }
-
-    public void setProductSeller(AgriculturalManufacturer productSeller) {
-        this.productSeller = productSeller;
     }
 
     public PaymentType getPaymentType() {
@@ -132,14 +140,6 @@ public class DealRequest {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-    }
-
-    public ProductByer getProductBuyer() {
-        return productBuyer;
-    }
-
-    public void setProductBuyer(ProductByer productBuyer) {
-        this.productBuyer = productBuyer;
     }
 
     public UUID getId() {

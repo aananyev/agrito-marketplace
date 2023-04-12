@@ -10,10 +10,10 @@
     </menu>
     <menu id="ProductByer" caption="msg://com.itpearls.agritomarketplace/menu_config.ProductByer"
           insertAfter="application">
-        <item screen="ProductByer.browse"
-              caption="msg://com.itpearls.agritomarketplace.screen.productbyer/productByerBrowse.menu"/>
         <item screen="LotToBuy.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.lottobuy/lotToBuyBrowse.menu"/>
+        <item screen="ProductByer.browse"
+              caption="msg://com.itpearls.agritomarketplace.screen.productbyer/productByerBrowse.menu"/>
     </menu>
     <menu id="AgriculturalManufacturer"
           caption="msg://com.itpearls.agritomarketplace/menu_config.AgriculturalManufacturer"

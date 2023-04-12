@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         caption="msg://dealRequestPurchaseBuyEdit.caption"
-        focusComponent="form">
+        focusComponent="productSellerField">
     <data>
         <instance id="dealRequestPurchaseBuyDc"
                   class="com.itpearls.agritomarketplace.entity.DealRequestPurchaseBuy">
             <fetchPlan extends="_base">
-                <property name="lotForSell" fetchPlan="_base"/>
-                <property name="productSeller" fetchPlan="_base"/>
-                <property name="productBuyer" fetchPlan="_base"/>
-                <property name="paymentType" fetchPlan="_base"/>
+                <property name="lotForSell"
+                          fetchPlan="_base"/>
+                <property name="productSeller"
+                          fetchPlan="_base"/>
+                <property name="productBuyer"
+                          fetchPlan="_base"/>
+                <property name="paymentType"
+                          fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
         </instance>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
-        <screenSettings id="settingsFacet" auto="true"/>
+        <screenSettings id="settingsFacet"
+                        auto="true"/>
     </facets>
     <actions>
-        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
+        <action id="windowCommitAndClose"
+                caption="msg:///actions.Ok"
                 icon="EDITOR_OK"
                 primary="true"
                 shortcut="${COMMIT_SHORTCUT}"/>
@@ -29,44 +35,181 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout spacing="true" expand="scrollBox">
-        <scrollBox id="scrollBox" spacing="true">
-            <form id="form" dataContainer="dealRequestPurchaseBuyDc">
-                <column width="350px">
-                    <entityPicker id="productSellerField" property="productSeller">
+    <layout spacing="true"
+            expand="mainTabSheet">
+        <tabSheet id="mainTabSheet"
+                  width="100%"
+                  height="100%">
+            <tab id="counterpartiesTab"
+                 expand="counterpartiesVBox"
+                 caption="msg://msgCounterparty">
+                <vbox id="counterpartiesVBox"
+                      spacing="true"
+                      margin="true"
+                      width="100%">
+                    <hbox spacing="true" width="100%">
+                        <vbox spacing="true"
+                              width="100%"
+                              height="100%"
+                              expand="productSellerDetailsGroupBox">
+                            <entityPicker id="productSellerField"
+                                          width="100%"
+                                          align="TOP_CENTER"
+                                          caption="msg://msgAgriculturalManufacturer"
+                                          dataContainer="dealRequestPurchaseBuyDc"
+                                          property="productSeller">
+                                <actions>
+                                    <action id="entityLookup" type="entity_lookup"/>
+                                    <action id="entityClear" type="entity_clear"/>
+                                </actions>
+                            </entityPicker>
+                            <groupBox id="productSellerDetailsGroupBox"
+                                      width="100%"
+                                      height="100%"
+                                      spacing="true"
+                                      stylename="well"
+                                      collapsable="true"
+                                      collapsed="false"
+                                      caption="msg://msgAgriculturalManufacturer">
+
+                            </groupBox>
+                        </vbox>
+                        <vbox spacing="true"
+                              width="100%"
+                              height="100%"
+                              expand="productBuyerDetailsGroupBox">
+                            <entityPicker id="productBuyerField"
+                                          width="100%"
+                                          caption="msg://msgBuyer"
+                                          dataContainer="dealRequestPurchaseBuyDc"
+                                          property="productBuyer">
+                                <actions>
+                                    <action id="entityLookup" type="entity_lookup"/>
+                                    <action id="entityClear" type="entity_clear"/>
+                                </actions>
+                            </entityPicker>
+                            <groupBox id="productBuyerDetailsGroupBox"
+                                      width="100%"
+                                      height="100%"
+                                      spacing="true"
+                                      stylename="well"
+                                      collapsable="true"
+                                      collapsed="false"
+                                      caption="msg://msgAgriculturalManufacturer">
+
+                            </groupBox>
+                        </vbox>
+                    </hbox>
+                </vbox>
+            </tab>
+            <tab id="productTab"
+                 expand="productVBox"
+                 caption="msg://msgProduct">
+                <vbox id="productVBox"
+                      spacing="true"
+                      expand="commentField"
+                      width="100%"
+                      margin="true">
+                    <hbox spacing="true"
+                          width="100%">
+                        <entityPicker id="lotForSellField"
+                                      width="100%"
+                                      caption="msg://msgProduct"
+                                      dataContainer="dealRequestPurchaseBuyDc"
+                                      property="lotForSell">
+                            <actions>
+                                <action id="entityLookup"
+                                        type="entity_lookup"/>
+                                <action id="entityClear"
+                                        type="entity_clear"/>
+                            </actions>
+                        </entityPicker>
+                        <vbox spacing="true"
+                              width="100%">
+                            <hbox spacing="true"
+                                  width="100%">
+                                <textField id="amountField"
+                                           caption="msg://msgAmount"
+                                           dataContainer="dealRequestPurchaseBuyDc"
+                                           property="amount"/>
+                                <label id="unitLabel"
+                                       dataContainer="dealRequestPurchaseBuyDc"
+                                       property="lotForSell.unitMeasurment.nameUnit"
+                                       align="MIDDLE_LEFT"/>
+                            </hbox>
+                            <textField id="proposalCostField"
+                                       caption="msg://msgProposalCost"
+                                       dataContainer="dealRequestPurchaseBuyDc"
+                                       property="proposalCost"/>
+                        </vbox>
+                    </hbox>
+                    <textArea id="commentField"
+                              width="100%"
+                              height="100%"
+                              caption="msg://msgComment"
+                              dataContainer="dealRequestPurchaseBuyDc"
+                              property="comment"/>
+                </vbox>
+            </tab>
+            <tab id="temsAndConditionsTab"
+                 expand="temsAndConditionsVBox"
+                 caption="msg://msgTerms">
+                <vbox id="temsAndConditionsVBox"
+                      expand="termsCommentVBox"
+                      spacing="true"
+                      margin="true"
+                      width="100%">
+                    <entityPicker id="paymentTypeField"
+                                  width="AUTO"
+                                  caption="msg://msgPaymentType"
+                                  dataContainer="dealRequestPurchaseBuyDc"
+                                  property="paymentType">
                         <actions>
-                            <action id="entityLookup" type="entity_lookup"/>
-                            <action id="entityClear" type="entity_clear"/>
+                            <action id="entityLookup"
+                                    type="entity_lookup"/>
+                            <action id="entityClear"
+                                    type="entity_clear"/>
                         </actions>
                     </entityPicker>
-                    <entityPicker id="productBuyerField" property="productBuyer">
-                        <actions>
-                            <action id="entityLookup" type="entity_lookup"/>
-                            <action id="entityClear" type="entity_clear"/>
-                        </actions>
-                    </entityPicker>
-                    <textField id="amountField" property="amount"/>
-                    <textField id="proposalCostField" property="proposalCost"/>
-                    <textArea id="commentField" property="comment" rows="5"/>
-                    <textArea id="deliveryTermsField" property="deliveryTerms" rows="5"/>
-                    <textArea id="termsPaymentField" property="termsPayment" rows="5"/>
-                    <entityPicker id="paymentTypeField" property="paymentType">
-                        <actions>
-                            <action id="entityLookup" type="entity_lookup"/>
-                            <action id="entityClear" type="entity_clear"/>
-                        </actions>
-                    </entityPicker>
-                    <comboBox id="dealRequestStatusField" property="dealRequestStatus"/>
-                    <textArea id="commentDealRequestStatusField" property="commentDealRequestStatus" rows="5"/>
-                    <entityPicker id="lotForSellField" property="lotForSell">
-                        <actions>
-                            <action id="entityLookup" type="entity_lookup"/>
-                            <action id="entityClear" type="entity_clear"/>
-                        </actions>
-                    </entityPicker>
-                </column>
-            </form>
-        </scrollBox>
+                    <vbox id="termsCommentVBox"
+                          spacing="true"
+                          width="100%"
+                          height="100%">
+                        <textArea id="termsPaymentField"
+                                  caption="msg://msgPaymentTerm"
+                                  width="100%"
+                                  height="100%"
+                                  dataContainer="dealRequestPurchaseBuyDc"
+                                  property="termsPayment"/>
+                        <textArea id="deliveryTermsField"
+                                  caption="msg://msgDeliveryTerms"
+                                  dataContainer="dealRequestPurchaseBuyDc"
+                                  width="100%"
+                                  height="100%"
+                                  property="deliveryTerms"/>
+                    </vbox>
+                </vbox>
+            </tab>
+            <tab id="statusTab"
+                 expand="statusVBox"
+                 caption="msg://msgDealStatus">
+                <vbox id="statusVBox"
+                      width="100%"
+                      spacing="true"
+                      margin="true"
+                      expand="commentDealRequestStatusField">
+                    <comboBox id="dealRequestStatusField"
+                              caption="msg://msgDealStatus"
+                              dataContainer="dealRequestPurchaseBuyDc"
+                              property="dealRequestStatus"/>
+                    <textArea id="commentDealRequestStatusField"
+                              width="100%"
+                              height="100%"
+                              dataContainer="dealRequestPurchaseBuyDc"
+                              property="commentDealRequestStatus"/>
+                </vbox>
+            </tab>
+        </tabSheet>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

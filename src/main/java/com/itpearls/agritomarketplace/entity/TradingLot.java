@@ -29,10 +29,10 @@ public class TradingLot {
     @NotNull
     private String lotArticle;
 
-    @JoinColumn(name = "AGRICULTURAL_MANUFACTURER_ID", nullable = false)
     @NotNull
+    @JoinColumn(name = "AGRICULTURAL_MANUFACTURER_ID", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private AgriculturalManufacturer agriculturalManufacturer;
+    private Counterparty agriculturalManufacturer;
 
     @JoinColumn(name = "PRODUCT_ID", nullable = false)
     @NotNull
@@ -60,6 +60,14 @@ public class TradingLot {
     @Column(name = "COMMENT_")
     @Lob
     private String comment;
+
+    public void setAgriculturalManufacturer(Counterparty agriculturalManufacturer) {
+        this.agriculturalManufacturer = agriculturalManufacturer;
+    }
+
+    public Counterparty getAgriculturalManufacturer() {
+        return agriculturalManufacturer;
+    }
 
     public void setPrice(BigDecimal price) {
         this.price = price;
@@ -115,14 +123,6 @@ public class TradingLot {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public AgriculturalManufacturer getAgriculturalManufacturer() {
-        return agriculturalManufacturer;
-    }
-
-    public void setAgriculturalManufacturer(AgriculturalManufacturer agriculturalManufacturer) {
-        this.agriculturalManufacturer = agriculturalManufacturer;
     }
 
     public UUID getId() {
