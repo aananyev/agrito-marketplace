@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         caption="msg://biddingEdit.caption"
-        focusComponent="form">
+        focusComponent="proposalCostField">
     <data>
         <instance id="biddingDc"
                   class="com.itpearls.agritomarketplace.entity.Bidding">
@@ -14,7 +14,8 @@
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
-        <screenSettings id="settingsFacet" auto="true"/>
+        <screenSettings id="settingsFacet"
+                        auto="true"/>
     </facets>
     <actions>
         <action id="windowCommitAndClose" caption="msg:///actions.Ok"
@@ -93,10 +94,30 @@
                   height="AUTO"
                   stylename="well">
             <hbox spacing="true"
-                  width="AUTO"
+                  width="100%"
                   height="AUTO">
-                <label stylename="h3"
+                <label id="startProposalCostTitleLabel"
+                       stylename="h3"
+                       width="AUTO"
+                       height="AUTO"
+                       value="msg://msgStartPropsalCost"/>
+                <label id="startProposalCostLabel"
+                       dataContainer="biddingDc"
+                       property="tradingLot.price"
+                       stylename="h3"
+                       align="MIDDLE_LEFT"
+                       width="AUTO"
+                       height="AUTO"/>
+                <label id="previonsProposalCostTitleLabel"
+                        stylename="h3"
+                       align="MIDDLE_RIGHT"
+                       width="AUTO"
+                       height="AUTO"
                        value="msg://msgPrevionsPropsalCost"/>
+                <label id="previonsProposalCostLabel"
+                       stylename="h3"
+                       width="AUTO"
+                       height="AUTO"/>
             </hbox>
         </groupBox>
         <vbox id="mainVBox"

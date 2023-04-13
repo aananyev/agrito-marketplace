@@ -5,10 +5,7 @@ import com.itpearls.agritomarketplace.entity.Counterparty;
 import com.itpearls.agritomarketplace.entity.TradeRole;
 import com.itpearls.agritomarketplace.entity.TradingLot;
 import io.jmix.core.EntityStates;
-import io.jmix.ui.component.ComboBox;
-import io.jmix.ui.component.DateField;
-import io.jmix.ui.component.EntityPicker;
-import io.jmix.ui.component.HasValue;
+import io.jmix.ui.component.*;
 import io.jmix.ui.screen.*;
 import com.itpearls.agritomarketplace.entity.Bidding;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,12 @@ public class BiddingEdit extends StandardEditor<Bidding> {
     private EntityPicker<TradingLot> tradingLotField;
     @Autowired
     private ComboBox<TradeRole> tradeRoleField;
+    @Autowired
+    private Label previonsProposalCostTitleLabel;
+    @Autowired
+    private MessageBundle messageBundle;
+    @Autowired
+    private Label previonsProposalCostLabel;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
@@ -47,6 +50,17 @@ public class BiddingEdit extends StandardEditor<Bidding> {
             } else {
                 tradeRoleField.setValue(TradeRole.BUYER);
             }
+        }
+
+        if (getEditedEntity().getParentBidding() == null) {
+            previonsProposalCostTitleLabel.setVisible(false);
+            previonsProposalCostLabel.setVisible(false);
+        } else {
+            previonsProposalCostTitleLabel.setVisible(true);
+            previonsProposalCostLabel.setVisible(true);
+
+            previonsProposalCostTitleLabel.setValue(messageBundle.getMessage("msgParentBidding"));
+            previonsProposalCostLabel.setValue(getEditedEntity().getParentBidding().getProposalCost());
         }
     }
 

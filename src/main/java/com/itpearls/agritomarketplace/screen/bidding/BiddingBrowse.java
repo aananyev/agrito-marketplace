@@ -94,16 +94,13 @@ public class BiddingBrowse extends StandardLookup<Bidding> {
 
         switch (biddingStatus) {
             case COUNTER_OFFER:
-                biddingParent.setChildBidding(biddingNew);
                 break;
             case APPROVE:
-                biddingParent.setChildBidding(biddingNew);
+                // TODO тут надо уменьшить количество предложения в обьявлении
                 break;
             case REJECT:
-                biddingParent.setChildBidding(biddingNew);
                 break;
             default:
-                biddingParent.setChildBidding(biddingNew);
                 break;
         }
 
@@ -120,10 +117,11 @@ public class BiddingBrowse extends StandardLookup<Bidding> {
                     popupButton.setEnabled(false);
                     popupButton.setIcon(JmixIcon.CANCEL.source());
 
+                    biddingParent.setChildBidding(biddingNew);
+                    dataManager.save(biddingParent);
+
                     biddingsDl.load();
                     biddingsTable.repaint();
-
-                    dataManager.save(biddingParent);
                 })
                 .withOpenMode(OpenMode.DIALOG)
                 .build()
