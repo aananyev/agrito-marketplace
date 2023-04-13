@@ -239,6 +239,11 @@
                             width="100%"
                             height="100%"
                             dataContainer="biddingDl">
+                    <actions>
+                        <action id="create" type="create"/>
+                        <action id="edit" type="edit"/>
+                        <action id="remove" type="remove"/>
+                    </actions>
                     <columns>
                         <column id="tradingLot"/>
                         <column id="couterparty"/>
@@ -246,6 +251,12 @@
                         <column id="proposalCost"/>
                         <column id="dateProposal"/>
                     </columns>
+                    <buttonsPanel id="buttonsPanel"
+                                  alwaysVisible="true">
+                        <button id="createBtn" action="biddingGroupTable.create"/>
+                        <button id="editBtn" action="biddingGroupTable.edit"/>
+                        <button id="removeBtn" action="biddingGroupTable.remove"/>
+                    </buttonsPanel>
                 </groupTable>
             </tab>
         </tabSheet>

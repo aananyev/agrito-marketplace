@@ -54,7 +54,7 @@
                 <column id="productBuyer"/>
                 <column id="amount"/>
                 <column id="proposalCost"/>
-                <column id="total"/>
+                <column id="total" caption="msg://msgTotal"/>
                 <column id="paymentType"/>
                 <column id="dealRequestStatus"/>
             </columns>

@@ -12,7 +12,8 @@ import java.util.UUID;
 @JmixEntity
 @Table(name = "BIDDING", indexes = {
         @Index(name = "IDX_BIDDING_TRADING_LOT", columnList = "TRADING_LOT_ID"),
-        @Index(name = "IDX_BIDDING_COUTERPARTY", columnList = "COUTERPARTY_ID")
+        @Index(name = "IDX_BIDDING_COUTERPARTY", columnList = "COUTERPARTY_ID"),
+        @Index(name = "IDX_BIDDING_PARENT_BIDDING", columnList = "PARENT_BIDDING_ID")
 })
 @Entity
 public class Bidding {
@@ -50,6 +51,30 @@ public class Bidding {
     @Column(name = "DATE_PROPOSAL", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateProposal;
+
+    @JoinColumn(name = "PARENT_BIDDING_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Bidding childBidding;
+
+    @JoinColumn(name = "PARENT_BIDDING_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Bidding parentBidding;
+
+    public Bidding getParentBidding() {
+        return parentBidding;
+    }
+
+    public void setParentBidding(Bidding parentBidding) {
+        this.parentBidding = parentBidding;
+    }
+
+    public Bidding getChildBidding() {
+        return childBidding;
+    }
+
+    public void setChildBidding(Bidding childBidding) {
+        this.childBidding = childBidding;
+    }
 
     public Date getDateProposal() {
         return dateProposal;

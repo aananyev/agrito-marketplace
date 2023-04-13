@@ -85,6 +85,23 @@
                 </hbox>
             </hbox>
         </groupBox>
+        <groupBox id="parentInfoGroupBox"
+                  caption="msg://msgParentBidding"
+                  collapsed="false"
+                  collapsable="true"
+                  width="100%"
+                  height="AUTO"
+                  stylename="well">
+            <hbox spacing="true"
+                  width="AUTO"
+                  height="AUTO">
+                <label stylename="h3"
+                       value="msg://msgPrevionsPropsalCost"/>
+            <label dataContainer="biddingDc"
+                   property="parentBidding.proposalCost"
+                   stylename="h3"/>
+            </hbox>
+        </groupBox>
         <vbox id="mainVBox"
               width="100%"
               height="100%"
@@ -126,6 +143,7 @@
             </hbox>
             <comboBox id="biddingStatusField"
                       caption="msg://msgStatus"
+                      required="true"
                       dataContainer="biddingDc"
                       property="biddingStatus"/>
             <textArea id="commentTextArea"

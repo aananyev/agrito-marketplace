@@ -1,10 +1,160 @@
 package com.itpearls.agritomarketplace.screen.bidding;
 
+import com.itpearls.agritomarketplace.AgritoGlobalValue;
+import com.itpearls.agritomarketplace.entity.BiddingStatus;
+import io.jmix.core.DataManager;
+import io.jmix.core.Metadata;
+import io.jmix.ui.ScreenBuilders;
+import io.jmix.ui.UiComponents;
+import io.jmix.ui.action.BaseAction;
+import io.jmix.ui.component.Component;
+import io.jmix.ui.component.GroupTable;
+import io.jmix.ui.component.Label;
+import io.jmix.ui.component.PopupButton;
+import io.jmix.ui.icon.JmixIcon;
+import io.jmix.ui.model.CollectionContainer;
+import io.jmix.ui.model.CollectionLoader;
+import io.jmix.ui.model.InstanceContainer;
 import io.jmix.ui.screen.*;
 import com.itpearls.agritomarketplace.entity.Bidding;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @UiController("Bidding.browse")
 @UiDescriptor("bidding-browse.xml")
 @LookupComponent("biddingsTable")
 public class BiddingBrowse extends StandardLookup<Bidding> {
+    @Autowired
+    private UiComponents uiComponents;
+    @Autowired
+    private MessageBundle messageBundle;
+    @Autowired
+    private Metadata metadata;
+    @Autowired
+    private GroupTable<Bidding> biddingsTable;
+    @Autowired
+    private ScreenBuilders screenBuilders;
+    @Autowired
+    private DataManager dataManager;
+    @Autowired
+    private CollectionLoader<Bidding> biddingsDl;
+
+    @Install(to = "biddingsTable.action", subject = "columnGenerator")
+    private Component biddingsTableActionColumnGenerator(Bidding bidding) {
+        PopupButton popupButton = uiComponents.create(PopupButton.class);
+
+        popupButton.setIcon(JmixIcon.BARS.iconName());
+        popupButton.addAction(new BaseAction("setApproveAction")
+                .withCaption(messageBundle.getMessage("msgApprove"))
+                .withHandler(actionPerformedEvent -> {
+                    createBiddingAction(BiddingStatus.APPROVE, popupButton);
+                    popupButton.setEnabled(false);
+                }));
+
+        popupButton.addAction(new BaseAction("setRejectAction")
+                .withCaption(messageBundle.getMessage("msgReject"))
+                .withHandler(actionPerformedEvent -> {
+                    createBiddingAction(BiddingStatus.REJECT, popupButton);
+                    popupButton.setEnabled(false);
+                }));
+
+        popupButton.addAction(new BaseAction("setCounterOfferAction")
+                .withCaption(messageBundle.getMessage("msgCounterOffer"))
+                .withHandler(actionPerformedEvent -> {
+                    createBiddingAction(BiddingStatus.COUNTER_OFFER, popupButton);
+                    popupButton.setEnabled(false);
+                }));
+
+        if (bidding.getChildBidding() == null) {
+            if (bidding.getBiddingStatus() == BiddingStatus.REJECT ||
+                    bidding.getBiddingStatus() == BiddingStatus.APPROVE) {
+                popupButton.setEnabled(false);
+            } else {
+                popupButton.setEnabled(true);
+            }
+        } else {
+            popupButton.setEnabled(false);
+            if (bidding.getBiddingStatus() == BiddingStatus.REJECT ||
+                    bidding.getBiddingStatus() == BiddingStatus.APPROVE) {
+                popupButton.setEnabled(false);
+            }
+        }
+
+        return popupButton;
+    }
+
+    private void createBiddingAction(BiddingStatus biddingStatus,
+                                     PopupButton popupButton) {
+        Bidding biddingNew = metadata.create(Bidding.class);
+        Bidding biddingParent = biddingsTable.getSingleSelected();
+
+        biddingNew.setTradingLot(biddingsTable.getSingleSelected().getTradingLot());
+        biddingNew.setCouterparty(AgritoGlobalValue.counterparty);
+        biddingNew.setBiddingStatus(biddingStatus);
+        biddingNew.setParentBidding(biddingParent);
+
+        switch (biddingStatus) {
+            case COUNTER_OFFER:
+                biddingParent.setChildBidding(biddingNew);
+                break;
+            case APPROVE:
+                biddingParent.setChildBidding(biddingNew);
+                break;
+            case REJECT:
+                biddingParent.setChildBidding(biddingNew);
+                break;
+            default:
+                biddingParent.setChildBidding(biddingNew);
+                break;
+        }
+
+        screenBuilders.editor(Bidding.class, this)
+                .withScreenClass(BiddingEdit.class)
+                .withInitializer(e -> {
+                    if (biddingStatus == BiddingStatus.APPROVE || biddingStatus == BiddingStatus.REJECT) {
+                        e.setProposalCost(biddingParent.getProposalCost());
+                        // как то блокировать ввод цены ???
+                    }
+                })
+                .editEntity(biddingNew)
+                .withAfterCloseListener(biddingEditAfterScreenCloseEvent -> {
+                    popupButton.setEnabled(false);
+                    popupButton.setIcon(JmixIcon.CANCEL.source());
+
+                    biddingsDl.load();
+                    biddingsTable.repaint();
+
+                    dataManager.save(biddingParent);
+                })
+                .withOpenMode(OpenMode.DIALOG)
+                .build()
+                .show();
+    }
+
+    @Install(to = "biddingsTable.statusIcon", subject = "columnGenerator")
+    private Component biddingsTableStatusIconColumnGenerator(Bidding bidding) {
+        Label retLabel = uiComponents.create(Label.class);
+        String iconLabel = "";
+
+        if (bidding.getBiddingStatus() != null) {
+            switch (bidding.getBiddingStatus()) {
+                case REJECT:
+                    iconLabel = JmixIcon.CANCEL.source();
+                    break;
+                case APPROVE:
+                    iconLabel = JmixIcon.HANDSHAKE_O.source();
+                    break;
+                case COUNTER_OFFER:
+                    iconLabel = JmixIcon.ROTATE_LEFT.source();
+                    break;
+                default:
+                    iconLabel = JmixIcon.QUESTION.source();
+                    break;
+            }
+        } else {
+            iconLabel = JmixIcon.QUESTION.source();
+        }
+
+        retLabel.setIcon(iconLabel);
+        return retLabel;
+    }
 }

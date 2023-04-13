@@ -12,7 +12,7 @@
             </fetchPlan>
             <loader id="biddingsDl">
                 <query>
-                    <![CDATA[select e from Bidding e]]>
+                    <![CDATA[select e from Bidding e order by e.dateProposal desc]]>
                 </query>
             </loader>
         </collection>
@@ -47,11 +47,15 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
+                <column id="statusIcon"
+                        caption="msg://msgStatus"/>
                 <column id="tradingLot"/>
                 <column id="proposalCost"/>
                 <column id="couterparty"/>
                 <column id="tradeRole"/>
                 <column id="biddingStatus"/>
+                <column id="dateProposal"/>
+                <column id="action" caption="msg://msgAction"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"

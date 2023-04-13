@@ -99,6 +99,13 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
                         .withCaption(messageBundle.getMessage("msgWarning"))
                         .withDescription(messageBundle.getMessage("msgNeedCreateMyhousehold"))
                         .show();
+
+                screenBuilders.editor(MyHousehold.class, this)
+                        .withScreenClass(MyHouseholdEdit.class)
+                        .newEntity()
+//                        .withAfterCloseListener(myHouseholdEditAfterScreenCloseEvent -> selectMyHousehold())
+                        .build()
+                        .show();
             }
         }
     }
