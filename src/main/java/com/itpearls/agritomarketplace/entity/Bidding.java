@@ -27,6 +27,9 @@ public class Bidding {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private TradingLot tradingLot;
 
+    @Column(name = "AMOUNT", precision = 19, scale = 2)
+    private BigDecimal amount;
+
     @NotNull
     @Column(name = "PROPOSAL_COST", nullable = false, precision = 19, scale = 2)
     private BigDecimal proposalCost;
@@ -59,6 +62,14 @@ public class Bidding {
     @JoinColumn(name = "PARENT_BIDDING_1")
     @ManyToOne(fetch = FetchType.LAZY)
     private Bidding parentBidding;
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
 
     public Bidding getParentBidding() {
         return parentBidding;

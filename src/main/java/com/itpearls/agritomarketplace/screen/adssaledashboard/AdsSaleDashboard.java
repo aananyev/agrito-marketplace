@@ -1,10 +1,7 @@
 package com.itpearls.agritomarketplace.screen.adssaledashboard;
 
 import com.ibm.icu.text.RuleBasedNumberFormat;
-import com.itpearls.agritomarketplace.entity.AgriculturalManufacturer;
-import com.itpearls.agritomarketplace.entity.DealRequestPurchaseBuy;
-import com.itpearls.agritomarketplace.entity.DealRequestSaleOffer;
-import com.itpearls.agritomarketplace.entity.LotForSell;
+import com.itpearls.agritomarketplace.entity.*;
 import com.itpearls.agritomarketplace.screen.agriculturalmanufacturer.AgriculturalManufacturerEdit;
 import com.itpearls.agritomarketplace.screen.dealrequestpurchasebuy.DealRequestPurchaseBuyEdit;
 import com.itpearls.agritomarketplace.screen.dealrequestsaleoffer.DealRequestSaleOfferEdit;
@@ -135,6 +132,26 @@ public class AdsSaleDashboard extends Screen {
         amountHBox.add(amountData);
         amountHBox.expand(amountTitle);
 
+        HBoxLayout freeAmountHBox = uiComponents.create(HBoxLayout.class);
+        freeAmountHBox.setSpacing(true);
+        freeAmountHBox.setWidthFull();
+
+        Label freeAmountTitle = uiComponents.create(Label.class);
+        freeAmountTitle.setValue(messageBundle.getMessage("msgFreeAmount"));
+        freeAmountTitle.setAlignment(Component.Alignment.MIDDLE_LEFT);
+        freeAmountTitle.setWidthFull();
+        freeAmountHBox.add(freeAmountTitle);
+
+        Label freeAmountData = uiComponents.create(Label.class);
+        freeAmountData.setValue(getFreeAmount(lotForSell)
+                + " "
+                +  lotForSell.getUnitMeasurment().getNameUnit());
+        freeAmountData.setDescription(nf.format(lotForSell.getProductAmount()));
+        freeAmountData.setAlignment(Component.Alignment.MIDDLE_RIGHT);
+        freeAmountData.setWidthAuto();
+        freeAmountHBox.add(freeAmountData);
+        freeAmountHBox.expand(freeAmountTitle);
+
         Label price = uiComponents.create(Label.class);
         price.setValue(messageBundle.getMessage("msgCostFor")
                 + " "
@@ -183,6 +200,7 @@ public class AdsSaleDashboard extends Screen {
         });
 
         dataHBox.add(amountHBox);
+        dataHBox.add(freeAmountHBox);
         dataHBox.add(price);
         dataHBox.add(totalHBox);
         dataHBox.expand(totalHBox);
@@ -196,6 +214,20 @@ public class AdsSaleDashboard extends Screen {
         retBox.add(buttonBuy);
 
         return retBox;
+    }
+
+    private Object getFreeAmount(LotForSell lotForSell) {
+        String freeAmount = "";
+        BigDecimal reserved = lotForSell.getProductAmount().subtract(dataManager.loadValue("select sum(e.amount) " +
+                "from Bidding e " +
+                        "where e.tradingLot = :tradingLot and e.biddingStatus = :biddingStatus", BigDecimal.class)
+                .parameter("biddingStatus", BiddingStatus.APPROVE)
+                .parameter("tradingLot", lotForSell)
+                .one());
+
+        freeAmount = reserved.toString();
+
+        return freeAmount;
     }
 
     private BigDecimal averageRating(AgriculturalManufacturer agriculturalManufacturer) {

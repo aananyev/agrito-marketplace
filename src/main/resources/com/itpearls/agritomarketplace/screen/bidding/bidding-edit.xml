@@ -141,6 +141,11 @@
                        caption="msg://msgProposalCost"
                        dataContainer="biddingDc"
                        property="proposalCost"/>
+                <textField id="amountField"
+                           width="100%"
+                           caption="msg://msgAmount"
+                           dataContainer="biddingDc"
+                           property="amount"/>
             </hbox>
             <hbox spacing="true" width="100%">
                 <entityPicker id="couterpartyField"

@@ -91,6 +91,7 @@ public class BiddingBrowse extends StandardLookup<Bidding> {
         biddingNew.setCouterparty(AgritoGlobalValue.counterparty);
         biddingNew.setBiddingStatus(biddingStatus);
         biddingNew.setParentBidding(biddingParent);
+        biddingNew.setAmount(biddingsTable.getSingleSelected().getAmount());
 
         switch (biddingStatus) {
             case COUNTER_OFFER:

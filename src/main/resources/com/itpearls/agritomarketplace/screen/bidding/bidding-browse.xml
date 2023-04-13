@@ -51,6 +51,7 @@
                         caption="msg://msgStatus"/>
                 <column id="tradingLot"/>
                 <column id="proposalCost"/>
+                <column id="amount"/>
                 <column id="couterparty"/>
                 <column id="tradeRole"/>
                 <column id="biddingStatus"/>
