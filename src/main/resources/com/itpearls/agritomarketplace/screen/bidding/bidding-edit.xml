@@ -97,9 +97,6 @@
                   height="AUTO">
                 <label stylename="h3"
                        value="msg://msgPrevionsPropsalCost"/>
-            <label dataContainer="biddingDc"
-                   property="parentBidding.proposalCost"
-                   stylename="h3"/>
             </hbox>
         </groupBox>
         <vbox id="mainVBox"

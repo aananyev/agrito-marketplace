@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name = "BIDDING", indexes = {
         @Index(name = "IDX_BIDDING_TRADING_LOT", columnList = "TRADING_LOT_ID"),
         @Index(name = "IDX_BIDDING_COUTERPARTY", columnList = "COUTERPARTY_ID"),
-        @Index(name = "IDX_BIDDING_PARENT_BIDDING", columnList = "PARENT_BIDDING_ID")
+        @Index(name = "IDX_BIDDING_PARENT_BIDDING_1", columnList = "PARENT_BIDDING_1")
 })
 @Entity
 public class Bidding {
@@ -56,7 +56,7 @@ public class Bidding {
     @ManyToOne(fetch = FetchType.LAZY)
     private Bidding childBidding;
 
-    @JoinColumn(name = "PARENT_BIDDING_ID")
+    @JoinColumn(name = "PARENT_BIDDING_1")
     @ManyToOne(fetch = FetchType.LAZY)
     private Bidding parentBidding;
 

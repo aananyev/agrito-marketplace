@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="agrito-marketplace">
+        <addColumn tableName="BIDDING">
+            <column name="PARENT_BIDDING_1" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2" author="agrito-marketplace">
+        <createIndex indexName="IDX_BIDDING_PARENT_BIDDING_1" tableName="BIDDING">
+            <column name="PARENT_BIDDING_1"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="PARENT_BIDDING_1" baseTableName="BIDDING"
+                                 constraintName="FK_BIDDING_ON_PARENT_BIDDING_1" referencedColumnNames="ID"
+                                 referencedTableName="BIDDING"/>
+    </changeSet>
+    <changeSet id="3" author="agrito-marketplace">
+        <dropIndex indexName="IDX_BIDDING_PARENT_BIDDING" tableName="BIDDING"/>
+    </changeSet>
+</databaseChangeLog>
