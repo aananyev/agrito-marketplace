@@ -57,6 +57,8 @@
             <columns>
                 <column id="counterpartyLogo"/>
                 <column id="counterpartyName"/>
+                <column id="counterPartyType"
+                        caption="msg://msgTradeRole"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
