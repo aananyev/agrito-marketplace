@@ -107,8 +107,6 @@ public class AdsSaleDashboard extends Screen {
         dataHBox.setWidth(String.valueOf(manufacturerHBox.getWidth()) + "%");
         dataHBox.setStyleName("card");
 
-
-
         Label product = uiComponents.create(Label.class);
         product.setValue(lotForSell.getProduct().getProductName());
 
@@ -132,25 +130,8 @@ public class AdsSaleDashboard extends Screen {
         amountHBox.add(amountData);
         amountHBox.expand(amountTitle);
 
-        HBoxLayout freeAmountHBox = uiComponents.create(HBoxLayout.class);
-        freeAmountHBox.setSpacing(true);
-        freeAmountHBox.setWidthFull();
-
-        Label freeAmountTitle = uiComponents.create(Label.class);
-        freeAmountTitle.setValue(messageBundle.getMessage("msgFreeAmount"));
-        freeAmountTitle.setAlignment(Component.Alignment.MIDDLE_LEFT);
-        freeAmountTitle.setWidthFull();
-        freeAmountHBox.add(freeAmountTitle);
-
-        Label freeAmountData = uiComponents.create(Label.class);
-        freeAmountData.setValue(getFreeAmount(lotForSell)
-                + " "
-                +  lotForSell.getUnitMeasurment().getNameUnit());
-        freeAmountData.setDescription(nf.format(lotForSell.getProductAmount()));
-        freeAmountData.setAlignment(Component.Alignment.MIDDLE_RIGHT);
-        freeAmountData.setWidthAuto();
-        freeAmountHBox.add(freeAmountData);
-        freeAmountHBox.expand(freeAmountTitle);
+        HBoxLayout freeAmountHBox = getFreeAmountHBoxLayout(lotForSell);
+        HBoxLayout reservedAmount = getReservedAmountHBoxLayout(lotForSell);
 
         Label price = uiComponents.create(Label.class);
         price.setValue(messageBundle.getMessage("msgCostFor")
@@ -174,15 +155,12 @@ public class AdsSaleDashboard extends Screen {
         totalHBox.add(totalTitle);
         totalHBox.expand(totalTitle);
 
-
         Label total = uiComponents.create(Label.class);
         total.setValue(lotForSell.getPrice().doubleValue() * lotForSell.getProductAmount().doubleValue()
                 + messageBundle.getMessage("msgRub"));
         total.setStyleName("bold");
         total.setAlignment(Component.Alignment.MIDDLE_RIGHT);
         total.setWidthAuto();
-        total.setDescription(nf.format((lotForSell.getPrice().doubleValue()
-                * lotForSell.getProductAmount().doubleValue())));
         totalHBox.add(total);
 
         Button buttonBuy = uiComponents.create(Button.class);
@@ -201,6 +179,9 @@ public class AdsSaleDashboard extends Screen {
 
         dataHBox.add(amountHBox);
         dataHBox.add(freeAmountHBox);
+        if (reservedAmount != null) {
+            dataHBox.add(reservedAmount);
+        }
         dataHBox.add(price);
         dataHBox.add(totalHBox);
         dataHBox.expand(totalHBox);
@@ -216,16 +197,94 @@ public class AdsSaleDashboard extends Screen {
         return retBox;
     }
 
+    private HBoxLayout getFreeAmountHBoxLayout(LotForSell lotForSell) {
+        RuleBasedNumberFormat nf = new RuleBasedNumberFormat(Locale.forLanguageTag("ru"),
+                RuleBasedNumberFormat.SPELLOUT);
+
+        HBoxLayout freeAmountHBox = uiComponents.create(HBoxLayout.class);
+        freeAmountHBox.setSpacing(true);
+        freeAmountHBox.setWidthFull();
+
+        Label freeAmountTitle = uiComponents.create(Label.class);
+        freeAmountTitle.setValue(messageBundle.getMessage("msgFreeAmount"));
+        freeAmountTitle.setAlignment(Component.Alignment.MIDDLE_LEFT);
+        freeAmountTitle.setWidthFull();
+        freeAmountHBox.add(freeAmountTitle);
+
+        Label freeAmountData = uiComponents.create(Label.class);
+        freeAmountData.setValue(getFreeAmount(lotForSell)
+                + " "
+                +  lotForSell.getUnitMeasurment().getNameUnit());
+        freeAmountData.setDescription(nf.format(lotForSell.getProductAmount()));
+        freeAmountData.setAlignment(Component.Alignment.MIDDLE_RIGHT);
+        freeAmountData.setWidthAuto();
+        freeAmountHBox.add(freeAmountData);
+        freeAmountHBox.expand(freeAmountTitle);
+
+        return freeAmountHBox;
+    }
+
+    private HBoxLayout getReservedAmountHBoxLayout(LotForSell lotForSell) {
+
+        BigDecimal reservedAmount = getReservedAmount(lotForSell);
+
+        if (reservedAmount != null) {
+            RuleBasedNumberFormat nf = new RuleBasedNumberFormat(Locale.forLanguageTag("ru"),
+                    RuleBasedNumberFormat.SPELLOUT);
+
+            HBoxLayout retHBox = uiComponents.create(HBoxLayout.class);
+            retHBox.setSpacing(true);
+            retHBox.setWidthFull();
+
+            Label reservedAmountTitle = uiComponents.create(Label.class);
+            reservedAmountTitle.setValue(messageBundle.getMessage("msgReservedAmount"));
+            reservedAmountTitle.setAlignment(Component.Alignment.MIDDLE_LEFT);
+            reservedAmountTitle.setWidthFull();
+            retHBox.add(reservedAmountTitle);
+
+            Label reservedAmountData = uiComponents.create(Label.class);
+            reservedAmountData.setValue(reservedAmount
+                    + " "
+                    + lotForSell.getUnitMeasurment().getNameUnit());
+            reservedAmountData.setDescription(nf.format(lotForSell.getProductAmount()));
+            reservedAmountData.setAlignment(Component.Alignment.MIDDLE_RIGHT);
+            reservedAmountData.setWidthAuto();
+            retHBox.add(reservedAmountData);
+            retHBox.expand(reservedAmountTitle);
+
+            return retHBox;
+        } else {
+            return null;
+        }
+    }
+
+    BigDecimal getReservedAmount(LotForSell lotForSell) {
+        BigDecimal reserved = BigDecimal.ZERO;
+
+        try {
+            reserved = dataManager.loadValue("select sum(e.amount) " +
+                            "from Bidding e " +
+                            "where e.tradingLot = :tradingLot and e.biddingStatus = :biddingStatus", BigDecimal.class)
+                    .parameter("biddingStatus", BiddingStatus.APPROVE)
+                    .parameter("tradingLot", lotForSell)
+                    .one();
+        } catch (NullPointerException e) {
+            reserved = BigDecimal.ZERO;
+            e.printStackTrace();
+        }
+
+        return reserved;
+    }
+
     private Object getFreeAmount(LotForSell lotForSell) {
         String freeAmount = "";
-        BigDecimal reserved = lotForSell.getProductAmount().subtract(dataManager.loadValue("select sum(e.amount) " +
-                "from Bidding e " +
-                        "where e.tradingLot = :tradingLot and e.biddingStatus = :biddingStatus", BigDecimal.class)
-                .parameter("biddingStatus", BiddingStatus.APPROVE)
-                .parameter("tradingLot", lotForSell)
-                .one());
+        BigDecimal reserved = getReservedAmount(lotForSell);
 
-        freeAmount = reserved.toString();
+        if (reserved != null) {
+            freeAmount = lotForSell.getProductAmount().subtract(reserved).toString();
+        } else {
+            freeAmount = lotForSell.getProductAmount().toString();
+        }
 
         return freeAmount;
     }

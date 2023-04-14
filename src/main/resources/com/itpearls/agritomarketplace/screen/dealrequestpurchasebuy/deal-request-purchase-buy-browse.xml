@@ -53,6 +53,7 @@
                 <column id="productSeller"/>
                 <column id="productBuyer"/>
                 <column id="amount"/>
+                <column id="reservedAmount"/>
                 <column id="proposalCost"/>
                 <column id="total" caption="msg://msgTotal"/>
                 <column id="paymentType"/>
