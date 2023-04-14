@@ -7,16 +7,14 @@ import io.jmix.core.Metadata;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.UiComponents;
 import io.jmix.ui.action.BaseAction;
-import io.jmix.ui.component.Component;
-import io.jmix.ui.component.GroupTable;
-import io.jmix.ui.component.Label;
-import io.jmix.ui.component.PopupButton;
+import io.jmix.ui.component.*;
 import io.jmix.ui.icon.JmixIcon;
 import io.jmix.ui.model.CollectionContainer;
 import io.jmix.ui.model.CollectionLoader;
 import io.jmix.ui.model.InstanceContainer;
 import io.jmix.ui.screen.*;
 import com.itpearls.agritomarketplace.entity.Bidding;
+import io.jmix.ui.screen.LookupComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @UiController("Bidding.browse")

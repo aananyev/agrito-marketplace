@@ -40,6 +40,8 @@
         </filter>
         <groupTable id="biddingsTable"
                     width="100%"
+                    aggregatable="true"
+                    aggregationStyle="BOTTOM"
                     dataContainer="biddingsDc">
             <actions>
                 <action id="create" type="create"/>
@@ -49,9 +51,17 @@
             <columns>
                 <column id="statusIcon"
                         caption="msg://msgStatus"/>
-                <column id="tradingLot"/>
-                <column id="proposalCost"/>
-                <column id="amount"/>
+                <group>
+                    <column id="tradingLot">
+                        <aggregation strategyClass="com.itpearls.agritomarketplace.screen.bidding.BiddingAmountAggregation"/>
+                    </column>
+                </group>
+                <column id="proposalCost">
+                    <aggregation type="MAX"
+                                 valueDescription="msg://msgMaxProposalCost"/>
+                </column>
+                <column id="amount">
+                </column>
                 <column id="couterparty"/>
                 <column id="tradeRole"/>
                 <column id="biddingStatus"/>

@@ -1,11 +1,19 @@
 package com.itpearls.agritomarketplace.screen.dealrequestpurchasebuy;
 
+import com.itpearls.agritomarketplace.AgritoGlobalValue;
+import com.itpearls.agritomarketplace.entity.Bidding;
 import com.itpearls.agritomarketplace.entity.BiddingStatus;
 import com.itpearls.agritomarketplace.entity.LotForSell;
+import com.itpearls.agritomarketplace.screen.bidding.BiddingEdit;
 import io.jmix.core.DataManager;
+import io.jmix.core.Metadata;
+import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.UiComponents;
+import io.jmix.ui.component.Button;
 import io.jmix.ui.component.Component;
+import io.jmix.ui.component.GroupTable;
 import io.jmix.ui.component.Label;
+import io.jmix.ui.model.CollectionLoader;
 import io.jmix.ui.screen.*;
 import com.itpearls.agritomarketplace.entity.DealRequestPurchaseBuy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +30,14 @@ public class DealRequestPurchaseBuyBrowse extends StandardLookup<DealRequestPurc
     private MessageBundle messageBundle;
     @Autowired
     private DataManager dataManager;
+    @Autowired
+    private Metadata metadata;
+    @Autowired
+    private GroupTable<DealRequestPurchaseBuy> dealRequestPurchaseBuysTable;
+    @Autowired
+    private ScreenBuilders screenBuilders;
+    @Autowired
+    private CollectionLoader<DealRequestPurchaseBuy> dealRequestPurchaseBuysDl;
 
     @Install(to = "dealRequestPurchaseBuysTable.total", subject = "columnGenerator")
     private Component dealRequestPurchaseBuysTableTotalColumnGenerator(DealRequestPurchaseBuy dealRequestPurchaseBuy) {
@@ -57,5 +73,26 @@ public class DealRequestPurchaseBuyBrowse extends StandardLookup<DealRequestPurc
         }
 
         return resreved;
+    }
+
+    @Subscribe("startBiddingButton")
+    public void onStartBiddingButtonClick(Button.ClickEvent event) {
+        Bidding bidding = metadata.create(Bidding.class);
+
+        bidding.setParentBidding(null);
+        bidding.setBiddingStatus(BiddingStatus.COUNTER_OFFER);
+        bidding.setAmount(dealRequestPurchaseBuysTable.getSingleSelected().getAmount());
+        bidding.setCouterparty(AgritoGlobalValue.counterparty);
+        bidding.setTradingLot(dealRequestPurchaseBuysTable.getSingleSelected().getLotForSell());
+
+        screenBuilders.editor(Bidding.class, this)
+                .editEntity(bidding)
+                .withScreenClass(BiddingEdit.class)
+                .withAfterCloseListener(biddingEditAfterScreenCloseEvent -> {
+                    dealRequestPurchaseBuysDl.load();
+                    dealRequestPurchaseBuysTable.repaint();
+                })
+                .build()
+                .show();
     }
 }

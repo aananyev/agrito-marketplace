@@ -53,11 +53,13 @@
                 <column id="productSeller"/>
                 <column id="productBuyer"/>
                 <column id="amount"/>
-                <column id="reservedAmount"/>
+                <column id="reservedAmount"
+                        caption="msg://msgReservedAmount"/>
                 <column id="proposalCost"/>
                 <column id="total" caption="msg://msgTotal"/>
                 <column id="paymentType"/>
-                <column id="dealRequestStatus"/>
+                <column id="dealRequestStatus"
+                        caption="msg://msgDealStatus"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
@@ -65,6 +67,9 @@
                 <button id="createBtn" action="dealRequestPurchaseBuysTable.create"/>
                 <button id="editBtn" action="dealRequestPurchaseBuysTable.edit"/>
                 <button id="removeBtn" action="dealRequestPurchaseBuysTable.remove"/>
+                <button id="startBiddingButton"
+                        caption="msg://msgBidding"
+                        responsive="true"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
