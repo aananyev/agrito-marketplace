@@ -36,6 +36,13 @@
                                        inputPrompt="msg://passwordPlaceholder"
                                        stylename="jmix-login-password"/>
                     </cssLayout>
+                    <comboBox id="tradeRoleComboBox"
+                              width="100%"
+                              nullOptionVisible="false"
+                              required="true"
+                              inputPrompt="msg://msgRole"
+                              optionsEnum="com.itpearls.agritomarketplace.entity.TradeRole">
+                    </comboBox>
                     <hbox id="rememberLocalesBox"
                           stylename="jmix-login-remember-locales">
                         <checkBox id="rememberMeCheckBox"

@@ -1,5 +1,7 @@
 package com.itpearls.agritomarketplace.screen.login;
 
+import com.itpearls.agritomarketplace.AgritoGlobalValue;
+import com.itpearls.agritomarketplace.entity.TradeRole;
 import io.jmix.core.MessageTools;
 import io.jmix.core.Messages;
 import io.jmix.securityui.authentication.AuthDetails;
@@ -60,6 +62,8 @@ public class LoginScreen extends Screen {
     private String defaultPassword;
 
     private final Logger log = LoggerFactory.getLogger(LoginScreen.class);
+    @Autowired
+    private ComboBox<TradeRole> tradeRoleComboBox;
 
     @Subscribe
     private void onInit(InitEvent event) {
@@ -124,5 +128,10 @@ public class LoginScreen extends Screen {
                     .withDescription(messages.getMessage(getClass(), "badCredentials"))
                     .show();
         }
+    }
+
+    @Subscribe("tradeRoleComboBox")
+    public void onTradeRoleComboBoxValueChange(HasValue.ValueChangeEvent<TradeRole> event) {
+        AgritoGlobalValue.tradeRole = tradeRoleComboBox.getValue();
     }
 }

@@ -7,7 +7,6 @@
                   class="com.itpearls.agritomarketplace.entity.MyHousehold">
             <fetchPlan extends="_base">
                 <property name="typeActivity" fetchPlan="_base"/>
-                <property name="owner" fetchPlan="_base"/>
                 <property name="pounterPartyCEO" fetchPlan="_base"/>
                 <property name="counterPartyChieffAccountant" fetchPlan="_base"/>
                 <property name="counterpartyManager" fetchPlan="_base"/>
@@ -74,19 +73,6 @@
                                caption="msg://msgEquipment"
                                dataContainer="myHouseholdDc"
                                property="unitsEquipment"/>
-                    <entityPicker id="ownerField"
-                                  caption="msg://msgOwner"
-                                  editable="false"
-                                  dataContainer="myHouseholdDc"
-                                  property="owner"
-                                  visible="false">
-                        <actions>
-                            <action id="entityLookup"
-                                    type="entity_lookup"/>
-                            <action id="entityClear"
-                                    type="entity_clear"/>
-                        </actions>
-                    </entityPicker>
                     <textArea id="commentField"
                               caption="msg://msgComment"
                               width="100%"
@@ -156,6 +142,10 @@
                     </entityPicker>
                 </tab>
             </tabSheet>
+            <entityPicker id="ownerField"
+                          caption="msg://msgOwner"
+                          dataContainer="myHouseholdDc"
+                          property="owner"/>
         </scrollBox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn"

@@ -7,7 +7,6 @@
         <collection id="myHouseholdsDc"
                     class="com.itpearls.agritomarketplace.entity.MyHousehold">
             <fetchPlan extends="_base">
-                <property name="owner" fetchPlan="_base"/>
             </fetchPlan>
             <loader id="myHouseholdsDl">
                 <query>

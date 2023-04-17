@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="agrito-marketplace">
+        <createTable tableName="TRADE_ORGANISATION_TYPE">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TRADE_ORGANISATION_TYPE"/>
+            </column>
+            <column name="TRADE_ORGANISATION_TYPE" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="agrito-marketplace">
+        <addColumn tableName="COUNTERPARTY">
+            <column name="TRADE_ORGANISATION_TYPE_ID" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="3" author="agrito-marketplace">
+        <createIndex indexName="IDX_COUNTERPARTY_TRADE_ORGANISATION_TYPE" tableName="COUNTERPARTY">
+            <column name="TRADE_ORGANISATION_TYPE_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="TRADE_ORGANISATION_TYPE_ID" baseTableName="COUNTERPARTY"
+                                 constraintName="FK_COUNTERPARTY_ON_TRADE_ORGANISATION_TYPE" referencedColumnNames="ID"
+                                 referencedTableName="TRADE_ORGANISATION_TYPE"/>
+    </changeSet>
+</databaseChangeLog>

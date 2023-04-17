@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
-        caption="msg://productByerBrowse.caption"
-        focusComponent="productByersTable">
+        caption="msg://tradeOrganisationTypeBrowse.caption"
+        focusComponent="tradeOrganisationTypesTable">
     <data readOnly="true">
-        <collection id="productByersDc"
-                    class="com.itpearls.agritomarketplace.entity.ProductByer">
-            <fetchPlan extends="_base">
-                <property name="pounterPartyCEO" fetchPlan="_base"/>
-                <property name="counterPartyChieffAccountant" fetchPlan="_base"/>
-                <property name="counterpartyManager" fetchPlan="_base"/>
-            </fetchPlan>
-            <loader id="productByersDl">
+        <collection id="tradeOrganisationTypesDc"
+                    class="com.itpearls.agritomarketplace.entity.TradeOrganisationType">
+            <fetchPlan extends="_base"/>
+            <loader id="tradeOrganisationTypesDl">
                 <query>
-                    <![CDATA[select e from ProductByer e]]>
+                    <![CDATA[select e from TradeOrganisationType e]]>
                 </query>
             </loader>
         </collection>
@@ -34,33 +30,28 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="productByersTable" spacing="true">
+    <layout expand="tradeOrganisationTypesTable" spacing="true">
         <filter id="filter"
-                dataLoader="productByersDl">
+                dataLoader="tradeOrganisationTypesDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="productByersTable"
+        <groupTable id="tradeOrganisationTypesTable"
                     width="100%"
-                    dataContainer="productByersDc">
+                    dataContainer="tradeOrganisationTypesDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="counterpartyName"/>
-                <column id="counterpartyLogo"/>
-                <column id="counterpartyPhone"/>
-                <column id="counterpartyEmail"/>
-                <column id="owner"/>
-                <column id="byers"/>
+                <column id="tradeOrganisationType"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="productByersTable.create"/>
-                <button id="editBtn" action="productByersTable.edit"/>
-                <button id="removeBtn" action="productByersTable.remove"/>
+                <button id="createBtn" action="tradeOrganisationTypesTable.create"/>
+                <button id="editBtn" action="tradeOrganisationTypesTable.edit"/>
+                <button id="removeBtn" action="tradeOrganisationTypesTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

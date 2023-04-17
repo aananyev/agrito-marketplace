@@ -6,9 +6,12 @@
         <instance id="productByerDc"
                   class="com.itpearls.agritomarketplace.entity.ProductByer">
             <fetchPlan extends="_base">
-                <property name="pounterPartyCEO" fetchPlan="_base"/>
-                <property name="counterPartyChieffAccountant" fetchPlan="_base"/>
-                <property name="counterpartyManager" fetchPlan="_base"/>
+                <property name="pounterPartyCEO"
+                          fetchPlan="_base"/>
+                <property name="counterPartyChieffAccountant"
+                          fetchPlan="_base"/>
+                <property name="counterpartyManager"
+                          fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
         </instance>
@@ -57,7 +60,24 @@
                             <action id="entityClear" type="entity_clear"/>
                         </actions>
                     </entityPicker>
-                    <checkBox id="byersField" property="byers"/>
+                    <entityPicker id="ownerField"
+                                  dataContainer="productByerDc"
+                                  property="owner">
+                        <actions>
+                            <action id="entityLookup"
+                                    type="entity_lookup"/>
+                            <action id="entityClear"
+                                    type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                    <checkBox id="byersField"
+                              dataContainer="productByerDc"
+                              property="byers"
+                              visible="false"/>
+                    <checkBox id="myTradeOrganisationField"
+                              caption="msg://msgMyTradeOrganisation"
+                              property="myTradeOrganisation"
+                              visible="false"/>
                 </column>
             </form>
         </scrollBox>

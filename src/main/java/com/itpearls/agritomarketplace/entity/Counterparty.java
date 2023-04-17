@@ -14,7 +14,9 @@ import java.util.UUID;
         @Index(name = "IDX_COUNTERPARTY_POUNTER_PARTY_CEO", columnList = "POUNTER_PARTY_CEO_ID"),
         @Index(name = "IDX_COUNTERPARTY_COUNTER_PARTY_CHIEFF_ACCOUNTANT", columnList = "COUNTER_PARTY_CHIEFF_ACCOUNTANT_ID"),
         @Index(name = "IDX_COUNTERPARTY_COUNTERPARTY_MANAGER", columnList = "COUNTERPARTY_MANAGER_ID"),
-        @Index(name = "IDX_COUNTERPARTY_TYPE_ACTIVITY", columnList = "TYPE_ACTIVITY_ID")
+        @Index(name = "IDX_COUNTERPARTY_TYPE_ACTIVITY", columnList = "TYPE_ACTIVITY_ID"),
+        @Index(name = "IDX_COUNTERPARTY_TRADE_ORGANISATION_TYPE", columnList = "TRADE_ORGANISATION_TYPE_ID"),
+        @Index(name = "IDX_COUNTERPARTY_OWNER", columnList = "OWNER_ID")
 })
 @Entity
 public class Counterparty {
@@ -57,6 +59,19 @@ public class Counterparty {
     @JoinColumn(name = "COUNTERPARTY_MANAGER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Person counterpartyManager;
+
+    @NotNull
+    @JoinColumn(name = "OWNER_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private User owner;
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 
     public FileRef getCounterpartyLogo() {
         return counterpartyLogo;

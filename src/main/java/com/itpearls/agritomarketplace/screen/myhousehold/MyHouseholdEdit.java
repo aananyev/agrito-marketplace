@@ -16,18 +16,18 @@ public class MyHouseholdEdit extends StandardEditor<MyHousehold> {
     @Autowired
     private EntityStates entityStates;
     @Autowired
-    private EntityPicker<User> ownerField;
-    @Autowired
     private CurrentAuthentication currentAuthentication;
     @Autowired
     private CheckBox myHouseholdField;
     @Autowired
     private CheckBox agriculturalManufacturerCheckBox;
+    @Autowired
+    private EntityPicker<User> ownerField;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
         if (entityStates.isNew(getEditedEntity())) {
-            ownerField.setValue((User)currentAuthentication.getUser());
+            ownerField.setValue((User) currentAuthentication.getUser());
             myHouseholdField.setValue(true);
             agriculturalManufacturerCheckBox.setValue(true);
         }

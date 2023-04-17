@@ -2,9 +2,13 @@ package com.itpearls.agritomarketplace.screen.main;
 
 import com.itpearls.agritomarketplace.AgritoGlobalValue;
 import com.itpearls.agritomarketplace.entity.MyHousehold;
+import com.itpearls.agritomarketplace.entity.ProductByer;
+import com.itpearls.agritomarketplace.entity.TradeRole;
 import com.itpearls.agritomarketplace.entity.User;
 import com.itpearls.agritomarketplace.screen.myhousehold.MyHouseholdEdit;
 import com.itpearls.agritomarketplace.screen.myhousehold.SelectMyHouseholdBrowse;
+import com.itpearls.agritomarketplace.screen.productbyer.ProductByerEdit;
+import com.itpearls.agritomarketplace.screen.productbyer.SelectMyProductByerBrowse;
 import io.jmix.core.DataManager;
 import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.ui.Notifications;
@@ -26,10 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @UiDescriptor("main-screen.xml")
 @Route(path = "main", root = true)
 public class MainScreen extends Screen implements Window.HasWorkArea {
-
     @Autowired
     private ScreenTools screenTools;
-
     @Autowired
     private AppWorkArea workArea;
     @Autowired
@@ -74,7 +76,60 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     }
 
     private void selectMyHousehold() {
-        Integer householdCount = dataManager.loadValue("select count(e) from MyHousehold e where e.owner = :owner",
+        if (AgritoGlobalValue.tradeRole != null) {
+            if (AgritoGlobalValue.tradeRole.equals(TradeRole.SELLER)) {
+                selectSeller();
+            } else {
+                selectTrader();
+            }
+        }
+    }
+
+    private void selectTrader() {
+        AgritoGlobalValue.tradeRole = TradeRole.BUYER;
+
+        Integer tradeOrganisationCount = dataManager.loadValue(
+                "select count(e) from ProductByer e where e.owner = :owner and e.myTradeOrganisation = true",
+                        Integer.class)
+                .parameter("owner", (User) currentAuthentication.getUser())
+                .one();
+
+        if (tradeOrganisationCount > 1) {
+            screenBuilders.lookup(ProductByer.class, this)
+                    .withOpenMode(OpenMode.DIALOG)
+                    .withScreenClass(SelectMyProductByerBrowse.class)
+                    .withSelectHandler(myTradeOrganisation -> {
+                        createMenuEditTradeOrganisation(myTradeOrganisation.iterator().next());
+                    })
+                    .build()
+                    .show();
+        } else {
+            if (tradeOrganisationCount == 1) {
+                createMenuEditTradeOrganisation(dataManager
+                        .loadValue("select e from ProductByer e where e.owner = :owner", ProductByer.class)
+                        .parameter("owner", (User) currentAuthentication.getUser())
+                        .one());
+            } else {
+                notifications.create(Notifications.NotificationType.WARNING)
+                        .withCaption(messageBundle.getMessage("msgWarning"))
+                        .withDescription(messageBundle.getMessage("msgNeedCreateMyhousehold"))
+                        .show();
+
+                screenBuilders.editor(ProductByer.class, this)
+                        .withScreenClass(ProductByerEdit.class)
+                        .newEntity()
+                        .withAfterCloseListener(myHouseholdEditAfterScreenCloseEvent ->
+                                createMenuEditTradeOrganisation(AgritoGlobalValue.myProductByer))
+                        .build()
+                        .show();
+            }
+        }
+    }
+
+    private void selectSeller() {
+        AgritoGlobalValue.tradeRole = TradeRole.SELLER;
+        Integer householdCount = dataManager.loadValue(
+                "select count(e) from MyHousehold e where e.owner = :owner and e.manufacturer = true",
                         Integer.class)
                 .parameter("owner", (User) currentAuthentication.getUser())
                 .one();
@@ -103,7 +158,8 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
                 screenBuilders.editor(MyHousehold.class, this)
                         .withScreenClass(MyHouseholdEdit.class)
                         .newEntity()
-//                        .withAfterCloseListener(myHouseholdEditAfterScreenCloseEvent -> selectMyHousehold())
+                        .withAfterCloseListener(myHouseholdEditAfterScreenCloseEvent ->
+                                createMenuEditHousehold(AgritoGlobalValue.myHousehold))
                         .build()
                         .show();
             }
@@ -113,6 +169,7 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     private void createMenuEditHousehold(MyHousehold household) {
 
         AgritoGlobalValue.myHousehold = household;
+        AgritoGlobalValue.myProductByer = null;
         AgritoGlobalValue.counterparty = AgritoGlobalValue.myHousehold;
 
         SideMenu.MenuItem myHouseholdSideMenuItem = sideMenu.createMenuItem("edit-my-household",
@@ -131,5 +188,29 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
                 + "\"");
 
         sideMenu.addMenuItem(myHouseholdSideMenuItem, 0);
+    }
+
+    private void createMenuEditTradeOrganisation(ProductByer productByer) {
+
+        AgritoGlobalValue.myProductByer = productByer;
+        AgritoGlobalValue.myHousehold = null;
+        AgritoGlobalValue.counterparty = AgritoGlobalValue.myProductByer;
+
+        SideMenu.MenuItem myProductByerSideMenuItem = sideMenu.createMenuItem("edit-my-productbyer",
+                AgritoGlobalValue.counterparty.getCounterpartyName(),
+                null,
+                menuItem -> {
+                    screenBuilders.editor(ProductByer.class, this)
+                            .withScreenClass(ProductByerEdit.class)
+                            .editEntity(AgritoGlobalValue.myProductByer)
+                            .build()
+                            .show();
+                });
+        myProductByerSideMenuItem.setDescription(messageBundle.getMessage("msgEditMyProductBuyer")
+                + " \""
+                + AgritoGlobalValue.myProductByer.getCounterpartyName()
+                + "\"");
+
+        sideMenu.addMenuItem(myProductByerSideMenuItem, 0);
     }
 }

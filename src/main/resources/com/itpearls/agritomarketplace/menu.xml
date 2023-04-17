@@ -53,6 +53,8 @@
               caption="msg://com.itpearls.agritomarketplace.screen.typeactivity/typeActivityBrowse.menu"/>
         <item screen="PaymentType.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.paymenttype/paymentTypeBrowse.menu"/>
+        <item screen="TradeOrganisationType.browse"
+              caption="msg://com.itpearls.agritomarketplace.screen.tradeorganisationtype/tradeOrganisationTypeBrowse.menu"/>
     </menu>
     <menu id="application" caption="msg://com.itpearls.agritomarketplace/menu.application"
           insertBefore="administration">

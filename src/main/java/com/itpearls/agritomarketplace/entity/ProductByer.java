@@ -4,14 +4,36 @@ import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @JmixEntity
 @Entity
 public class ProductByer extends Counterparty {
     @Column(name = "BYERS")
     private Boolean byers;
+
+    @JoinColumn(name = "TRADE_ORGANISATION_TYPE_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TradeOrganisationType tradeOrganisationType;
+
+    @Column(name = "MY_TRADE_ORGANISATION")
+    private Boolean myTradeOrganisation;
+
+    public Boolean getMyTradeOrganisation() {
+        return myTradeOrganisation;
+    }
+
+    public void setMyTradeOrganisation(Boolean myTradeOrganisation) {
+        this.myTradeOrganisation = myTradeOrganisation;
+    }
+
+    public TradeOrganisationType getTradeOrganisationType() {
+        return tradeOrganisationType;
+    }
+
+    public void setTradeOrganisationType(TradeOrganisationType tradeOrganisationType) {
+        this.tradeOrganisationType = tradeOrganisationType;
+    }
 
     public Boolean getByers() {
         return byers;

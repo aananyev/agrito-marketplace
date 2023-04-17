@@ -36,10 +36,6 @@ public class MyHousehold extends AgriculturalManufacturer {
     @Lob
     private String comment;
 
-    @JoinColumn(name = "OWNER_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User owner;
-
     public Date getStartDateActivity() {
         return startDateActivity;
     }
@@ -62,14 +58,6 @@ public class MyHousehold extends AgriculturalManufacturer {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 
     public Boolean getMyHousehold() {
