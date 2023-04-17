@@ -1,13 +1,10 @@
 package com.itpearls.agritomarketplace;
 
-import com.itpearls.agritomarketplace.entity.Counterparty;
-import com.itpearls.agritomarketplace.entity.MyHousehold;
-import com.itpearls.agritomarketplace.entity.ProductByer;
-import com.itpearls.agritomarketplace.entity.TradeRole;
+import com.itpearls.agritomarketplace.entity.*;
 
 public class AgritoGlobalValue {
     public static MyHousehold myHousehold;
-    public static ProductByer myProductByer;
+    public static MyTradeOrganisation myProductByer;
     public static Counterparty counterparty;
     public static TradeRole tradeRole;
 

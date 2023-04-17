@@ -105,7 +105,8 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
         } else {
             if (tradeOrganisationCount == 1) {
                 createMenuEditTradeOrganisation(dataManager
-                        .loadValue("select e from MyTradeOrganisation e where e.owner = :owner", ProductByer.class)
+                        .loadValue("select e from MyTradeOrganisation e where e.owner = :owner",
+                                MyTradeOrganisation.class)
                         .parameter("owner", (User) currentAuthentication.getUser())
                         .one());
             } else {
@@ -189,9 +190,9 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
         sideMenu.addMenuItem(myHouseholdSideMenuItem, 0);
     }
 
-    private void createMenuEditTradeOrganisation(ProductByer productByer) {
+    private void createMenuEditTradeOrganisation(MyTradeOrganisation myTradeOrganisation) {
 
-        AgritoGlobalValue.myProductByer = productByer;
+        AgritoGlobalValue.myProductByer = myTradeOrganisation;
         AgritoGlobalValue.myHousehold = null;
         AgritoGlobalValue.counterparty = AgritoGlobalValue.myProductByer;
 
@@ -199,8 +200,8 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
                 AgritoGlobalValue.counterparty.getCounterpartyName(),
                 null,
                 menuItem -> {
-                    screenBuilders.editor(ProductByer.class, this)
-                            .withScreenClass(ProductByerEdit.class)
+                    screenBuilders.editor(MyTradeOrganisation.class, this)
+                            .withScreenClass(MyTradeOrganisationEdit.class)
                             .editEntity(AgritoGlobalValue.myProductByer)
                             .build()
                             .show();

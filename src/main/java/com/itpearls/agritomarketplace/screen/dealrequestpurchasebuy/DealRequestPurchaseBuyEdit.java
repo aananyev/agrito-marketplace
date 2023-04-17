@@ -2,15 +2,16 @@ package com.itpearls.agritomarketplace.screen.dealrequestpurchasebuy;
 
 import com.itpearls.agritomarketplace.AgritoGlobalValue;
 import com.itpearls.agritomarketplace.entity.*;
+import io.jmix.core.DataManager;
 import io.jmix.core.EntityStates;
-import io.jmix.ui.component.EntityPicker;
-import io.jmix.ui.component.HasValue;
-import io.jmix.ui.component.TextField;
-import io.jmix.ui.component.ValidationException;
+import io.jmix.core.Metadata;
+import io.jmix.ui.component.*;
+import io.jmix.ui.model.DataContext;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @UiController("DealRequestPurchaseBuy.edit")
 @UiDescriptor("deal-request-purchase-buy-edit.xml")
@@ -30,6 +31,14 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
     private EntityPicker<Counterparty> productBuyerField;
     @Autowired
     private MessageBundle messageBundle;
+    @Autowired
+    private Metadata metadata;
+    @Autowired
+    private DataManager dataManager;
+    @Autowired
+    private DataContext dataContext;
+    @Autowired
+    private ComboBox<DealRequestStatus> dealRequestStatusField;
 
     @Install(to = "amountField", subject = "validator")
     private void amountFieldValidator(BigDecimal value) {
@@ -62,6 +71,24 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
     public void onBeforeShow(BeforeShowEvent event) {
         if (entityStates.isNew(getEditedEntity())) {
             productBuyerField.setValue(AgritoGlobalValue.counterparty);
+            dealRequestStatusField.setValue(DealRequestStatus.NEW);
         }
+    }
+
+    @Subscribe
+    public void onAfterCommitChanges(AfterCommitChangesEvent event) {
+        createBiddingRecord(event);
+    }
+
+    private void createBiddingRecord(AfterCommitChangesEvent event) {
+        Bidding bidding = metadata.create(Bidding.class);
+        bidding.setTradingLot(getEditedEntity().getLotForSell());
+        bidding.setBiddingStatus(BiddingStatus.COUNTER_OFFER);
+        bidding.setParentBidding(null);
+        bidding.setAmount(getEditedEntity().getAmount());
+        bidding.setProposalCost(getEditedEntity().getProposalCost());
+        bidding.setComment(getEditedEntity().getComment());
+        bidding.setDateProposal(new Date());
+        dataManager.save(bidding);
     }
 }
