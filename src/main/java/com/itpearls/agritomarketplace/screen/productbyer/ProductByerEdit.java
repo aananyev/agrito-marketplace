@@ -21,15 +21,12 @@ public class ProductByerEdit extends StandardEditor<ProductByer> {
     private CheckBox byersField;
     @Autowired
     private EntityPicker<User> ownerField;
-    @Autowired
-    private CheckBox myTradeOrganisationField;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
        if (entityStates.isNew(getEditedEntity())) {
            byersField.setValue(true);
            ownerField.setValue((User) currentAuthentication.getUser());
-           myTradeOrganisationField.setValue(true);
        }
     }
 }

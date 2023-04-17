@@ -1,12 +1,11 @@
 package com.itpearls.agritomarketplace.screen.main;
 
 import com.itpearls.agritomarketplace.AgritoGlobalValue;
-import com.itpearls.agritomarketplace.entity.MyHousehold;
-import com.itpearls.agritomarketplace.entity.ProductByer;
-import com.itpearls.agritomarketplace.entity.TradeRole;
-import com.itpearls.agritomarketplace.entity.User;
+import com.itpearls.agritomarketplace.entity.*;
 import com.itpearls.agritomarketplace.screen.myhousehold.MyHouseholdEdit;
 import com.itpearls.agritomarketplace.screen.myhousehold.SelectMyHouseholdBrowse;
+import com.itpearls.agritomarketplace.screen.mytradeorganisation.MyTradeOrganisationEdit;
+import com.itpearls.agritomarketplace.screen.mytradeorganisation.SelectMyTradeOrganisationBrowse;
 import com.itpearls.agritomarketplace.screen.productbyer.ProductByerEdit;
 import com.itpearls.agritomarketplace.screen.productbyer.SelectMyProductByerBrowse;
 import io.jmix.core.DataManager;
@@ -89,15 +88,15 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
         AgritoGlobalValue.tradeRole = TradeRole.BUYER;
 
         Integer tradeOrganisationCount = dataManager.loadValue(
-                "select count(e) from ProductByer e where e.owner = :owner and e.myTradeOrganisation = true",
+                "select count(e) from MyTradeOrganisation e where e.owner = :owner and e.myTradeOrganisation = true",
                         Integer.class)
                 .parameter("owner", (User) currentAuthentication.getUser())
                 .one();
 
         if (tradeOrganisationCount > 1) {
-            screenBuilders.lookup(ProductByer.class, this)
+            screenBuilders.lookup(MyTradeOrganisation.class, this)
                     .withOpenMode(OpenMode.DIALOG)
-                    .withScreenClass(SelectMyProductByerBrowse.class)
+                    .withScreenClass(SelectMyTradeOrganisationBrowse.class)
                     .withSelectHandler(myTradeOrganisation -> {
                         createMenuEditTradeOrganisation(myTradeOrganisation.iterator().next());
                     })
@@ -106,7 +105,7 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
         } else {
             if (tradeOrganisationCount == 1) {
                 createMenuEditTradeOrganisation(dataManager
-                        .loadValue("select e from ProductByer e where e.owner = :owner", ProductByer.class)
+                        .loadValue("select e from MyTradeOrganisation e where e.owner = :owner", ProductByer.class)
                         .parameter("owner", (User) currentAuthentication.getUser())
                         .one());
             } else {
@@ -115,8 +114,8 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
                         .withDescription(messageBundle.getMessage("msgNeedCreateMyhousehold"))
                         .show();
 
-                screenBuilders.editor(ProductByer.class, this)
-                        .withScreenClass(ProductByerEdit.class)
+                screenBuilders.editor(MyTradeOrganisation.class, this)
+                        .withScreenClass(MyTradeOrganisationEdit.class)
                         .newEntity()
                         .withAfterCloseListener(myHouseholdEditAfterScreenCloseEvent ->
                                 createMenuEditTradeOrganisation(AgritoGlobalValue.myProductByer))
@@ -129,7 +128,7 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     private void selectSeller() {
         AgritoGlobalValue.tradeRole = TradeRole.SELLER;
         Integer householdCount = dataManager.loadValue(
-                "select count(e) from MyHousehold e where e.owner = :owner and e.manufacturer = true",
+                "select count(e) from MyHousehold e where e.owner = :owner and e.myHousehold = true",
                         Integer.class)
                 .parameter("owner", (User) currentAuthentication.getUser())
                 .one();

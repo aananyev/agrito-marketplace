@@ -16,17 +16,6 @@ public class ProductByer extends Counterparty {
     @ManyToOne(fetch = FetchType.LAZY)
     private TradeOrganisationType tradeOrganisationType;
 
-    @Column(name = "MY_TRADE_ORGANISATION")
-    private Boolean myTradeOrganisation;
-
-    public Boolean getMyTradeOrganisation() {
-        return myTradeOrganisation;
-    }
-
-    public void setMyTradeOrganisation(Boolean myTradeOrganisation) {
-        this.myTradeOrganisation = myTradeOrganisation;
-    }
-
     public TradeOrganisationType getTradeOrganisationType() {
         return tradeOrganisationType;
     }

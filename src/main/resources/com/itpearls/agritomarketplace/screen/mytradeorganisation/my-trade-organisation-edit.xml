@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
-        caption="msg://productByerEdit.caption"
+        caption="msg://myTradeOrganisationEdit.caption"
         focusComponent="form">
     <data>
-        <instance id="productByerDc"
-                  class="com.itpearls.agritomarketplace.entity.ProductByer">
+        <instance id="myTradeOrganisationDc"
+                  class="com.itpearls.agritomarketplace.entity.MyTradeOrganisation">
             <fetchPlan extends="_base">
-                <property name="pounterPartyCEO"
-                          fetchPlan="_base"/>
-                <property name="counterPartyChieffAccountant"
-                          fetchPlan="_base"/>
-                <property name="counterpartyManager"
-                          fetchPlan="_base"/>
+                <property name="pounterPartyCEO" fetchPlan="_base"/>
+                <property name="counterPartyChieffAccountant" fetchPlan="_base"/>
+                <property name="counterpartyManager" fetchPlan="_base"/>
+                <property name="owner" fetchPlan="_base"/>
+                <property name="tradeOrganisationType" fetchPlan="_base"/>
             </fetchPlan>
             <loader/>
         </instance>
@@ -33,7 +32,7 @@
                 width="800"/>
     <layout spacing="true" expand="scrollBox">
         <scrollBox id="scrollBox" spacing="true">
-            <form id="form" dataContainer="productByerDc">
+            <form id="form" dataContainer="myTradeOrganisationDc">
                 <column width="350px">
                     <textField id="counterpartyNameField" property="counterpartyName"/>
                     <fileStorageUpload id="counterpartyLogoField" property="counterpartyLogo"/>
@@ -60,20 +59,22 @@
                             <action id="entityClear" type="entity_clear"/>
                         </actions>
                     </entityPicker>
-                    <entityPicker id="ownerField"
-                                  dataContainer="productByerDc"
-                                  property="owner">
+                    <entityPicker id="ownerField" property="owner">
                         <actions>
-                            <action id="entityLookup"
-                                    type="entity_lookup"/>
-                            <action id="entityClear"
-                                    type="entity_clear"/>
+                            <action id="entityLookup" type="entity_lookup"/>
+                            <action id="entityClear" type="entity_clear"/>
                         </actions>
                     </entityPicker>
-                    <checkBox id="byersField"
-                              dataContainer="productByerDc"
-                              property="byers"
-                              visible="false"/>
+                    <checkBox id="byersField" property="byers"/>
+                    <entityPicker id="tradeOrganisationTypeField" property="tradeOrganisationType">
+                        <actions>
+                            <action id="entityLookup" type="entity_lookup"/>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityPicker>
+                    <checkBox id="myTradeOrganisationField" property="myTradeOrganisation"/>
+                    <textField id="personellCountField" property="personellCount"/>
+                    <textField id="salesVolumeYearField" property="salesVolumeYear"/>
                 </column>
             </form>
         </scrollBox>

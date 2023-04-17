@@ -17,6 +17,8 @@
               caption="msg://com.itpearls.agritomarketplace.screen.lottobuy/lotToBuyBrowse.menu"/>
         <item screen="ProductByer.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.productbyer/productByerBrowse.menu"/>
+        <item screen="MyTradeOrganisation.browse"
+              caption="msg://com.itpearls.agritomarketplace.screen.mytradeorganisation/myTradeOrganisationBrowse.menu"/>
     </menu>
     <menu id="AgriculturalManufacturer"
           caption="msg://com.itpearls.agritomarketplace/menu_config.AgriculturalManufacturer" insertAfter="Dictionary">
