@@ -1,6 +1,7 @@
 package com.itpearls.agritomarketplace.entity;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.metamodel.annotation.Composition;
 import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
@@ -8,6 +9,7 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
@@ -60,6 +62,18 @@ public class TradingLot {
     @Column(name = "COMMENT_")
     @Lob
     private String comment;
+
+    @Composition
+    @OneToMany(mappedBy = "tradingLot")
+    private List<Bidding> bidding;
+
+    public List<Bidding> getBidding() {
+        return bidding;
+    }
+
+    public void setBidding(List<Bidding> bidding) {
+        this.bidding = bidding;
+    }
 
     public void setAgriculturalManufacturer(Counterparty agriculturalManufacturer) {
         this.agriculturalManufacturer = agriculturalManufacturer;

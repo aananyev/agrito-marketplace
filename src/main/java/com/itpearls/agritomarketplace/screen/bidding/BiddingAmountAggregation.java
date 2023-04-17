@@ -14,8 +14,8 @@ public class BiddingAmountAggregation implements AggregationStrategy<TradingLot,
 
         if (CollectionUtils.isNotEmpty(propertyValues)) {
             for (TradingLot tradingLot : propertyValues) {
-                if (tradingLot.)
-                    sumApproved.add(bidding);
+//                if (tradingLot.)
+//                    sumApproved.add(bidding);
             }
         }
 

@@ -5,6 +5,8 @@ import com.itpearls.agritomarketplace.entity.Counterparty;
 import com.itpearls.agritomarketplace.entity.TradeRole;
 import com.itpearls.agritomarketplace.entity.TradingLot;
 import io.jmix.core.EntityStates;
+import io.jmix.ui.ScreenBuilders;
+import io.jmix.ui.builder.LookupBuilder;
 import io.jmix.ui.component.*;
 import io.jmix.ui.screen.*;
 import com.itpearls.agritomarketplace.entity.Bidding;
@@ -33,6 +35,8 @@ public class BiddingEdit extends StandardEditor<Bidding> {
     private MessageBundle messageBundle;
     @Autowired
     private Label previonsProposalCostLabel;
+    @Autowired
+    private ScreenBuilders screenBuilders;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
@@ -67,4 +71,16 @@ public class BiddingEdit extends StandardEditor<Bidding> {
     public void setProposalCostField(BigDecimal proposalCost) {
 
     }
+
+    @Subscribe("showCostProposalHistory")
+    public void onShowCostProposalHistoryClick(Button.ClickEvent event) {
+        BiddingShowProposalCostsBrowse biddingHistory = screenBuilders.screen(this)
+                .withScreenClass(BiddingShowProposalCostsBrowse.class)
+                .withOpenMode(OpenMode.DIALOG)
+                .build();
+        biddingHistory.setTradingLot(getEditedEntity().getTradingLot());
+        biddingHistory.show();
+    }
+
+
 }

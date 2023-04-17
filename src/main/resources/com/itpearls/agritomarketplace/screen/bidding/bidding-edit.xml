@@ -118,6 +118,10 @@
                        stylename="h3"
                        width="AUTO"
                        height="AUTO"/>
+                <button id="showCostProposalHistory"
+                        caption="msg://msgShowProposalHistory"
+                        width="AUTO"
+                        align="MIDDLE_RIGHT"/>
             </hbox>
         </groupBox>
         <vbox id="mainVBox"
