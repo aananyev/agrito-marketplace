@@ -15,6 +15,16 @@
             <loader id="dealRequestPurchaseBuysDl">
                 <query>
                     <![CDATA[select e from DealRequestPurchaseBuy e]]>
+                    <condition>
+                        <or>
+                            <c:jpql>
+                                <c:where>e.productSeller = :owner_seller</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.productBuyer = :owner_buyer</c:where>
+                            </c:jpql>
+                        </or>
+                    </condition>
                 </query>
             </loader>
         </collection>
@@ -72,6 +82,9 @@
                         responsive="true"/>
             </buttonsPanel>
         </groupTable>
+        <checkBox id="onlyMyDealRequests"
+                  width="AUTO"
+                  caption="msg://msgOnlyMyRequests"/>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

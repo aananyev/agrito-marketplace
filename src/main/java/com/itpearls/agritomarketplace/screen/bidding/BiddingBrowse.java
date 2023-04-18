@@ -5,6 +5,7 @@ import com.itpearls.agritomarketplace.entity.BiddingStatus;
 import com.itpearls.agritomarketplace.entity.DealRequestStatus;
 import io.jmix.core.DataManager;
 import io.jmix.core.Metadata;
+import io.jmix.core.security.CurrentAuthentication;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.UiComponents;
 import io.jmix.ui.action.BaseAction;
@@ -36,6 +37,8 @@ public class BiddingBrowse extends StandardLookup<Bidding> {
     private DataManager dataManager;
     @Autowired
     private CollectionLoader<Bidding> biddingsDl;
+    @Autowired
+    private CurrentAuthentication currentAuthentication;
 
     @Install(to = "biddingsTable.action", subject = "columnGenerator")
     private Component biddingsTableActionColumnGenerator(Bidding bidding) {

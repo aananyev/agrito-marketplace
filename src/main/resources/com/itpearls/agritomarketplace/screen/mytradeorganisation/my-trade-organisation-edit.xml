@@ -65,7 +65,7 @@
                             <action id="entityClear" type="entity_clear"/>
                         </actions>
                     </entityPicker>
-                    <checkBox id="byersField" property="byers"/>
+                    <checkBox id="byersField" property="byers" visible="false"/>
                     <entityPicker id="tradeOrganisationTypeField" property="tradeOrganisationType">
                         <actions>
                             <action id="entityLookup" type="entity_lookup"/>

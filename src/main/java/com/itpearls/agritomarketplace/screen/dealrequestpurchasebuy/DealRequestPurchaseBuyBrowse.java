@@ -9,13 +9,11 @@ import io.jmix.core.DataManager;
 import io.jmix.core.Metadata;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.UiComponents;
-import io.jmix.ui.component.Button;
-import io.jmix.ui.component.Component;
-import io.jmix.ui.component.GroupTable;
-import io.jmix.ui.component.Label;
+import io.jmix.ui.component.*;
 import io.jmix.ui.model.CollectionLoader;
 import io.jmix.ui.screen.*;
 import com.itpearls.agritomarketplace.entity.DealRequestPurchaseBuy;
+import io.jmix.ui.screen.LookupComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -38,6 +36,8 @@ public class DealRequestPurchaseBuyBrowse extends StandardLookup<DealRequestPurc
     private ScreenBuilders screenBuilders;
     @Autowired
     private CollectionLoader<DealRequestPurchaseBuy> dealRequestPurchaseBuysDl;
+    @Autowired
+    private CheckBox onlyMyDealRequests;
 
     @Install(to = "dealRequestPurchaseBuysTable.total", subject = "columnGenerator")
     private Component dealRequestPurchaseBuysTableTotalColumnGenerator(DealRequestPurchaseBuy dealRequestPurchaseBuy) {
@@ -99,4 +99,25 @@ public class DealRequestPurchaseBuyBrowse extends StandardLookup<DealRequestPurc
                 .build()
                 .show();
     }
+
+    @Subscribe
+    public void onBeforeShow(BeforeShowEvent event) {
+        onlyMyDealRequests.setValue(true);
+    }
+
+    @Subscribe("onlyMyDealRequests")
+    public void onOnlyMyDealRequestsValueChange(HasValue.ValueChangeEvent<Boolean> event) {
+        if (event.getValue()) {
+            dealRequestPurchaseBuysDl.setParameter("owner_seller", AgritoGlobalValue.counterparty);
+            dealRequestPurchaseBuysDl.setParameter("owner_buyer", AgritoGlobalValue.counterparty);
+        } else {
+            dealRequestPurchaseBuysDl.removeParameter("owner_seller");
+            dealRequestPurchaseBuysDl.removeParameter("owner_buyer");
+
+        }
+
+        dealRequestPurchaseBuysDl.load();
+    }
+
+
 }

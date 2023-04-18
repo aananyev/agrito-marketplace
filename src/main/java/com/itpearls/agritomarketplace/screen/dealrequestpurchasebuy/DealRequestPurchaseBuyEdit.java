@@ -85,13 +85,14 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
     }
 
     private void checkReservedAmount(BeforeCloseEvent event) {
-/*        BigDecimal amount = getEditedEntity().getAmount();
-        BigDecimal reservedAmount = getReservedAmount(getEditedEntity().getLotForSell());
-        BigDecimal requestAmount = amountField.getValue();
-        Integer bool = amount.compareTo(requestAmount.add(reservedAmount)); */
+//        BigDecimal amount = getEditedEntity().getAmount();
+        BigDecimal reservedAmount = getReservedAmount(getEditedEntity().getLotForSell()) != null
+                ? getReservedAmount(getEditedEntity().getLotForSell()) : BigDecimal.ZERO;
+//        BigDecimal requestAmount = amountField.getValue();
+//        Integer bool = amount.compareTo(requestAmount.add(reservedAmount)); */
 
         if (getEditedEntity().getAmount().compareTo(
-                (getReservedAmount(getEditedEntity().getLotForSell()).add(amountField.getValue()))) <= 0) {
+                (reservedAmount.add(amountField.getValue()))) <= 0) {
             notifications.create(Notifications.NotificationType.WARNING)
                     .withCaption(messageBundle.getMessage("msgWarning"))
                     .withDescription(messageBundle.getMessage("msgLessThenReserved"))
