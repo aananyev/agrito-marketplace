@@ -2,6 +2,7 @@ package com.itpearls.agritomarketplace.screen.bidding;
 
 import com.itpearls.agritomarketplace.AgritoGlobalValue;
 import com.itpearls.agritomarketplace.entity.BiddingStatus;
+import com.itpearls.agritomarketplace.entity.DealRequestStatus;
 import io.jmix.core.DataManager;
 import io.jmix.core.Metadata;
 import io.jmix.ui.ScreenBuilders;
@@ -90,14 +91,20 @@ public class BiddingBrowse extends StandardLookup<Bidding> {
         biddingNew.setBiddingStatus(biddingStatus);
         biddingNew.setParentBidding(biddingParent);
         biddingNew.setAmount(biddingsTable.getSingleSelected().getAmount());
+        biddingNew.setDealRequest(biddingParent.getDealRequest());
 
         switch (biddingStatus) {
             case COUNTER_OFFER:
+                biddingNew.getDealRequest().setDealRequestStatus(DealRequestStatus.COUNTER_OFFER);
                 break;
             case APPROVE:
                 // TODO тут надо уменьшить количество предложения в обьявлении
+                biddingNew.setProposalCost(biddingParent.getProposalCost());
+                biddingNew.getDealRequest().setDealRequestStatus(DealRequestStatus.AGREEMENT);
                 break;
             case REJECT:
+                biddingNew.setProposalCost(biddingParent.getProposalCost());
+                biddingNew.getDealRequest().setDealRequestStatus(DealRequestStatus.REJECTION);
                 break;
             default:
                 break;

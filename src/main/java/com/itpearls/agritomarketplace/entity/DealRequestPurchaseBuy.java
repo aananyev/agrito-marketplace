@@ -1,5 +1,7 @@
 package com.itpearls.agritomarketplace.entity;
 
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.Entity;
@@ -20,5 +22,11 @@ public class DealRequestPurchaseBuy extends DealRequest {
 
     public void setLotForSell(LotForSell lotForSell) {
         this.lotForSell = lotForSell;
+    }
+
+    @InstanceName
+    @DependsOnProperties({"lotForSell", "productBuyer", "productSeller"})
+    public String getInstanceName() {
+        return String.format("%s %s %s", lotForSell, getProductBuyer(), getProductSeller());
     }
 }

@@ -1,6 +1,8 @@
 package com.itpearls.agritomarketplace.entity;
 
+import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.entity.annotation.OnDeleteInverse;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
@@ -13,7 +15,8 @@ import java.util.UUID;
 @Table(name = "BIDDING", indexes = {
         @Index(name = "IDX_BIDDING_TRADING_LOT", columnList = "TRADING_LOT_ID"),
         @Index(name = "IDX_BIDDING_COUTERPARTY", columnList = "COUTERPARTY_ID"),
-        @Index(name = "IDX_BIDDING_PARENT_BIDDING_1", columnList = "PARENT_BIDDING_1")
+        @Index(name = "IDX_BIDDING_PARENT_BIDDING_1", columnList = "PARENT_BIDDING_1"),
+        @Index(name = "IDX_BIDDING_DEAL_REQUEST", columnList = "DEAL_REQUEST_ID")
 })
 @Entity
 public class Bidding {
@@ -62,6 +65,19 @@ public class Bidding {
     @JoinColumn(name = "PARENT_BIDDING_1")
     @ManyToOne(fetch = FetchType.LAZY)
     private Bidding parentBidding;
+
+    @OnDeleteInverse(DeletePolicy.CASCADE)
+    @JoinColumn(name = "DEAL_REQUEST_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private DealRequest dealRequest;
+
+    public DealRequest getDealRequest() {
+        return dealRequest;
+    }
+
+    public void setDealRequest(DealRequest dealRequest) {
+        this.dealRequest = dealRequest;
+    }
 
     public BigDecimal getAmount() {
         return amount;

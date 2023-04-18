@@ -1,11 +1,15 @@
 package com.itpearls.agritomarketplace.entity;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.metamodel.annotation.Composition;
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @JmixEntity
@@ -61,6 +65,18 @@ public class DealRequest {
     @Column(name = "COMMENT_DEAL_REQUEST_STATUS")
     @Lob
     private String commentDealRequestStatus;
+
+    @Composition
+    @OneToMany(mappedBy = "dealRequest")
+    private List<Bidding> biding;
+
+    public List<Bidding> getBiding() {
+        return biding;
+    }
+
+    public void setBiding(List<Bidding> biding) {
+        this.biding = biding;
+    }
 
     public void setProductBuyer(Counterparty productBuyer) {
         this.productBuyer = productBuyer;
@@ -149,4 +165,5 @@ public class DealRequest {
     public void setId(UUID id) {
         this.id = id;
     }
+
 }

@@ -53,19 +53,23 @@ public class DealRequestPurchaseBuyBrowse extends StandardLookup<DealRequestPurc
     private Component dealRequestPurchaseBuysTableReservedAmountColumnGenerator(DealRequestPurchaseBuy dealRequestPurchaseBuy) {
         Label retLabel = uiComponents.create(Label.class);
 
-        retLabel.setValue(getReservedAmount(dealRequestPurchaseBuy.getLotForSell()));
+        retLabel.setValue(getReservedAmount(dealRequestPurchaseBuy.getLotForSell(), dealRequestPurchaseBuy));
 
         return retLabel;
     }
 
-    BigDecimal getReservedAmount(LotForSell lotForSell) {
+    BigDecimal getReservedAmount(LotForSell lotForSell,
+                                 DealRequestPurchaseBuy dealRequestPurchaseBuy) {
         BigDecimal resreved = BigDecimal.ZERO;
 
         try {
             resreved = dataManager.loadValue("select sum(e.amount) " +
                             "from Bidding e " +
-                            "where e.tradingLot = :tradingLot and e.biddingStatus = :biddingStatus", BigDecimal.class)
+                            "where e.tradingLot = :tradingLot " +
+                            "and e.dealRequest = :dealRequest " +
+                            "and e.biddingStatus = :biddingStatus", BigDecimal.class)
                     .parameter("biddingStatus", BiddingStatus.APPROVE)
+                    .parameter("dealRequest", dealRequestPurchaseBuy)
                     .parameter("tradingLot", lotForSell)
                     .one();
         } catch (NullPointerException e) {

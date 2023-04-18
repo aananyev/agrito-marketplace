@@ -1,12 +1,14 @@
 package com.itpearls.agritomarketplace.screen.adssaledashboard;
 
 import com.ibm.icu.text.RuleBasedNumberFormat;
+import com.itpearls.agritomarketplace.AgritoGlobalValue;
 import com.itpearls.agritomarketplace.entity.*;
 import com.itpearls.agritomarketplace.screen.agriculturalmanufacturer.AgriculturalManufacturerEdit;
 import com.itpearls.agritomarketplace.screen.dealrequestpurchasebuy.DealRequestPurchaseBuyEdit;
 import com.itpearls.agritomarketplace.screen.dealrequestsaleoffer.DealRequestSaleOfferEdit;
 import com.itpearls.agritomarketplace.screen.lotforsell.LotForSellEdit;
 import io.jmix.core.DataManager;
+import io.jmix.ui.Notifications;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.UiComponents;
 import io.jmix.ui.component.*;
@@ -32,6 +34,9 @@ public class AdsSaleDashboard extends Screen {
     private MessageBundle messageBundle;
     @Autowired
     private ScreenBuilders screenBuilders;
+    @Autowired
+    private Notifications notifications;
+    private BigDecimal reservedAmount;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
@@ -123,7 +128,7 @@ public class AdsSaleDashboard extends Screen {
         Label amountData = uiComponents.create(Label.class);
         amountData.setValue(lotForSell.getProductAmount()
                 + " "
-                +  lotForSell.getUnitMeasurment().getNameUnit());
+                + lotForSell.getUnitMeasurment().getNameUnit());
         amountData.setDescription(nf.format(lotForSell.getProductAmount()));
         amountData.setAlignment(Component.Alignment.MIDDLE_RIGHT);
         amountData.setWidthAuto();
@@ -167,14 +172,21 @@ public class AdsSaleDashboard extends Screen {
         buttonBuy.setCaption(messageBundle.getMessage("msgBuy"));
         buttonBuy.setAlignment(Component.Alignment.BOTTOM_RIGHT);
         buttonBuy.addClickListener(clickEvent -> {
-            screenBuilders.editor(DealRequestPurchaseBuy.class, this)
-                    .withScreenClass(DealRequestPurchaseBuyEdit.class)
-                    .newEntity()
-                    .withInitializer(e -> {
-                        e.setLotForSell(lotForSell);
-                    })
-                    .build()
-                    .show();
+            if (!AgritoGlobalValue.counterparty.equals(lotForSell.getAgriculturalManufacturer())) {
+                screenBuilders.editor(DealRequestPurchaseBuy.class, this)
+                        .withScreenClass(DealRequestPurchaseBuyEdit.class)
+                        .newEntity()
+                        .withInitializer(e -> {
+                            e.setLotForSell(lotForSell);
+                        })
+                        .build()
+                        .show();
+            } else {
+                notifications.create(Notifications.NotificationType.ERROR)
+                        .withCaption(messageBundle.getMessage("msgError"))
+                        .withDescription(messageBundle.getMessage("msgErrorDealWithYourself"))
+                        .show();
+            }
         });
 
         dataHBox.add(amountHBox);
@@ -214,7 +226,7 @@ public class AdsSaleDashboard extends Screen {
         Label freeAmountData = uiComponents.create(Label.class);
         freeAmountData.setValue(getFreeAmount(lotForSell)
                 + " "
-                +  lotForSell.getUnitMeasurment().getNameUnit());
+                + lotForSell.getUnitMeasurment().getNameUnit());
         freeAmountData.setDescription(nf.format(lotForSell.getProductAmount()));
         freeAmountData.setAlignment(Component.Alignment.MIDDLE_RIGHT);
         freeAmountData.setWidthAuto();
@@ -226,7 +238,7 @@ public class AdsSaleDashboard extends Screen {
 
     private HBoxLayout getReservedAmountHBoxLayout(LotForSell lotForSell) {
 
-        BigDecimal reservedAmount = getReservedAmount(lotForSell);
+        reservedAmount = getReservedAmount(lotForSell);
 
         if (reservedAmount != null) {
             RuleBasedNumberFormat nf = new RuleBasedNumberFormat(Locale.forLanguageTag("ru"),

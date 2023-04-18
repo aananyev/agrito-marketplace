@@ -9,6 +9,10 @@
             <fetchPlan extends="_base">
                 <property name="tradingLot" fetchPlan="_base"/>
                 <property name="couterparty" fetchPlan="_base"/>
+                <property name="dealRequest" fetchPlan="_base">
+                    <property name="productSeller" fetchPlan="_base"/>
+                    <property name="productBuyer" fetchPlan="_base"/>
+                </property>
             </fetchPlan>
             <loader id="biddingsDl">
                 <query>
@@ -55,6 +59,7 @@
                     <column id="tradingLot">
                         <aggregation strategyClass="com.itpearls.agritomarketplace.screen.bidding.BiddingAmountAggregation"/>
                     </column>
+                    <column id="dealRequest.productBuyer"/>
                 </group>
                 <column id="proposalCost">
                     <aggregation type="MAX"

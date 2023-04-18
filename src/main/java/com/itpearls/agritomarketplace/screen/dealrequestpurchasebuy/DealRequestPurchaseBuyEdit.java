@@ -5,6 +5,7 @@ import com.itpearls.agritomarketplace.entity.*;
 import io.jmix.core.DataManager;
 import io.jmix.core.EntityStates;
 import io.jmix.core.Metadata;
+import io.jmix.ui.Notifications;
 import io.jmix.ui.component.*;
 import io.jmix.ui.model.DataContext;
 import io.jmix.ui.screen.*;
@@ -39,6 +40,8 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
     private DataContext dataContext;
     @Autowired
     private ComboBox<DealRequestStatus> dealRequestStatusField;
+    @Autowired
+    private Notifications notifications;
 
     @Install(to = "amountField", subject = "validator")
     private void amountFieldValidator(BigDecimal value) {
@@ -76,12 +79,47 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
     }
 
     @Subscribe
-    public void onAfterCommitChanges(AfterCommitChangesEvent event) {
+    public void onBeforeClose(BeforeCloseEvent event) {
+        checkReservedAmount(event);
         createBiddingRecord(event);
     }
 
-    private void createBiddingRecord(AfterCommitChangesEvent event) {
+    private void checkReservedAmount(BeforeCloseEvent event) {
+/*        BigDecimal amount = getEditedEntity().getAmount();
+        BigDecimal reservedAmount = getReservedAmount(getEditedEntity().getLotForSell());
+        BigDecimal requestAmount = amountField.getValue();
+        Integer bool = amount.compareTo(requestAmount.add(reservedAmount)); */
+
+        if (getEditedEntity().getAmount().compareTo(
+                (getReservedAmount(getEditedEntity().getLotForSell()).add(amountField.getValue()))) <= 0) {
+            notifications.create(Notifications.NotificationType.WARNING)
+                    .withCaption(messageBundle.getMessage("msgWarning"))
+                    .withDescription(messageBundle.getMessage("msgLessThenReserved"))
+                    .show();
+        }
+    }
+
+    BigDecimal getReservedAmount(LotForSell lotForSell) {
+        BigDecimal reserved = BigDecimal.ZERO;
+
+        try {
+            reserved = dataManager.loadValue("select sum(e.amount) " +
+                            "from Bidding e " +
+                            "where e.tradingLot = :tradingLot and e.biddingStatus = :biddingStatus", BigDecimal.class)
+                    .parameter("biddingStatus", BiddingStatus.APPROVE)
+                    .parameter("tradingLot", lotForSell)
+                    .one();
+        } catch (NullPointerException e) {
+            reserved = BigDecimal.ZERO;
+            e.printStackTrace();
+        }
+
+        return reserved;
+    }
+
+    private void createBiddingRecord(BeforeCloseEvent event) {
         Bidding bidding = metadata.create(Bidding.class);
+
         bidding.setTradingLot(getEditedEntity().getLotForSell());
         bidding.setBiddingStatus(BiddingStatus.COUNTER_OFFER);
         bidding.setParentBidding(null);
@@ -89,6 +127,16 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
         bidding.setProposalCost(getEditedEntity().getProposalCost());
         bidding.setComment(getEditedEntity().getComment());
         bidding.setDateProposal(new Date());
+        bidding.setDealRequest(getEditedEntity());
+        bidding.setCouterparty(productBuyerField.getValue());
+        bidding.setTradeRole(AgritoGlobalValue.tradeRole);
+
         dataManager.save(bidding);
+
+        if (lotForSellField.getValue().getPrice().equals(getEditedEntity().getProposalCost())) {
+            dealRequestStatusField.setValue(DealRequestStatus.AGREEMENT);
+        } else {
+            dealRequestStatusField.setValue(DealRequestStatus.COUNTER_OFFER);
+        }
     }
 }
