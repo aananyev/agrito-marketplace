@@ -17,6 +17,16 @@
             <loader id="biddingsDl">
                 <query>
                     <![CDATA[select e from Bidding e order by e.dateProposal desc]]>
+                    <condition>
+                        <or>
+                            <c:jpql>
+                                <c:where>e.dealRequest.productSeller = :owner_seller</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.dealRequest.productBuyer = :owner_buyer</c:where>
+                            </c:jpql>
+                        </or>
+                    </condition>
                 </query>
             </loader>
         </collection>
@@ -81,6 +91,9 @@
                 <button id="removeBtn" action="biddingsTable.remove"/>
             </buttonsPanel>
         </groupTable>
+        <checkBox id="onlyMyBiddingsCheckBox"
+                  width="AUTO"
+                  caption="msg://OnlyMyBiddings"/>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

@@ -39,6 +39,8 @@ public class BiddingBrowse extends StandardLookup<Bidding> {
     private CollectionLoader<Bidding> biddingsDl;
     @Autowired
     private CurrentAuthentication currentAuthentication;
+    @Autowired
+    private CheckBox onlyMyBiddingsCheckBox;
 
     @Install(to = "biddingsTable.action", subject = "columnGenerator")
     private Component biddingsTableActionColumnGenerator(Bidding bidding) {
@@ -163,5 +165,23 @@ public class BiddingBrowse extends StandardLookup<Bidding> {
 
         retLabel.setIcon(iconLabel);
         return retLabel;
+    }
+
+    @Subscribe
+    public void onBeforeShow(BeforeShowEvent event) {
+        onlyMyBiddingsCheckBox.setValue(true);
+    }
+
+    @Subscribe("onlyMyBiddingsCheckBox")
+    public void onOnlyMyBiddingsCheckBoxValueChange(HasValue.ValueChangeEvent<Boolean> event) {
+        if (onlyMyBiddingsCheckBox.getValue()) {
+            biddingsDl.setParameter("owner_seller", AgritoGlobalValue.counterparty);
+            biddingsDl.setParameter("owner_buyer", AgritoGlobalValue.counterparty);
+        } else {
+            biddingsDl.removeParameter("owner_seller");
+            biddingsDl.removeParameter("owner_buyer");
+        }
+
+        biddingsDl.load();
     }
 }
