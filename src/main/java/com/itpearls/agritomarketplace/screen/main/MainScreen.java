@@ -168,49 +168,70 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
 
     private void createMenuEditHousehold(MyHousehold household) {
 
-        AgritoGlobalValue.myHousehold = household;
-        AgritoGlobalValue.myProductByer = null;
-        AgritoGlobalValue.counterparty = AgritoGlobalValue.myHousehold;
+        if (household != null) {
+            AgritoGlobalValue.myHousehold = household;
+            AgritoGlobalValue.myProductByer = null;
+            AgritoGlobalValue.counterparty = AgritoGlobalValue.myHousehold;
 
-        SideMenu.MenuItem myHouseholdSideMenuItem = sideMenu.createMenuItem("edit-my-household",
-                AgritoGlobalValue.counterparty.getCounterpartyName(),
-                null,
-                menuItem -> {
-                    screenBuilders.editor(MyHousehold.class, this)
-                            .withScreenClass(MyHouseholdEdit.class)
-                            .editEntity(AgritoGlobalValue.myHousehold)
-                            .build()
-                            .show();
-                });
-        myHouseholdSideMenuItem.setDescription(messageBundle.getMessage("msgEditMyHousehold")
-                + " \""
-                + AgritoGlobalValue.myHousehold.getCounterpartyName()
-                + "\"");
+            SideMenu.MenuItem myHouseholdSideMenuItem = sideMenu.createMenuItem("edit-my-household",
+                    AgritoGlobalValue.counterparty.getCounterpartyName(),
+                    null,
+                    menuItem -> {
+                        screenBuilders.editor(MyHousehold.class, this)
+                                .withScreenClass(MyHouseholdEdit.class)
+                                .editEntity(AgritoGlobalValue.myHousehold)
+                                .build()
+                                .show();
+                    });
+            myHouseholdSideMenuItem.setDescription(messageBundle.getMessage("msgEditMyHousehold")
+                    + " \""
+                    + AgritoGlobalValue.myHousehold.getCounterpartyName()
+                    + "\"");
 
-        sideMenu.addMenuItem(myHouseholdSideMenuItem, 0);
+            sideMenu.addMenuItem(myHouseholdSideMenuItem, 0);
+        } else {
+            switchReadOnlySystem();
+        }
     }
 
     private void createMenuEditTradeOrganisation(MyTradeOrganisation myTradeOrganisation) {
 
-        AgritoGlobalValue.myProductByer = myTradeOrganisation;
-        AgritoGlobalValue.myHousehold = null;
-        AgritoGlobalValue.counterparty = AgritoGlobalValue.myProductByer;
+        if (myTradeOrganisation != null) {
+            AgritoGlobalValue.myProductByer = myTradeOrganisation;
+            AgritoGlobalValue.myHousehold = null;
+            AgritoGlobalValue.counterparty = AgritoGlobalValue.myProductByer;
 
-        SideMenu.MenuItem myProductByerSideMenuItem = sideMenu.createMenuItem("edit-my-productbyer",
-                AgritoGlobalValue.counterparty.getCounterpartyName(),
-                null,
-                menuItem -> {
-                    screenBuilders.editor(MyTradeOrganisation.class, this)
-                            .withScreenClass(MyTradeOrganisationEdit.class)
-                            .editEntity(AgritoGlobalValue.myProductByer)
-                            .build()
-                            .show();
-                });
-        myProductByerSideMenuItem.setDescription(messageBundle.getMessage("msgEditMyProductBuyer")
-                + " \""
-                + AgritoGlobalValue.myProductByer.getCounterpartyName()
-                + "\"");
+            SideMenu.MenuItem myProductByerSideMenuItem = sideMenu.createMenuItem("edit-my-productbyer",
+                    AgritoGlobalValue.counterparty.getCounterpartyName(),
+                    null,
+                    menuItem -> {
+                        screenBuilders.editor(MyTradeOrganisation.class, this)
+                                .withScreenClass(MyTradeOrganisationEdit.class)
+                                .editEntity(AgritoGlobalValue.myProductByer)
+                                .build()
+                                .show();
+                    });
+            myProductByerSideMenuItem.setDescription(messageBundle.getMessage("msgEditMyProductBuyer")
+                    + " \""
+                    + AgritoGlobalValue.myProductByer.getCounterpartyName()
+                    + "\"");
 
-        sideMenu.addMenuItem(myProductByerSideMenuItem, 0);
+            sideMenu.addMenuItem(myProductByerSideMenuItem, 0);
+        } else {
+            switchReadOnlySystem();
+        }
+    }
+
+    private void switchReadOnlySystem() {
+        notifications.create(Notifications.NotificationType.WARNING)
+                .withCaption(messageBundle.getMessage("msgWarning"))
+                .withDescription(messageBundle.getMessage("msgSystemReadOnly"))
+                .show();
+
+        sideMenu.getMenuItem("Ads").setVisible(false);
+        sideMenu.getMenuItem("Bidding").setVisible(false);
+        sideMenu.getMenuItem("ProductByer").setVisible(false);
+        sideMenu.getMenuItem("ProductByer").setVisible(false);
+        sideMenu.getMenuItem("AgriculturalManufacturer").setVisible(false);
     }
 }
