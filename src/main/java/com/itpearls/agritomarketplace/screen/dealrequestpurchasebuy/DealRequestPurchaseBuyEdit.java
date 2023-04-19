@@ -85,11 +85,8 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
     }
 
     private void checkReservedAmount(BeforeCloseEvent event) {
-//        BigDecimal amount = getEditedEntity().getAmount();
         BigDecimal reservedAmount = getReservedAmount(getEditedEntity().getLotForSell()) != null
                 ? getReservedAmount(getEditedEntity().getLotForSell()) : BigDecimal.ZERO;
-//        BigDecimal requestAmount = amountField.getValue();
-//        Integer bool = amount.compareTo(requestAmount.add(reservedAmount)); */
 
         if (getEditedEntity().getAmount().compareTo(
                 (reservedAmount.add(amountField.getValue()))) <= 0) {

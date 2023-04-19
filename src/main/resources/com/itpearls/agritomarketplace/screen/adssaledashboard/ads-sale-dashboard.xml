@@ -4,7 +4,11 @@
     <data readOnly="true">
     </data>
     <layout expand="dashboard">
+        <label stylename="h2"
+               align="TOP_CENTER"
+               value="msg://msgSale"/>
         <flowBox id="dashboard"
+                 align="TOP_CENTER"
                  width="100%"
                  spacing="true"
                  height="100%"/>

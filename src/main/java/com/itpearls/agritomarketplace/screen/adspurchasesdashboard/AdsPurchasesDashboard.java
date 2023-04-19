@@ -165,10 +165,10 @@ public class AdsPurchasesDashboard extends Screen {
         total.setWidthAuto();
         totalHBox.add(total);
 
-        Button buttonBuy = uiComponents.create(Button.class);
-        buttonBuy.setCaption(messageBundle.getMessage("msgPropose"));
-        buttonBuy.setAlignment(Component.Alignment.BOTTOM_RIGHT);
-        buttonBuy.addClickListener(clickEvent -> {
+        Button buttonSale = uiComponents.create(Button.class);
+        buttonSale.setCaption(messageBundle.getMessage("msgPropose"));
+        buttonSale.setAlignment(Component.Alignment.BOTTOM_RIGHT);
+        buttonSale.addClickListener(clickEvent -> {
             if (!AgritoGlobalValue.counterparty.equals(lotToBuy.getProductBuyer())) {
                 screenBuilders.editor(DealRequestSaleOffer.class, this)
                         .withScreenClass(DealRequestSaleOfferEdit.class)
@@ -201,7 +201,7 @@ public class AdsPurchasesDashboard extends Screen {
         retBox.add(dataHBox);
         retBox.expand(dataHBox);
 
-        retBox.add(buttonBuy);
+        retBox.add(buttonSale);
 
         return retBox;
     }

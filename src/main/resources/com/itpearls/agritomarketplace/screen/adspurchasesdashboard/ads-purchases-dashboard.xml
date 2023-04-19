@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         caption="msg://adsPurchasesDashboard.caption">
-    <layout>
+    <layout expand="dashboard">
+        <label stylename="h2"
+               align="TOP_CENTER"
+               value="msg://msgBuy"/>
         <flowBox id="dashboard"
+                 align="TOP_CENTER"
                  width="100%"
                  spacing="true"
                  height="100%"/>
