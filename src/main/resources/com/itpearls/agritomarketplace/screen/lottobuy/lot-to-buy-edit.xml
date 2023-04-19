@@ -34,8 +34,8 @@
             <column width="350px">
                 <checkBox id="buyField" property="buy" visible="false"/>
                 <textField id="lotArticleField" property="lotArticle"/>
-                <entityPicker id="agriculturalManufacturerField"
-                              property="agriculturalManufacturer"
+                <entityPicker id="productBuyerField"
+                              property="productBuyer"
                               caption="msg://msgByer">
                     <actions>
                         <action id="entityLookup" type="entity_lookup"/>

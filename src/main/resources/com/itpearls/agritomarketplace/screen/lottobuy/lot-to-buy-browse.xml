@@ -50,7 +50,7 @@
             </actions>
             <columns>
                 <column id="lotArticle"/>
-                <column id="agriculturalManufacturer"
+                <column id="productBuyer"
                         caption="msg://msgBuyer"/>
                 <column id="product"/>
                 <column id="productGrade"/>
