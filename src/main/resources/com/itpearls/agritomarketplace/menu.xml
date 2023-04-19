@@ -3,6 +3,8 @@
     <menu id="Ads" caption="msg://com.itpearls.agritomarketplace/menu_config.Ads" insertAfter="application">
         <item screen="AdsSaleDashboard"
               caption="msg://com.itpearls.agritomarketplace.screen.adssaledashboard/adsSaleDashboard.caption"/>
+        <item screen="AdsPurchasesDashboard"
+              caption="msg://com.itpearls.agritomarketplace.screen.adspurchasesdashboard/adsPurchasesDashboard.caption"/>
     </menu>
     <menu id="Bidding" caption="msg://com.itpearls.agritomarketplace/menu_config.Bidding" insertAfter="Ads">
         <item screen="Bidding.browse" caption="msg://com.itpearls.agritomarketplace.screen.bidding/biddingBrowse.menu"/>

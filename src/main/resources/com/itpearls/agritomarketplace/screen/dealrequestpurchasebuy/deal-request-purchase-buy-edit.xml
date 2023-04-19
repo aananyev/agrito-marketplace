@@ -75,6 +75,7 @@
                               height="100%"
                               expand="productSellerDetailsGroupBox">
                             <entityPicker id="productSellerField"
+                                          editable="false"
                                           width="100%"
                                           align="TOP_CENTER"
                                           caption="msg://msgAgriculturalManufacturer"

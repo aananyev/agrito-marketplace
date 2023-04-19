@@ -33,7 +33,9 @@
         <scrollBox id="scrollBox" spacing="true">
             <form id="form" dataContainer="dealRequestSaleOfferDc">
                 <column width="350px">
-                    <entityPicker id="productSellerField" property="productSeller">
+                    <entityPicker id="productSellerField"
+                                  editable="false"
+                                  property="productSeller">
                         <actions>
                             <action id="entityLookup" type="entity_lookup"/>
                             <action id="entityClear" type="entity_clear"/>

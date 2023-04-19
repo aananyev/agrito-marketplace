@@ -1,19 +1,16 @@
-package com.itpearls.agritomarketplace.screen.adssaledashboard;
+package com.itpearls.agritomarketplace.screen.adspurchasesdashboard;
 
 import com.ibm.icu.text.RuleBasedNumberFormat;
 import com.itpearls.agritomarketplace.AgritoGlobalValue;
 import com.itpearls.agritomarketplace.entity.*;
-import com.itpearls.agritomarketplace.screen.agriculturalmanufacturer.AgriculturalManufacturerEdit;
-import com.itpearls.agritomarketplace.screen.dealrequestpurchasebuy.DealRequestPurchaseBuyEdit;
 import com.itpearls.agritomarketplace.screen.dealrequestsaleoffer.DealRequestSaleOfferEdit;
-import com.itpearls.agritomarketplace.screen.lotforsell.LotForSellEdit;
+import com.itpearls.agritomarketplace.screen.lottobuy.LotToBuyEdit;
+import com.itpearls.agritomarketplace.screen.productbyer.ProductByerEdit;
 import io.jmix.core.DataManager;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.UiComponents;
 import io.jmix.ui.component.*;
-import io.jmix.ui.model.CollectionContainer;
-import io.jmix.ui.model.CollectionLoader;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,9 +18,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 
-@UiController("AdsSaleDashboard")
-@UiDescriptor("ads-sale-dashboard.xml")
-public class AdsSaleDashboard extends Screen {
+@UiController("AdsPurchasesDashboard")
+@UiDescriptor("ads-purchases-dashboard.xml")
+public class AdsPurchasesDashboard extends Screen {
     @Autowired
     private FlowBoxLayout dashboard;
     @Autowired
@@ -40,17 +37,17 @@ public class AdsSaleDashboard extends Screen {
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
-        List<LotForSell> lotForSelList = dataManager.load(LotForSell.class)
+        List<LotToBuy> lotToBuys = dataManager.load(LotToBuy.class)
                 .all()
                 .list();
-        for (LotForSell lotForSell : lotForSelList) {
-            VBoxLayout retBox = createLotCard(lotForSell);
+        for (LotToBuy lotToBuy : lotToBuys) {
+            VBoxLayout retBox = createLotCard(lotToBuy);
 
             dashboard.add(retBox);
         }
     }
 
-    private VBoxLayout createLotCard(LotForSell lotForSell) {
+    private VBoxLayout createLotCard(LotToBuy lotToBuy) {
         RuleBasedNumberFormat nf = new RuleBasedNumberFormat(Locale.forLanguageTag("ru"),
                 RuleBasedNumberFormat.SPELLOUT);
 
@@ -62,36 +59,36 @@ public class AdsSaleDashboard extends Screen {
         retBox.setSpacing(true);
 
         LinkButton lotName = uiComponents.create(LinkButton.class);
-        lotName.setCaption(lotForSell.getLotArticle());
+        lotName.setCaption(lotToBuy.getLotArticle());
         lotName.setStyleName("italic");
         lotName.addClickListener(clickEvent -> {
-            screenBuilders.editor(LotForSell.class, this)
-                    .withScreenClass(LotForSellEdit.class)
-                    .editEntity(lotForSell)
+            screenBuilders.editor(LotToBuy.class, this)
+                    .withScreenClass(LotToBuyEdit.class)
+                    .editEntity(lotToBuy)
                     .build()
                     .show();
         });
 
-        HBoxLayout manufacturerHBox = uiComponents.create(HBoxLayout.class);
-        manufacturerHBox.setSpacing(true);
-        manufacturerHBox.setWidthFull();
+        HBoxLayout productBuyerHBox = uiComponents.create(HBoxLayout.class);
+        productBuyerHBox.setSpacing(true);
+        productBuyerHBox.setWidthFull();
 
-        LinkButton manufacturer = uiComponents.create(LinkButton.class);
-        manufacturer.setCaption(lotForSell.getAgriculturalManufacturer().getCounterpartyName());
-        manufacturer.setStyleName("bold");
-        manufacturer.setAlignment(Component.Alignment.MIDDLE_LEFT);
-        manufacturer.addClickListener(clickEvent -> {
-            screenBuilders.editor(AgriculturalManufacturer.class, this)
-                    .withScreenClass(AgriculturalManufacturerEdit.class)
-                    .editEntity((AgriculturalManufacturer) lotForSell.getAgriculturalManufacturer())
+        LinkButton buyer = uiComponents.create(LinkButton.class);
+        buyer.setCaption(lotToBuy.getProductBuyer().getCounterpartyName());
+        buyer.setStyleName("bold");
+        buyer.setAlignment(Component.Alignment.MIDDLE_LEFT);
+        buyer.addClickListener(clickEvent -> {
+            screenBuilders.editor(ProductByer.class, this)
+                    .withScreenClass(ProductByerEdit.class)
+                    .editEntity((ProductByer) lotToBuy.getProductBuyer())
                     .build()
                     .show();
         });
 
-        manufacturerHBox.add(manufacturer);
-        manufacturerHBox.expand(manufacturer);
+        productBuyerHBox.add(buyer);
+        productBuyerHBox.expand(buyer);
 
-        BigDecimal averageRating = averageRating((AgriculturalManufacturer) lotForSell.getAgriculturalManufacturer());
+        BigDecimal averageRating = averageRating((ProductByer) lotToBuy.getProductBuyer());
 
         if (averageRating != null) {
             Label rating = uiComponents.create(Label.class);
@@ -102,18 +99,18 @@ public class AdsSaleDashboard extends Screen {
                     + nf.format(averageRating));
             rating.setAlignment(Component.Alignment.MIDDLE_RIGHT);
             rating.setWidthFull();
-            manufacturerHBox.add(rating);
+            productBuyerHBox.add(rating);
         }
 
         VBoxLayout dataHBox = uiComponents.create(VBoxLayout.class);
         dataHBox.setSpacing(true);
         dataHBox.setMargin(true);
         dataHBox.setHeightAuto();
-        dataHBox.setWidth(String.valueOf(manufacturerHBox.getWidth()) + "%");
+        dataHBox.setWidth(String.valueOf(productBuyerHBox.getWidth()) + "%");
         dataHBox.setStyleName("card");
 
         Label product = uiComponents.create(Label.class);
-        product.setValue(lotForSell.getProduct().getProductName());
+        product.setValue(lotToBuy.getProduct().getProductName());
 
         HBoxLayout amountHBox = uiComponents.create(HBoxLayout.class);
         amountHBox.setSpacing(true);
@@ -126,27 +123,27 @@ public class AdsSaleDashboard extends Screen {
         amountHBox.add(amountTitle);
 
         Label amountData = uiComponents.create(Label.class);
-        amountData.setValue(lotForSell.getProductAmount()
+        amountData.setValue(lotToBuy.getProductAmount()
                 + " "
-                + lotForSell.getUnitMeasurment().getNameUnit());
-        amountData.setDescription(nf.format(lotForSell.getProductAmount()));
+                + lotToBuy.getUnitMeasurment().getNameUnit());
+        amountData.setDescription(nf.format(lotToBuy.getProductAmount()));
         amountData.setAlignment(Component.Alignment.MIDDLE_RIGHT);
         amountData.setWidthAuto();
         amountHBox.add(amountData);
         amountHBox.expand(amountTitle);
 
-        HBoxLayout freeAmountHBox = getFreeAmountHBoxLayout(lotForSell);
-        HBoxLayout reservedAmount = getReservedAmountHBoxLayout(lotForSell);
+        HBoxLayout freeAmountHBox = getFreeAmountHBoxLayout(lotToBuy);
+        HBoxLayout reservedAmount = getReservedAmountHBoxLayout(lotToBuy);
 
         Label price = uiComponents.create(Label.class);
         price.setValue(messageBundle.getMessage("msgCostFor")
                 + " "
-                + lotForSell.getUnitMeasurment().getNameUnit()
+                + lotToBuy.getUnitMeasurment().getNameUnit()
                 + ": "
-                + lotForSell.getPrice()
+                + lotToBuy.getPrice()
                 + " "
                 + messageBundle.getMessage("msgRub"));
-        price.setDescription(String.valueOf(lotForSell.getPrice()));
+        price.setDescription(String.valueOf(lotToBuy.getPrice()));
 
         HBoxLayout totalHBox = uiComponents.create(HBoxLayout.class);
         totalHBox.setWidthFull();
@@ -161,7 +158,7 @@ public class AdsSaleDashboard extends Screen {
         totalHBox.expand(totalTitle);
 
         Label total = uiComponents.create(Label.class);
-        total.setValue(lotForSell.getPrice().doubleValue() * lotForSell.getProductAmount().doubleValue()
+        total.setValue(lotToBuy.getPrice().doubleValue() * lotToBuy.getProductAmount().doubleValue()
                 + messageBundle.getMessage("msgRub"));
         total.setStyleName("bold");
         total.setAlignment(Component.Alignment.MIDDLE_RIGHT);
@@ -169,15 +166,15 @@ public class AdsSaleDashboard extends Screen {
         totalHBox.add(total);
 
         Button buttonBuy = uiComponents.create(Button.class);
-        buttonBuy.setCaption(messageBundle.getMessage("msgBuy"));
+        buttonBuy.setCaption(messageBundle.getMessage("msgPropose"));
         buttonBuy.setAlignment(Component.Alignment.BOTTOM_RIGHT);
         buttonBuy.addClickListener(clickEvent -> {
-            if (!AgritoGlobalValue.counterparty.equals(lotForSell.getAgriculturalManufacturer())) {
-                screenBuilders.editor(DealRequestPurchaseBuy.class, this)
-                        .withScreenClass(DealRequestPurchaseBuyEdit.class)
+            if (!AgritoGlobalValue.counterparty.equals(lotToBuy.getProductBuyer())) {
+                screenBuilders.editor(DealRequestSaleOffer.class, this)
+                        .withScreenClass(DealRequestSaleOfferEdit.class)
                         .newEntity()
                         .withInitializer(e -> {
-                            e.setLotForSell(lotForSell);
+                            e.setLotForBuy(lotToBuy);
                         })
                         .build()
                         .show();
@@ -199,7 +196,7 @@ public class AdsSaleDashboard extends Screen {
         dataHBox.expand(totalHBox);
 
         retBox.add(lotName);
-        retBox.add(manufacturerHBox);
+        retBox.add(productBuyerHBox);
         retBox.add(product);
         retBox.add(dataHBox);
         retBox.expand(dataHBox);
@@ -209,7 +206,7 @@ public class AdsSaleDashboard extends Screen {
         return retBox;
     }
 
-    private HBoxLayout getFreeAmountHBoxLayout(LotForSell lotForSell) {
+    private HBoxLayout getFreeAmountHBoxLayout(LotToBuy lotForSell) {
         RuleBasedNumberFormat nf = new RuleBasedNumberFormat(Locale.forLanguageTag("ru"),
                 RuleBasedNumberFormat.SPELLOUT);
 
@@ -236,9 +233,9 @@ public class AdsSaleDashboard extends Screen {
         return freeAmountHBox;
     }
 
-    private HBoxLayout getReservedAmountHBoxLayout(LotForSell lotForSell) {
+    private HBoxLayout getReservedAmountHBoxLayout(LotToBuy lotToBuy) {
 
-        reservedAmount = getReservedAmount(lotForSell);
+        reservedAmount = getReservedAmount(lotToBuy);
 
         if (reservedAmount != null) {
             RuleBasedNumberFormat nf = new RuleBasedNumberFormat(Locale.forLanguageTag("ru"),
@@ -257,8 +254,8 @@ public class AdsSaleDashboard extends Screen {
             Label reservedAmountData = uiComponents.create(Label.class);
             reservedAmountData.setValue(reservedAmount
                     + " "
-                    + lotForSell.getUnitMeasurment().getNameUnit());
-            reservedAmountData.setDescription(nf.format(lotForSell.getProductAmount()));
+                    + lotToBuy.getUnitMeasurment().getNameUnit());
+            reservedAmountData.setDescription(nf.format(lotToBuy.getProductAmount()));
             reservedAmountData.setAlignment(Component.Alignment.MIDDLE_RIGHT);
             reservedAmountData.setWidthAuto();
             retHBox.add(reservedAmountData);
@@ -270,7 +267,7 @@ public class AdsSaleDashboard extends Screen {
         }
     }
 
-    BigDecimal getReservedAmount(LotForSell lotForSell) {
+    BigDecimal getReservedAmount(LotToBuy lotForSell) {
         BigDecimal reserved = BigDecimal.ZERO;
 
         try {
@@ -288,24 +285,24 @@ public class AdsSaleDashboard extends Screen {
         return reserved;
     }
 
-    private Object getFreeAmount(LotForSell lotForSell) {
+    private Object getFreeAmount(LotToBuy lotToBuy) {
         String freeAmount = "";
-        BigDecimal reserved = getReservedAmount(lotForSell);
+        BigDecimal reserved = getReservedAmount(lotToBuy);
 
         if (reserved != null) {
-            freeAmount = lotForSell.getProductAmount().subtract(reserved).toString();
+            freeAmount = lotToBuy.getProductAmount().subtract(reserved).toString();
         } else {
-            freeAmount = lotForSell.getProductAmount().toString();
+            freeAmount = lotToBuy.getProductAmount().toString();
         }
 
         return freeAmount;
     }
 
-    private BigDecimal averageRating(AgriculturalManufacturer agriculturalManufacturer) {
+    private BigDecimal averageRating(ProductByer productByer) {
         String QUERY_RATING = "select avg(e.rating) from CounterpartyRating e where e.counterparty = :counterparty";
 
         return dataManager.loadValue(QUERY_RATING, BigDecimal.class)
-                .parameter("counterparty", agriculturalManufacturer)
+                .parameter("counterparty", productByer)
                 .one();
     }
 }

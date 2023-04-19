@@ -18,7 +18,8 @@ import java.util.UUID;
         @Index(name = "IDX_TRADING_LOT_PRODUCT", columnList = "PRODUCT_ID"),
         @Index(name = "IDX_TRADING_LOT_UNIT_MEASURMENT", columnList = "UNIT_MEASURMENT_ID"),
         @Index(name = "IDX_TRADING_LOT_PRODUCT_GRADE", columnList = "PRODUCT_GRADE_ID"),
-        @Index(name = "IDX_TRADING_LOT_ARTICLE_UNIQUE", columnList = "LOT_ARTICLE")
+        @Index(name = "IDX_TRADING_LOT_ARTICLE_UNIQUE", columnList = "LOT_ARTICLE"),
+        @Index(name = "IDX_TRADING_LOT_PRODUCT_BUYER", columnList = "PRODUCT_BUYER_ID")
 })
 @Entity
 public class TradingLot {
@@ -35,6 +36,10 @@ public class TradingLot {
     @JoinColumn(name = "AGRICULTURAL_MANUFACTURER_ID", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Counterparty agriculturalManufacturer;
+
+    @JoinColumn(name = "PRODUCT_BUYER_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Counterparty productBuyer;
 
     @JoinColumn(name = "PRODUCT_ID", nullable = false)
     @NotNull
@@ -66,6 +71,14 @@ public class TradingLot {
     @Composition
     @OneToMany(mappedBy = "tradingLot")
     private List<Bidding> bidding;
+
+    public void setProductBuyer(Counterparty productBuyer) {
+        this.productBuyer = productBuyer;
+    }
+
+    public Counterparty getProductBuyer() {
+        return productBuyer;
+    }
 
     public List<Bidding> getBidding() {
         return bidding;

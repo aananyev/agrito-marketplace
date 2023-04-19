@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
-        caption="msg://adsSaleDashboard.caption">
-    <data readOnly="true">
-    </data>
-    <layout expand="dashboard">
+        caption="msg://adsPurchasesDashboard.caption">
+    <layout>
         <flowBox id="dashboard"
                  width="100%"
                  spacing="true"
