@@ -32,9 +32,8 @@ public class TradingLot {
     @NotNull
     private String lotArticle;
 
-    @NotNull
-    @JoinColumn(name = "AGRICULTURAL_MANUFACTURER_ID", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "AGRICULTURAL_MANUFACTURER_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Counterparty agriculturalManufacturer;
 
     @JoinColumn(name = "PRODUCT_BUYER_ID")
