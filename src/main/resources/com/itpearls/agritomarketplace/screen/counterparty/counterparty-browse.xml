@@ -53,6 +53,10 @@
                 <column id="counterpartyManager"/>
                 <column id="counterpartyPhone"/>
                 <column id="counterpartyEmail"/>
+                <column id="rating"
+                        caption="msg://msgRating"/>
+                <column id="actionMenu"
+                        caption="msg://msgMenu"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
