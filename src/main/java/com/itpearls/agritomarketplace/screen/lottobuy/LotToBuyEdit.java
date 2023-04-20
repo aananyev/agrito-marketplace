@@ -1,7 +1,10 @@
 package com.itpearls.agritomarketplace.screen.lottobuy;
 
+import com.itpearls.agritomarketplace.AgritoGlobalValue;
+import com.itpearls.agritomarketplace.entity.Counterparty;
 import io.jmix.core.EntityStates;
 import io.jmix.ui.component.CheckBox;
+import io.jmix.ui.component.EntityPicker;
 import io.jmix.ui.screen.*;
 import com.itpearls.agritomarketplace.entity.LotToBuy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +17,14 @@ public class LotToBuyEdit extends StandardEditor<LotToBuy> {
     private EntityStates entityStates;
     @Autowired
     private CheckBox buyField;
+    @Autowired
+    private EntityPicker<Counterparty> productBuyerField;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
        if (entityStates.isNew(getEditedEntity())) {
            buyField.setValue(true);
+           productBuyerField.setValue(AgritoGlobalValue.myProductByer);
        }
     }
 }
