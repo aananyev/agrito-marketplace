@@ -18,14 +18,19 @@
                 <query>
                     <![CDATA[select e from Bidding e order by e.dateProposal desc]]>
                     <condition>
-                        <or>
+                        <and>
+                            <or>
+                                <c:jpql>
+                                    <c:where>e.dealRequest.productSeller = :owner_seller</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>e.dealRequest.productBuyer = :owner_buyer</c:where>
+                                </c:jpql>
+                            </or>
                             <c:jpql>
-                                <c:where>e.dealRequest.productSeller = :owner_seller</c:where>
+                                <c:where>not e.dealRequest in :removeDealRequest</c:where>
                             </c:jpql>
-                            <c:jpql>
-                                <c:where>e.dealRequest.productBuyer = :owner_buyer</c:where>
-                            </c:jpql>
-                        </or>
+                        </and>
                     </condition>
                 </query>
             </loader>
@@ -67,7 +72,8 @@
                         caption="msg://msgStatus"/>
                 <group>
                     <column id="tradingLot">
-                        <aggregation strategyClass="com.itpearls.agritomarketplace.screen.bidding.BiddingAmountAggregation"/>
+                        <aggregation
+                                strategyClass="com.itpearls.agritomarketplace.screen.bidding.BiddingAmountAggregation"/>
                     </column>
                     <column id="dealRequest.productBuyer"/>
                 </group>
@@ -91,10 +97,17 @@
                 <button id="removeBtn" action="biddingsTable.remove"/>
             </buttonsPanel>
         </groupTable>
-        <checkBox id="onlyMyBiddingsCheckBox"
-                  width="AUTO"
-                  caption="msg://OnlyMyBiddings"/>
-        <hbox id="lookupActions" spacing="true" visible="false">
+        <hbox spacing="true">
+            <checkBox id="onlyMyBiddingsCheckBox"
+                      width="AUTO"
+                      caption="msg://OnlyMyBiddings"/>
+            <checkBox id="removeCompleted"
+                      width="AUTO"
+                      caption="msg://msgRemoveCompleted"/>
+        </hbox>
+        <hbox id="lookupActions"
+              spacing="true"
+              visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>

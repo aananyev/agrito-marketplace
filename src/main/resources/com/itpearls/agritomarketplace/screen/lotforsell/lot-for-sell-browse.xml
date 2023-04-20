@@ -17,6 +17,11 @@
             <loader id="lotForSellsDl">
                 <query>
                     <![CDATA[select e from LotForSell e where e.sell = true]]>
+                    <condition>
+                        <c:jpql>
+                            <c:where>e.agriculturalManufacturer = :owner</c:where>
+                        </c:jpql>
+                    </condition>
                 </query>
             </loader>
         </collection>
@@ -69,6 +74,9 @@
                 <button id="removeBtn" action="lotForSellsTable.remove"/>
             </buttonsPanel>
         </groupTable>
+        <checkBox id="onlyMyLotsCheckBox"
+                  visible="true"
+                  caption="msg://mshOnlyMyLots"/>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

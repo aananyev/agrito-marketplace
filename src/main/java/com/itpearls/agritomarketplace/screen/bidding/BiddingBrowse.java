@@ -1,11 +1,11 @@
 package com.itpearls.agritomarketplace.screen.bidding;
 
 import com.itpearls.agritomarketplace.AgritoGlobalValue;
-import com.itpearls.agritomarketplace.entity.BiddingStatus;
-import com.itpearls.agritomarketplace.entity.DealRequestStatus;
+import com.itpearls.agritomarketplace.entity.*;
 import io.jmix.core.DataManager;
 import io.jmix.core.Metadata;
 import io.jmix.core.security.CurrentAuthentication;
+import io.jmix.ui.Notifications;
 import io.jmix.ui.ScreenBuilders;
 import io.jmix.ui.UiComponents;
 import io.jmix.ui.action.BaseAction;
@@ -15,9 +15,11 @@ import io.jmix.ui.model.CollectionContainer;
 import io.jmix.ui.model.CollectionLoader;
 import io.jmix.ui.model.InstanceContainer;
 import io.jmix.ui.screen.*;
-import com.itpearls.agritomarketplace.entity.Bidding;
 import io.jmix.ui.screen.LookupComponent;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @UiController("Bidding.browse")
 @UiDescriptor("bidding-browse.xml")
@@ -41,6 +43,10 @@ public class BiddingBrowse extends StandardLookup<Bidding> {
     private CurrentAuthentication currentAuthentication;
     @Autowired
     private CheckBox onlyMyBiddingsCheckBox;
+    @Autowired
+    private CollectionContainer<Bidding> biddingsDc;
+    @Autowired
+    private Notifications notifications;
 
     @Install(to = "biddingsTable.action", subject = "columnGenerator")
     private Component biddingsTableActionColumnGenerator(Bidding bidding) {
@@ -183,5 +189,13 @@ public class BiddingBrowse extends StandardLookup<Bidding> {
         }
 
         biddingsDl.load();
+    }
+
+    @Subscribe("removeCompleted")
+    public void onRemoveCompletedValueChange(HasValue.ValueChangeEvent<Boolean> event) {
+        notifications.create(Notifications.NotificationType.WARNING)
+                .withCaption(messageBundle.getMessage("msgWarning"))
+                .withDescription("Тут будет фильтр который удаляет уже согласованные торги")
+                .show();
     }
 }
