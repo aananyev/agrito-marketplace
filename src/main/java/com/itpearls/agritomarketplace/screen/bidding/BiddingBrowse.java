@@ -214,18 +214,10 @@ public class BiddingBrowse extends StandardLookup<Bidding> {
         Label retLabel = uiComponents.create(Label.class);
 
         switch (bidding.getTradingLot().getTradingLotType()) {
-            case SALE -> {
-                retLabel.setValue(bidding.getTradingLot().getAgriculturalManufacturer().getCounterpartyName());
-            }
-            case BUY -> {
-                retLabel.setValue(bidding.getTradingLot().getProductBuyer().getCounterpartyName());
-            }
-            case EXCHANGE ->                 { // неверно
+            case SALE -> retLabel.setValue(bidding.getTradingLot().getAgriculturalManufacturer().getCounterpartyName());
+            case BUY -> retLabel.setValue(bidding.getTradingLot().getProductBuyer().getCounterpartyName());
+            case EXCHANGE ->
                     retLabel.setValue(bidding.getTradingLot().getAgriculturalManufacturer().getCounterpartyName());
-            }
-            default -> { // неверно
-                retLabel.setValue(bidding.getTradingLot().getAgriculturalManufacturer().getCounterpartyName());
-            }
         }
 
         return retLabel;
