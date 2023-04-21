@@ -108,7 +108,7 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
                 ? getReservedAmount(getEditedEntity().getLotForSell()) : BigDecimal.ZERO;
 
         if (getEditedEntity().getAmount().compareTo(
-                (reservedAmount.add(amountField.getValue()))) >= 0) {
+                (reservedAmount.add(amountField.getValue()))) < 0) {
             notifications.create(Notifications.NotificationType.WARNING)
                     .withCaption(messageBundle.getMessage("msgWarning"))
                     .withDescription(messageBundle.getMessage("msgLessThenReserved"))
