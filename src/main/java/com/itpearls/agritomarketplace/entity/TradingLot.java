@@ -32,6 +32,9 @@ public class TradingLot {
     @NotNull
     private String lotArticle;
 
+    @Column(name = "TRADING_LOT_TYPE", length = 64)
+    private String tradingLotType;
+
     @JoinColumn(name = "AGRICULTURAL_MANUFACTURER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Counterparty agriculturalManufacturer;
@@ -70,6 +73,14 @@ public class TradingLot {
     @Composition
     @OneToMany(mappedBy = "tradingLot")
     private List<Bidding> bidding;
+
+    public TradingLotType getTradingLotType() {
+        return tradingLotType == null ? null : TradingLotType.fromId(tradingLotType);
+    }
+
+    public void setTradingLotType(TradingLotType tradingLotType) {
+        this.tradingLotType = tradingLotType == null ? null : tradingLotType.getId();
+    }
 
     public void setProductBuyer(Counterparty productBuyer) {
         this.productBuyer = productBuyer;

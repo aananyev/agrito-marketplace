@@ -2,6 +2,7 @@ package com.itpearls.agritomarketplace.screen.lottobuy;
 
 import com.itpearls.agritomarketplace.AgritoGlobalValue;
 import com.itpearls.agritomarketplace.entity.Counterparty;
+import com.itpearls.agritomarketplace.entity.TradingLotType;
 import io.jmix.core.EntityStates;
 import io.jmix.ui.component.CheckBox;
 import io.jmix.ui.component.EntityPicker;
@@ -25,6 +26,7 @@ public class LotToBuyEdit extends StandardEditor<LotToBuy> {
        if (entityStates.isNew(getEditedEntity())) {
            buyField.setValue(true);
            productBuyerField.setValue(AgritoGlobalValue.myProductByer);
+           getEditedEntity().setTradingLotType(TradingLotType.BUY);
        }
     }
 }

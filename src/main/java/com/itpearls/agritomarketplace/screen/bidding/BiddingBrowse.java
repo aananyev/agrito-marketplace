@@ -198,4 +198,14 @@ public class BiddingBrowse extends StandardLookup<Bidding> {
                 .withDescription("Тут будет фильтр который удаляет уже согласованные торги")
                 .show();
     }
+
+    @Install(to = "biddingsTable.biddingType", subject = "columnGenerator")
+    private Component biddingsTableBiddingTypeColumnGenerator(Bidding bidding) {
+        Label retLabel = uiComponents.create(Label.class);
+
+        retLabel.setWidthAuto();
+        retLabel.setValue(bidding.getTradingLot().getTradingLotType());
+
+        return retLabel;
+    }
 }

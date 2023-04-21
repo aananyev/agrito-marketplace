@@ -82,6 +82,8 @@
                 </column>
                 <column id="amount">
                 </column>
+                <column id="biddingType"
+                        caption="msg://msgTradingLotType"/>
                 <column id="tradingLot.agriculturalManufacturer"/>
                 <column id="tradingLot.productBuyer"/>
                 <column id="couterparty"/>

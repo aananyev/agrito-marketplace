@@ -2,6 +2,7 @@ package com.itpearls.agritomarketplace.screen.lotforsell;
 
 import com.itpearls.agritomarketplace.AgritoGlobalValue;
 import com.itpearls.agritomarketplace.entity.Counterparty;
+import com.itpearls.agritomarketplace.entity.TradingLotType;
 import io.jmix.core.EntityStates;
 import io.jmix.ui.component.CheckBox;
 import io.jmix.ui.component.EntityPicker;
@@ -25,6 +26,7 @@ public class LotForSellEdit extends StandardEditor<LotForSell> {
         if(entityStates.isNew(getEditedEntity())) {
             sellField.setValue(true);
             agriculturalManufacturerField.setValue(AgritoGlobalValue.myHousehold);
+            getEditedEntity().setTradingLotType(TradingLotType.SALE);
         }
     }
 }
