@@ -161,7 +161,9 @@ public class AdsSaleDashboard extends Screen {
         totalHBox.expand(totalTitle);
 
         Label total = uiComponents.create(Label.class);
-        total.setValue(lotForSell.getPrice().doubleValue() * lotForSell.getProductAmount().doubleValue()
+        total.setValue(String.format("$.2f",
+                lotForSell.getPrice().doubleValue() * lotForSell.getProductAmount().doubleValue())
+                + " "
                 + messageBundle.getMessage("msgRub"));
         total.setStyleName("bold");
         total.setAlignment(Component.Alignment.MIDDLE_RIGHT);
