@@ -74,6 +74,7 @@
                         <aggregation
                                 strategyClass="com.itpearls.agritomarketplace.screen.bidding.BiddingAmountAggregation"/>
                     </column>
+                    <column id="dealRequest"/>
                     <column id="dealRequest.productBuyer"/>
                 </group>
                 <column id="proposalCost">
