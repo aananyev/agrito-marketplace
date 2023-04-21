@@ -213,11 +213,10 @@ public class BiddingBrowse extends StandardLookup<Bidding> {
     private Component biddingsTableCounterpartyDealInitiatorColumnGenerator(Bidding bidding) {
         Label retLabel = uiComponents.create(Label.class);
 
-        switch (bidding.getTradingLot().getTradingLotType()) {
-            case SALE -> retLabel.setValue(bidding.getTradingLot().getAgriculturalManufacturer().getCounterpartyName());
-            case BUY -> retLabel.setValue(bidding.getTradingLot().getProductBuyer().getCounterpartyName());
-            case EXCHANGE ->
-                    retLabel.setValue(bidding.getTradingLot().getAgriculturalManufacturer().getCounterpartyName());
+        if (bidding.getTradingLot().getTradingLotType().equals(TradingLotType.BUY)) {
+            retLabel.setValue(bidding.getTradingLot().getProductBuyer().getCounterpartyName());
+        } else {
+            retLabel.setValue(bidding.getTradingLot().getAgriculturalManufacturer().getCounterpartyName());
         }
 
         return retLabel;
