@@ -84,7 +84,8 @@
                 </column>
                 <column id="biddingType"
                         caption="msg://msgTradingLotType"/>
-                <column id="counterpartyDealInitiator"/>
+                <column id="counterpartyDealInitiator"
+                        caption="msgDealInitiator"/>
                 <column id="couterparty"/>
                 <column id="tradeRole"/>
                 <column id="biddingStatus"/>
