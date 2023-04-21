@@ -88,7 +88,7 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
         AgritoGlobalValue.tradeRole = TradeRole.BUYER;
 
         Integer tradeOrganisationCount = dataManager.loadValue(
-                "select count(e) from MyTradeOrganisation e where e.owner = :owner and e.myTradeOrganisation = true",
+                        "select count(e) from MyTradeOrganisation e where e.owner = :owner and e.myTradeOrganisation = true",
                         Integer.class)
                 .parameter("owner", (User) currentAuthentication.getUser())
                 .one();
@@ -129,7 +129,7 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
     private void selectSeller() {
         AgritoGlobalValue.tradeRole = TradeRole.SELLER;
         Integer householdCount = dataManager.loadValue(
-                "select count(e) from MyHousehold e where e.owner = :owner and e.myHousehold = true",
+                        "select count(e) from MyHousehold e where e.owner = :owner and e.myHousehold = true",
                         Integer.class)
                 .parameter("owner", (User) currentAuthentication.getUser())
                 .one();
@@ -177,11 +177,20 @@ public class MainScreen extends Screen implements Window.HasWorkArea {
                     AgritoGlobalValue.counterparty.getCounterpartyName(),
                     null,
                     menuItem -> {
-                        screenBuilders.editor(MyHousehold.class, this)
-                                .withScreenClass(MyHouseholdEdit.class)
-                                .editEntity(AgritoGlobalValue.myHousehold)
-                                .build()
-                                .show();
+                        if (AgritoGlobalValue.tradeRole == TradeRole.SELLER) {
+                            screenBuilders.editor(MyHousehold.class, this)
+                                    .withScreenClass(MyHouseholdEdit.class)
+                                    .editEntity(AgritoGlobalValue.myHousehold)
+                                    .build()
+                                    .show();
+                        } else {
+                            screenBuilders.editor(MyTradeOrganisation.class, this)
+                                    .withScreenClass(MyTradeOrganisationEdit.class)
+                                    .editEntity(AgritoGlobalValue.myProductByer)
+                                    .build()
+                                    .show();
+
+                        }
                     });
             myHouseholdSideMenuItem.setDescription(messageBundle.getMessage("msgEditMyHousehold")
                     + " \""

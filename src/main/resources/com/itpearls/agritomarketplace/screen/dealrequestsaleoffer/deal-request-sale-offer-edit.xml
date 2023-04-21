@@ -86,7 +86,7 @@
                                           stylename="well"
                                           collapsable="true"
                                           collapsed="false"
-                                          caption="msg://msgAgriculturalManufacturer">
+                                          caption="msg://msgProductBuyer">
                                 </groupBox>
                             </vbox>
                         </hbox>
