@@ -80,7 +80,7 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
             dealRequestStatusField.setValue(DealRequestStatus.NEW);
         }
 
-        biddingDl.setParameter("tradingLot", getEditedEntity());
+        biddingDl.setParameter("tradingLot", getEditedEntity().getLotForSell());
         biddingDl.load();
     }
 

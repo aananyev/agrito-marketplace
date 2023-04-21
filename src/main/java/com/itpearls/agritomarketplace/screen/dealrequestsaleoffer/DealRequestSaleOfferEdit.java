@@ -49,7 +49,7 @@ public class DealRequestSaleOfferEdit extends StandardEditor<DealRequestSaleOffe
             dealRequestStatusField.setValue(DealRequestStatus.NEW);
         }
 
-        biddingDl.setParameter("tradingLot", getEditedEntity());
+        biddingDl.setParameter("tradingLot", getEditedEntity().getLotForBuy());
         biddingDl.load();
     }
 
