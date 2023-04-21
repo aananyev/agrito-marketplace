@@ -18,7 +18,7 @@
             </fetchPlan>
             <loader/>
         </instance>
-        <collection id="biddingDl"
+        <collection id="biddingDc"
                     class="com.itpearls.agritomarketplace.entity.Bidding">
             <fetchPlan extends="_base">
                 <property name="tradingLot"
@@ -103,6 +103,7 @@
                               expand="productBuyerDetailsGroupBox">
                             <entityPicker id="productBuyerField"
                                           width="100%"
+                                          editable="false"
                                           caption="msg://msgBuyer"
                                           dataContainer="dealRequestPurchaseBuyDc"
                                           property="productBuyer">
@@ -136,6 +137,7 @@
                     <hbox spacing="true"
                           width="100%">
                         <entityPicker id="lotForSellField"
+                                      editable="false"
                                       width="100%"
                                       caption="msg://msgProduct"
                                       dataContainer="dealRequestPurchaseBuyDc"
@@ -239,7 +241,7 @@
                             caption="msg://msgBidding"
                             width="100%"
                             height="100%"
-                            dataContainer="biddingDl">
+                            dataContainer="biddingDc">
                     <actions>
                         <action id="create" type="create"/>
                         <action id="edit" type="edit"/>

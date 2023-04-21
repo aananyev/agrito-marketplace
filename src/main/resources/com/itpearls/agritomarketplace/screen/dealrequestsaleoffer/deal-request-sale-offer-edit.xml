@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
         caption="msg://dealRequestSaleOfferEdit.caption"
         focusComponent="productBuyerField">
     <data>
@@ -13,6 +14,27 @@
             </fetchPlan>
             <loader/>
         </instance>
+        <collection id="biddingDc"
+                    class="com.itpearls.agritomarketplace.entity.Bidding">
+            <fetchPlan extends="_base">
+                <property name="tradingLot"
+                          fetchPlan="_base"/>
+                <property name="couterparty"
+                          fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="biddingDl" cacheable="true">
+                <query>
+                    <![CDATA[select e from Bidding e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.tradingLot = :tradingLot</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true"/>
@@ -71,6 +93,7 @@
                                   height="100%"
                                   expand="productBuyerDetailsGroupBox">
                                 <entityPicker id="productBuyerField"
+                                              editable="false"
                                               width="100%"
                                               dataContainer="dealRequestSaleOfferDc"
                                               property="productBuyer">
@@ -105,6 +128,7 @@
                             <entityPicker id="lotForBuyField"
                                           width="100%"
                                           caption="msg://msgProduct"
+                                          editable="false"
                                           dataContainer="dealRequestSaleOfferDc"
                                           property="lotForBuy">
                                 <actions>
@@ -192,6 +216,34 @@
                                   property="commentDealRequestStatus"
                                   rows="5"/>
                     </vbox>
+                </tab>
+                <tab id="biddingTab"
+                     caption="msg://msgBidding"
+                     expand="biddingGroupTable">
+                    <groupTable id="biddingGroupTable"
+                                caption="msg://msgBidding"
+                                width="100%"
+                                height="100%"
+                                dataContainer="biddingDc">
+                        <actions>
+                            <action id="create" type="create"/>
+                            <action id="edit" type="edit"/>
+                            <action id="remove" type="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="tradingLot"/>
+                            <column id="couterparty"/>
+                            <column id="tradeRole"/>
+                            <column id="proposalCost"/>
+                            <column id="dateProposal"/>
+                        </columns>
+                        <buttonsPanel id="buttonsPanel"
+                                      alwaysVisible="true">
+                            <button id="createBtn" action="biddingGroupTable.create"/>
+                            <button id="editBtn" action="biddingGroupTable.edit"/>
+                            <button id="removeBtn" action="biddingGroupTable.remove"/>
+                        </buttonsPanel>
+                    </groupTable>
                 </tab>
 
             </tabSheet>

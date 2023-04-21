@@ -7,6 +7,7 @@ import io.jmix.core.EntityStates;
 import io.jmix.core.Metadata;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.component.*;
+import io.jmix.ui.model.CollectionLoader;
 import io.jmix.ui.model.DataContext;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
     private ComboBox<DealRequestStatus> dealRequestStatusField;
     @Autowired
     private Notifications notifications;
+    @Autowired
+    private CollectionLoader<Bidding> biddingDl;
 
     @Install(to = "amountField", subject = "validator")
     private void amountFieldValidator(BigDecimal value) {
@@ -76,6 +79,9 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
             productBuyerField.setValue(AgritoGlobalValue.counterparty);
             dealRequestStatusField.setValue(DealRequestStatus.NEW);
         }
+
+        biddingDl.setParameter("tradingLot", getEditedEntity());
+        biddingDl.load();
     }
 
     @Subscribe

@@ -9,6 +9,7 @@ import io.jmix.ui.component.ComboBox;
 import io.jmix.ui.component.EntityPicker;
 import io.jmix.ui.component.HasValue;
 import io.jmix.ui.component.TextField;
+import io.jmix.ui.model.CollectionLoader;
 import io.jmix.ui.screen.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,6 +38,8 @@ public class DealRequestSaleOfferEdit extends StandardEditor<DealRequestSaleOffe
     private Metadata metadata;
     @Autowired
     private DataManager dataManager;
+    @Autowired
+    private CollectionLoader<Bidding> biddingDl;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
@@ -45,6 +48,9 @@ public class DealRequestSaleOfferEdit extends StandardEditor<DealRequestSaleOffe
             productBuyerField.setValue(lotForBuyField.getValue().getProductBuyer());
             dealRequestStatusField.setValue(DealRequestStatus.NEW);
         }
+
+        biddingDl.setParameter("tradingLot", getEditedEntity());
+        biddingDl.load();
     }
 
     @Subscribe
