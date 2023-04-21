@@ -11,35 +11,35 @@
     </menu>
     <menu id="ProductByer" caption="msg://com.itpearls.agritomarketplace/menu_config.ProductByer"
           insertAfter="application">
-        <item screen="LotToBuy.browse"
-              caption="msg://com.itpearls.agritomarketplace.screen.lottobuy/lotToBuyBrowse.menu"/>
         <item screen="ProductByer.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.productbyer/productByerBrowse.menu"/>
+        <item screen="LotToBuy.browse"
+              caption="msg://com.itpearls.agritomarketplace.screen.lottobuy/lotToBuyBrowse.menu"/>
         <item screen="MyTradeOrganisation.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.mytradeorganisation/myTradeOrganisationBrowse.menu"/>
-        <item screen="DealRequestPurchaseBuy.browse"
-              caption="msg://com.itpearls.agritomarketplace/menu_config.DealRequestPurchaseBuy.browse"/>
+        <item screen="DealRequestSaleOffer.browse"
+              caption="msg://com.itpearls.agritomarketplace/menu_config.DealRequestSaleOffer.browse"/>
     </menu>
     <menu id="AgriculturalManufacturer"
           caption="msg://com.itpearls.agritomarketplace/menu_config.AgriculturalManufacturer" insertAfter="Dictionary">
         <item screen="AgriculturalManufacturer.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.agriculturalmanufacturer/agriculturalManufacturerBrowse.menu"/>
-        <item screen="MyHousehold.browse"
-              caption="msg://com.itpearls.agritomarketplace.screen.myhousehold/myHouseholdBrowse.menu"/>
         <item screen="LotForSell.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.lotforsell/lotForSellBrowse.menu"/>
-        <item screen="DealRequestSaleOffer.browse"
-              caption="msg://com.itpearls.agritomarketplace/menu_config.DealRequestSaleOffer.browse"/>
+        <item screen="MyHousehold.browse"
+              caption="msg://com.itpearls.agritomarketplace.screen.myhousehold/myHouseholdBrowse.menu"/>
+        <item screen="DealRequestPurchaseBuy.browse"
+              caption="msg://com.itpearls.agritomarketplace/menu_config.DealRequestPurchaseBuy.browse"/>
     </menu>
     <menu id="Counterparties" caption="msg://com.itpearls.agritomarketplace/menu_config.Counterparties"
           insertAfter="Dictionary">
-        <item screen="TradingLot.browse"
-              caption="msg://com.itpearls.agritomarketplace.screen.tradinglot/tradingLotBrowse.menu"/>
-        <item screen="Person.browse" caption="msg://com.itpearls.agritomarketplace.screen.person/personBrowse.menu"/>
         <item screen="Counterparty.browse" id="Counterparty"
               caption="msg://com.itpearls.agritomarketplace/menu_config.Counterparty"/>
         <item screen="CounterpartyRating.browse"
               caption="msg://com.itpearls.agritomarketplace.screen.counterpartyrating/counterpartyRatingBrowse.menu"/>
+        <item screen="TradingLot.browse"
+              caption="msg://com.itpearls.agritomarketplace.screen.tradinglot/tradingLotBrowse.menu"/>
+        <item screen="Person.browse" caption="msg://com.itpearls.agritomarketplace.screen.person/personBrowse.menu"/>
     </menu>
     <menu id="Dictionary" caption="msg://com.itpearls.agritomarketplace/menu_config.Dictionary"
           insertAfter="Counterparties">

@@ -42,8 +42,8 @@ public class DealRequestPurchaseBuyBrowse extends StandardLookup<DealRequestPurc
     @Install(to = "dealRequestPurchaseBuysTable.total", subject = "columnGenerator")
     private Component dealRequestPurchaseBuysTableTotalColumnGenerator(DealRequestPurchaseBuy dealRequestPurchaseBuy) {
         Label retLabel = uiComponents.create(Label.class);
-        retLabel.setValue(dealRequestPurchaseBuy.getProposalCost().doubleValue()
-                * dealRequestPurchaseBuy.getAmount().doubleValue()
+        retLabel.setValue(String.format("%.2f", dealRequestPurchaseBuy.getProposalCost().doubleValue()
+                * dealRequestPurchaseBuy.getAmount().doubleValue())
                 + " "
                 + messageBundle.getMessage("msgRub"));
         return retLabel;
