@@ -86,7 +86,7 @@ public class DealRequestSaleOfferEdit extends StandardEditor<DealRequestSaleOffe
     @Subscribe("lotForBuyField")
     public void onLotForBuyFieldValueChange(HasValue.ValueChangeEvent<LotToBuy> event) {
         productBuyerField.setValue((ProductByer) event.getValue().getProductBuyer());
-        amountField.setValue(event.getValue().getProductAmount());
+        amountField.setValue(getFreeAmount(event.getValue()));
         proposalCostField.setValue(lotForBuyField.getValue().getPrice());
     }
 
@@ -95,5 +95,36 @@ public class DealRequestSaleOfferEdit extends StandardEditor<DealRequestSaleOffe
 
         amountField.setValue(lotToBuy.getProductAmount());
         proposalCostField.setValue(lotToBuy.getPrice());
+    }
+
+    private BigDecimal getFreeAmount(LotToBuy lotToBuy) {
+        BigDecimal freeAmount = BigDecimal.ZERO;
+        BigDecimal reserved = getReservedAmount(lotToBuy);
+
+        if (reserved != null) {
+            freeAmount = lotToBuy.getProductAmount().subtract(reserved);
+        } else {
+            freeAmount = lotToBuy.getProductAmount();
+        }
+
+        return freeAmount;
+    }
+
+    BigDecimal getReservedAmount(LotToBuy lotForSell) {
+        BigDecimal reserved = BigDecimal.ZERO;
+
+        try {
+            reserved = dataManager.loadValue("select sum(e.amount) " +
+                            "from Bidding e " +
+                            "where e.tradingLot = :tradingLot and e.biddingStatus = :biddingStatus", BigDecimal.class)
+                    .parameter("biddingStatus", BiddingStatus.APPROVE)
+                    .parameter("tradingLot", lotForSell)
+                    .one();
+        } catch (NullPointerException e) {
+            reserved = BigDecimal.ZERO;
+            e.printStackTrace();
+        }
+
+        return reserved;
     }
 }

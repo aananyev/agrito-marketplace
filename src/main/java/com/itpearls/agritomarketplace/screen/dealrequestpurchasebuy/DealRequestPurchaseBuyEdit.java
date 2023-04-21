@@ -69,8 +69,21 @@ public class DealRequestPurchaseBuyEdit extends StandardEditor<DealRequestPurcha
     @Subscribe("lotForSellField")
     public void onLotForSellFieldValueChange(HasValue.ValueChangeEvent<LotForSell> event) {
         productSellerField.setValue((AgriculturalManufacturer) event.getValue().getAgriculturalManufacturer());
-        amountField.setValue(event.getValue().getProductAmount());
+        amountField.setValue(getFreeAmount(event.getValue()));
         proposalCostField.setValue(event.getValue().getPrice());
+    }
+
+    private BigDecimal getFreeAmount(LotForSell lotForSell) {
+        BigDecimal freeAmount = BigDecimal.ZERO;
+        BigDecimal reserved = getReservedAmount(lotForSell);
+
+        if (reserved != null) {
+            freeAmount = lotForSell.getProductAmount().subtract(reserved);
+        } else {
+            freeAmount = lotForSell.getProductAmount();
+        }
+
+        return freeAmount;
     }
 
     @Subscribe
