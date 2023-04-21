@@ -59,6 +59,7 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
+                <column id="lotForSell.tradingLotType"/>
                 <column id="lotForSell"/>
                 <column id="productSeller"/>
                 <column id="productBuyer"/>
