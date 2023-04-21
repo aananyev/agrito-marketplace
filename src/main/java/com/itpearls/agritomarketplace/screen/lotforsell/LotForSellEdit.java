@@ -27,6 +27,10 @@ public class LotForSellEdit extends StandardEditor<LotForSell> {
             sellField.setValue(true);
             agriculturalManufacturerField.setValue(AgritoGlobalValue.myHousehold);
             getEditedEntity().setTradingLotType(TradingLotType.SALE);
+        } else {
+            if (getEditedEntity().getTradingLotType() == null) {
+                getEditedEntity().setTradingLotType(TradingLotType.SALE);
+            }
         }
     }
 }

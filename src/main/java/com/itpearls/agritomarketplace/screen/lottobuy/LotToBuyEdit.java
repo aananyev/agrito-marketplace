@@ -27,6 +27,10 @@ public class LotToBuyEdit extends StandardEditor<LotToBuy> {
            buyField.setValue(true);
            productBuyerField.setValue(AgritoGlobalValue.myProductByer);
            getEditedEntity().setTradingLotType(TradingLotType.BUY);
+       } else {
+           if (getEditedEntity().getTradingLotType() == null) {
+               getEditedEntity().setTradingLotType(TradingLotType.BUY);
+           }
        }
     }
 }
